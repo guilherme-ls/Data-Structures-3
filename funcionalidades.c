@@ -108,13 +108,26 @@ void funcionalidade2() {
     // cria struct de registro a ser empregado nas leituras
     registro reg;
 
-    // loop de leitura dos dados
+    // loop de leitura e escrita dos dados
     while(1) {
         // funcao de leitura dos registros
         if(ler_registro(arq_bin, &reg)) {
             // break com fim do arquivo
             break;
         }
+
+        // checa se registros de texto sao nulos
+        if(reg.tamanhoTecnologiaOrigem == 1) {
+            free(reg.nomeTecnologiaOrigem);
+            reg.nomeTecnologiaOrigem = malloc(5 * sizeof(char));
+            strcpy(reg.nomeTecnologiaOrigem, "NULO");
+        }
+        if(reg.tamanhoTecnologiaDestino == 1) {
+            free(reg.nomeTecnologiaDestino);
+            reg.nomeTecnologiaDestino = malloc(5 * sizeof(char));
+            strcpy(reg.nomeTecnologiaDestino, "NULO");
+        }
+
 
         // imprime os dados contidos no registro lido, caso nao removido
         if(reg.removido != 1)
