@@ -1,3 +1,6 @@
+// Guilherme Lorete Schmidt - 13676857
+// Emanuel Percinio Goncalves de Oliveira - 13676878
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

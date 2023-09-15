@@ -1,3 +1,6 @@
+// Guilherme Lorete Schmidt - 13676857
+// Emanuel Percinio Goncalves de Oliveira - 13676878
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "registros.h"
@@ -41,7 +44,7 @@ void escrever_registro(FILE* arquivo, registro reg) {
 /**
  * @brief le um registro no arquivo fornecido a partir da posicao corrente e o armazena em reg
  * @param arquivo arquivo a ser lido (binario)
- * @param reg registro no qual sera armazenado o registro lido
+ * @param reg struct de registro no qual sera armazenado o registro lido
  * @return 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
  */
 int ler_registro(FILE* arquivo, registro* reg) {
@@ -50,16 +53,26 @@ int ler_registro(FILE* arquivo, registro* reg) {
         // retorno com fim do arquivo
         return 1;
     }
-    // leitura dos dados, com alocacao de strings quando necessario
+    // leitura dos dados numericos iniciais
     fread(&(reg->grupo), sizeof(int), 1, arquivo);
     fread(&(reg->popularidade), sizeof(int), 1, arquivo);
     fread(&(reg->peso), sizeof(int), 1, arquivo);
+
+    // leitura do tamanho do registro de texto inicial e alocacao da string necessaria
     fread(&(reg->tamanhoTecnologiaOrigem), sizeof(int), 1, arquivo);
-    reg->nomeTecnologiaOrigem = malloc(reg->tamanhoTecnologiaOrigem * sizeof(char));
+    reg->nomeTecnologiaOrigem = malloc((reg->tamanhoTecnologiaOrigem + 1) * sizeof(char));
+
+    // leitura da string e preenchimento do terminador nulo
     fread(reg->nomeTecnologiaOrigem, sizeof(char), reg->tamanhoTecnologiaOrigem, arquivo);
+    reg->nomeTecnologiaOrigem[reg->tamanhoTecnologiaOrigem] = '\0';
+
+    // leitura do tamanho do segundo registro de texto e alocacao da string necessaria
     fread(&(reg->tamanhoTecnologiaDestino), sizeof(int), 1, arquivo);
-    reg->nomeTecnologiaDestino = malloc(reg->tamanhoTecnologiaDestino * sizeof(char));
+    reg->nomeTecnologiaDestino = malloc((reg->tamanhoTecnologiaDestino + 1) * sizeof(char));
+
+    // leitura da string e preenchimento do terminador nulo
     fread(reg->nomeTecnologiaDestino, sizeof(char), reg->tamanhoTecnologiaDestino, arquivo);
+    reg->nomeTecnologiaDestino[reg->tamanhoTecnologiaDestino] = '\0';
 
     // calcula tamanho do lixo e o pula
     fseek(arquivo, calcula_lixo(*reg), SEEK_CUR);
@@ -78,5 +91,32 @@ void escrever_header(FILE* arquivo, header cabecalho) {
     fwrite(&cabecalho.status, sizeof(char), 1, arquivo);
     fwrite(&cabecalho.proxRRN, sizeof(int), 1, arquivo);
     fwrite(&cabecalho.nroTecnologias, sizeof(int), 1, arquivo);
-    fwrite(&cabecalho.nroParesTecnologias, sizeof(int), 1, arquivo);    
+    fwrite(&cabecalho.nroParesTecnologias, sizeof(int), 1, arquivo);
+}
+
+/**
+ * @brief le o registro de cabecalho no arquivo fornecido a partir da posicao corrente e o armazena em cabecalho
+ * @param arquivo arquivo a ser lido (binario)
+ * @param cabecalho struct de cabecalho no qual sera armazenado o cabecalho lido
+ * @return 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
+ */
+int ler_header(FILE* arquivo, header* cabecalho) {
+    // le os dados contidos no registro de cabecalho
+    if(fread(&cabecalho->status, sizeof(char), 1, arquivo) == 0) {
+        return 1;
+    }
+    fread(&cabecalho->proxRRN, sizeof(int), 1, arquivo);
+    fread(&cabecalho->nroTecnologias, sizeof(int), 1, arquivo);
+    fread(&cabecalho->nroParesTecnologias, sizeof(int), 1, arquivo);
+
+    return 0;
+}
+
+/**
+ * @brief calcula o byte offset para o registro do RRN fornecido
+ * @param RRN RRN do registro desejado
+ * @return byte offset do registro correspondente ao RRN fornecido
+ */
+int calcula_byte_off(int RRN) {
+    return TAM_HEADER + RRN * TAM_REG;
 }

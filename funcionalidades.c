@@ -1,3 +1,6 @@
+// Guilherme Lorete Schmidt - 13676857
+// Emanuel Percinio Goncalves de Oliveira - 13676878
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -94,8 +97,13 @@ void funcionalidade2() {
     // abre o arquivo de entrada
     FILE* arq_bin = fopen(nome_bin, "rb");
 
-    // pula o registro de cabecalho
-    fseek(arq_bin, TAM_HEADER, SEEK_SET);
+    // le registro de cabecalho e vai ao primeiro RRN
+    header cabecalho;
+    if(ler_header(arq_bin, &cabecalho) == 1){
+        printf("Registro inexistente.");
+        return;
+    }
+    fseek(arq_bin, calcula_byte_off(cabecalho.proxRRN), SEEK_SET);
 
     // cria struct de registro a ser empregado nas leituras
     registro reg;
@@ -108,8 +116,9 @@ void funcionalidade2() {
             break;
         }
 
-        // imprime os dados contidos no registro lido
-        printf("%s, %d, %d, %s, %d\n", reg.nomeTecnologiaOrigem, reg.grupo, reg.popularidade, reg.nomeTecnologiaDestino, reg.peso);
+        // imprime os dados contidos no registro lido, caso nao removido
+        if(reg.removido != 1)
+            printf("%s, %d, %d, %s, %d\n", reg.nomeTecnologiaOrigem, reg.grupo, reg.popularidade, reg.nomeTecnologiaDestino, reg.peso);
 
         // libera as strings alocadas
         free(reg.nomeTecnologiaOrigem);
