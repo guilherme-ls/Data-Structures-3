@@ -24,5 +24,6 @@ struct registro {
 typedef struct header header;
 typedef struct registro registro;
 
-void escrever_registros(FILE* arquivo, registro reg);
+void escrever_registro(FILE* arquivo, registro reg);
 int ler_registro(FILE* arquivo, registro* reg);
+void escrever_header(FILE* arquivo, header cabecalho);

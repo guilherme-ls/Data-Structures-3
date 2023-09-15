@@ -21,7 +21,7 @@ void funcionalidade1() {
     FILE *arq_csv = fopen(nome_csv, "r");
 
     // pula o cabecalho do csv lido
-    fscanf(arq_csv, "nomeTecnologiaOrigem,grupo,popularidade,nomeTecnologiaDestino,peso\n", NULL);
+    while(fgetc(arq_csv) != '\n');
 
     // cria registro de cabecalho
     header cabecalho;
@@ -30,15 +30,15 @@ void funcionalidade1() {
     cabecalho.nroTecnologias = 0;
     cabecalho.nroParesTecnologias = 0;
 
-    fseek(arq_bin, TAM_HEADER, SEEK_SET);
+    // gera struct de registro e o marca como nao removido
+    registro reg;
+    reg.removido = 0;
+    
+    char* tec_prev = malloc(100 * sizeof(char));
 
+    escrever_header(arq_bin, cabecalho);
     // executa o loop ate chegar ao fim do arquivo
-    int quit = 0;
-    while(!quit) {
-        // gera struct de registro e o marca como nao removido
-        registro reg;
-        reg.removido = 0;
-
+    while(1) {
         // le cada linha do csv e armazena em uma string
         char* entrada = malloc(100 * sizeof(char));
         if(fgets(entrada, 100, arq_csv) == NULL) {
@@ -52,17 +52,32 @@ void funcionalidade1() {
         reg.popularidade = atoi(strtok(NULL, ","));
         reg.nomeTecnologiaDestino = strtok(NULL, ",");
         reg.peso = atoi(strtok(NULL, ","));
+        
+        // salva o nome da tecnologia previa, para avaliacao do numero de tecnologias distintas (o csv providenciado esta ordenado nesse sentido)
+        if(cabecalho.nroParesTecnologias != 0) {
+            if(strcmp(tec_prev, reg.nomeTecnologiaDestino) != 0) {
+                cabecalho.nroTecnologias++;
+            }
+        }
+        strcpy(tec_prev, reg.nomeTecnologiaDestino);
 
         // preenche  o tamanho dos nomes armazenados
         reg.tamanhoTecnologiaOrigem = strlen(reg.nomeTecnologiaOrigem);
         reg.tamanhoTecnologiaDestino = strlen(reg.nomeTecnologiaDestino);
 
         // calcula tamanho do lixo e o cria
-        escrever_registros(arq_bin, reg);
+        escrever_registro(arq_bin, reg);
 
         // libera a entrada lida
         free(entrada);
+        cabecalho.nroParesTecnologias++;
+
     }
+    free(tec_prev);
+
+    // escreve registro de cabecalho atualizado
+    fseek(arq_bin, 0, SEEK_SET);
+    escrever_header(arq_bin, cabecalho);
 
     fclose(arq_csv);
     fclose(arq_bin);

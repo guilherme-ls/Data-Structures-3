@@ -2,11 +2,21 @@
 #include <stdlib.h>
 #include "registros.h"
 
+/**
+ * @brief calcula o tamanho do lixo ao final do registro
+ * @param reg registro cujo tamanho do lixo deve ser calculado
+ * @return tamanho do lixo
+ */
 int calcula_lixo(registro reg) {
     return (TAM_REG - (1 + 5*4 + reg.tamanhoTecnologiaOrigem + reg.tamanhoTecnologiaDestino));
 }
 
-void escrever_registros(FILE* arquivo, registro reg) {
+/**
+ * @brief escreve o registro fornecido na posicao corrente no arquivo dado
+ * @param arquivo arquivo onde sera escrito o registro
+ * @param reg registro a ser escrito no arquivo
+ */
+void escrever_registro(FILE* arquivo, registro reg) {
     // calcula tamanho do lixo e o cria
     int tam_lixo = calcula_lixo(reg);
     char* lixo = (char *)malloc(tam_lixo * sizeof(char));
@@ -28,6 +38,12 @@ void escrever_registros(FILE* arquivo, registro reg) {
     free(lixo);
 }
 
+/**
+ * @brief le um registro no arquivo fornecido a partir da posicao corrente e o armazena em reg
+ * @param arquivo arquivo a ser lido (binario)
+ * @param reg registro no qual sera armazenado o registro lido
+ * @return 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
+ */
 int ler_registro(FILE* arquivo, registro* reg) {
     // leitura do registro
     if(fread(&(reg->removido), sizeof(char), 1, arquivo) == 0) {
@@ -50,4 +66,17 @@ int ler_registro(FILE* arquivo, registro* reg) {
     
     // retorno com sucesso
     return 0;
+}
+
+/**
+ * @brief escreve o cabecalho fornecido na posicao corrente no arquivo dado (binario)
+ * @param arquivo arquivo no qual sera escrito o cabecalho
+ * @param cabecalho cabecalho a ser escrito no arquivo
+ */
+void escrever_header(FILE* arquivo, header cabecalho) {
+    // escreve os dados contidos no registro de cabecalho
+    fwrite(&cabecalho.status, sizeof(char), 1, arquivo);
+    fwrite(&cabecalho.proxRRN, sizeof(int), 1, arquivo);
+    fwrite(&cabecalho.nroTecnologias, sizeof(int), 1, arquivo);
+    fwrite(&cabecalho.nroParesTecnologias, sizeof(int), 1, arquivo);    
 }
