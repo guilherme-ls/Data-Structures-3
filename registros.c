@@ -18,8 +18,9 @@ int calcula_lixo(registro reg) {
  * @brief escreve o registro fornecido na posicao corrente no arquivo dado
  * @param arquivo arquivo onde sera escrito o registro
  * @param reg registro a ser escrito no arquivo
+ * @return 0 se o registro foi escrito sem erros, 1 se houveram erros
  */
-void escrever_registro(FILE* arquivo, registro reg) {
+int escrever_registro(FILE* arquivo, registro reg) {
     // calcula tamanho do lixo e o cria
     int tam_lixo = calcula_lixo(reg);
     char* lixo = (char *)malloc(tam_lixo * sizeof(char));
@@ -39,13 +40,19 @@ void escrever_registro(FILE* arquivo, registro reg) {
 
     // libera o lixo
     free(lixo);
+
+    // detecta erros na escrita do arquivo
+    if(ferror(arquivo)) {
+        return 1;
+    }
+    return 0;
 }
 
 /**
  * @brief le um registro no arquivo fornecido a partir da posicao corrente e o armazena em reg
  * @param arquivo arquivo a ser lido (binario)
  * @param reg struct de registro no qual sera armazenado o registro lido
- * @return 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
+ * @return 2, caso ocorram erros, 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
  */
 int ler_registro(FILE* arquivo, registro* reg) {
     // leitura do registro
@@ -77,6 +84,11 @@ int ler_registro(FILE* arquivo, registro* reg) {
     // calcula tamanho do lixo e o pula
     fseek(arquivo, calcula_lixo(*reg), SEEK_CUR);
     
+    // detecta erros na escrita do registro
+    if(ferror(arquivo)) {
+        return 2;
+    }
+
     // retorno com sucesso
     return 0;
 }
@@ -85,20 +97,27 @@ int ler_registro(FILE* arquivo, registro* reg) {
  * @brief escreve o cabecalho fornecido na posicao corrente no arquivo dado (binario)
  * @param arquivo arquivo no qual sera escrito o cabecalho
  * @param cabecalho cabecalho a ser escrito no arquivo
+ * @return 0 se o registro foi escrito sem erros, 1 se houveram erros
  */
-void escrever_header(FILE* arquivo, header cabecalho) {
+int escrever_header(FILE* arquivo, header cabecalho) {
     // escreve os dados contidos no registro de cabecalho
     fwrite(&cabecalho.status, sizeof(char), 1, arquivo);
     fwrite(&cabecalho.proxRRN, sizeof(int), 1, arquivo);
     fwrite(&cabecalho.nroTecnologias, sizeof(int), 1, arquivo);
     fwrite(&cabecalho.nroParesTecnologias, sizeof(int), 1, arquivo);
+
+    // detecta erros na escrita do arquivo
+    if(ferror(arquivo)) {
+        return 1;
+    }
+    return 0;
 }
 
 /**
  * @brief le o registro de cabecalho no arquivo fornecido a partir da posicao corrente e o armazena em cabecalho
  * @param arquivo arquivo a ser lido (binario)
  * @param cabecalho struct de cabecalho no qual sera armazenado o cabecalho lido
- * @return 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
+ * @return 2, caso ocorram erros, 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
  */
 int ler_header(FILE* arquivo, header* cabecalho) {
     // le os dados contidos no registro de cabecalho
@@ -108,6 +127,11 @@ int ler_header(FILE* arquivo, header* cabecalho) {
     fread(&cabecalho->proxRRN, sizeof(int), 1, arquivo);
     fread(&cabecalho->nroTecnologias, sizeof(int), 1, arquivo);
     fread(&cabecalho->nroParesTecnologias, sizeof(int), 1, arquivo);
+
+    // detecta erros na escrita do registro
+    if(ferror(arquivo)) {
+        return 2;
+    }
 
     return 0;
 }

@@ -30,8 +30,8 @@ typedef struct header header;
 typedef struct registro registro;
 
 // funcoes de manipulacao de registros
-void escrever_registro(FILE* arquivo, registro reg);
+int escrever_registro(FILE* arquivo, registro reg);
 int ler_registro(FILE* arquivo, registro* reg);
-void escrever_header(FILE* arquivo, header cabecalho);
+int escrever_header(FILE* arquivo, header cabecalho);
 int ler_header(FILE* arquivo, header* cabecalho);
 int calcula_byte_off(int RRN);

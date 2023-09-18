@@ -19,9 +19,17 @@ void funcionalidade1() {
 
     // abre arquivo de saida em modo de escrita
     FILE *arq_bin = fopen(nome_bin, "wb");
+    if(arq_bin == NULL) {
+        printf("Falha no processamento do arquivo.");
+        exit(EXIT_FAILURE);
+    }
 
     // abre arquivo de entrada em modo de leitura
     FILE *arq_csv = fopen(nome_csv, "r");
+    if(arq_csv == NULL) {
+        printf("Falha no processamento do arquivo.");
+        exit(EXIT_FAILURE);
+    }
 
     // pula o cabecalho do csv lido
     while(fgetc(arq_csv) != '\n');
@@ -36,10 +44,15 @@ void funcionalidade1() {
     // gera struct de registro e o marca como nao removido
     registro reg;
     reg.removido = 0;
-    
+
+    // checa se houveram erros na escrita do header
+    if(escrever_header(arq_bin, cabecalho) == 1) {
+        printf("Falha no processamento do arquivo.");
+        return;
+    }
+
     char* tec_prev = malloc(100 * sizeof(char));
 
-    escrever_header(arq_bin, cabecalho);
     // executa o loop ate chegar ao fim do arquivo
     while(1) {
         // le cada linha do csv e armazena em uma string
@@ -68,8 +81,11 @@ void funcionalidade1() {
         reg.tamanhoTecnologiaOrigem = strlen(reg.nomeTecnologiaOrigem);
         reg.tamanhoTecnologiaDestino = strlen(reg.nomeTecnologiaDestino);
 
-        // calcula tamanho do lixo e o cria
-        escrever_registro(arq_bin, reg);
+        // escreve o registro e checa erros
+        if(escrever_registro(arq_bin, reg) == 1) {
+            printf("Falha no processamento do arquivo.");
+            return;
+        }
 
         // libera a entrada lida
         free(entrada);
@@ -78,9 +94,12 @@ void funcionalidade1() {
     }
     free(tec_prev);
 
-    // escreve registro de cabecalho atualizado
+    // escreve registro de cabecalho atualizado e checa erros
     fseek(arq_bin, 0, SEEK_SET);
-    escrever_header(arq_bin, cabecalho);
+    if(escrever_header(arq_bin, cabecalho) == 1) {
+        printf("Falha no processamento do arquivo.");
+        return;
+    }
 
     fclose(arq_csv);
     fclose(arq_bin);
@@ -96,11 +115,20 @@ void funcionalidade2() {
 
     // abre o arquivo de entrada
     FILE* arq_bin = fopen(nome_bin, "rb");
+    if(arq_bin == NULL) {
+        printf("Falha no processamento do arquivo.");
+        exit(EXIT_FAILURE);
+    }
 
-    // le registro de cabecalho e vai ao primeiro RRN
+    // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
     header cabecalho;
-    if(ler_header(arq_bin, &cabecalho) == 1){
+    int saida = ler_header(arq_bin, &cabecalho);
+    if(saida == 1) {
         printf("Registro inexistente.");
+        return;
+    }
+    else if(saida == 2) {
+        printf("Falha no processamento do arquivo.");
         return;
     }
     fseek(arq_bin, calcula_byte_off(cabecalho.proxRRN), SEEK_SET);
@@ -110,10 +138,15 @@ void funcionalidade2() {
 
     // loop de leitura e escrita dos dados
     while(1) {
-        // funcao de leitura dos registros
-        if(ler_registro(arq_bin, &reg)) {
+        // funcao de leitura dos registros, retornando erros
+        int saida = ler_registro(arq_bin, &reg);
+        if(saida == 1) {
             // break com fim do arquivo
             break;
+        }
+        else if(saida == 2) {
+            printf("Falha no processamento do arquivo.");
+            return;
         }
 
         // checa se registros de texto sao nulos
