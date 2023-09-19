@@ -36,7 +36,7 @@ void funcionalidade1() {
 
     // cria registro de cabecalho
     header cabecalho;
-    cabecalho.status = 1;
+    cabecalho.status = 0;
     cabecalho.proxRRN = 0;
     cabecalho.nroTecnologias = 0;
     cabecalho.nroParesTecnologias = 0;
@@ -89,10 +89,15 @@ void funcionalidade1() {
 
         // libera a entrada lida
         free(entrada);
-        cabecalho.nroParesTecnologias++;
 
+        // atualiza informacoes do cabecalho
+        cabecalho.nroParesTecnologias++;
+        cabecalho.proxRRN++;
     }
     free(tec_prev);
+
+    // muda status do cabecalho com fim da escrita de dados
+    cabecalho.status = 1;
 
     // escreve registro de cabecalho atualizado e checa erros
     fseek(arq_bin, 0, SEEK_SET);
@@ -131,8 +136,7 @@ void funcionalidade2() {
         printf("Falha no processamento do arquivo.");
         return;
     }
-    fseek(arq_bin, calcula_byte_off(cabecalho.proxRRN), SEEK_SET);
-
+    
     // cria struct de registro a ser empregado nas leituras
     registro reg;
 
