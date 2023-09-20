@@ -1,7 +1,7 @@
 CC= gcc
 CFLAGS= -Wall -g -I.
 TARGET= main
-CFILES= main.c registros.c funcionalidades.c
+CFILES= main.c registros.c funcionalidades.c funcoesFornecidas.c
 
 all :
 	$(CC) $(CFLAGS) $(CFILES) -o $(TARGET)
@@ -9,8 +9,18 @@ all :
 run :
 	./$(TARGET)
 
-val :
+valin :
 	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < test.in
+
+valout :
+	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) > test.out
+
+# pode trocar os numeros para diferentes testes
+test :
+	for number in `seq 1 6` ; do \
+	./$(TARGET) < TestCases/$$number.in > TestCases/$$number.out2; \
+	diff -s TestCases/$$number.out TestCases/$$number.out2; \
+	done
 
 hex :
 	hexdump -Cv tec.bin
