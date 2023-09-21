@@ -6,6 +6,7 @@
 #include <string.h>
 #include "registros.h"
 #include "funcionalidades.h"
+#include "funcoesFornecidas.h"
 
 /**
  * @brief Executa a funcionalidade 1, lendo um dado arquivo csv e convertendo seus dados para registros em binario
@@ -20,42 +21,37 @@ void funcionalidade1() {
     // abre arquivo de saida em modo de escrita
     FILE *arq_bin = fopen(nome_bin, "wb");
     if(arq_bin == NULL) {
-        printf("Falha no processamento do arquivo.");
+        printf("Falha no processamento do arquivo.\n");
         exit(EXIT_FAILURE);
     }
 
     // abre arquivo de entrada em modo de leitura
     FILE *arq_csv = fopen(nome_csv, "r");
     if(arq_csv == NULL) {
-        printf("Falha no processamento do arquivo.");
+        printf("Falha no processamento do arquivo.\n");
         exit(EXIT_FAILURE);
     }
 
     // pula o cabecalho do csv lido
     while(fgetc(arq_csv) != '\n');
 
-    // cria registro de cabecalho
+    // cria registro de cabecalho e o inicializa com dados generalizados
     header cabecalho;
-    cabecalho.status = 1;
-    cabecalho.proxRRN = 0;
-    cabecalho.nroTecnologias = 0;
-    cabecalho.nroParesTecnologias = 0;
+    inicializa_cabecalho(&cabecalho);
 
-    // gera struct de registro e o marca como nao removido
+    // cria registro de dados e o inicializa com dados generalizados
     registro reg;
-    reg.removido = 0;
+    inicializa_registro(&reg);
 
-    // checa se houveram erros na escrita do header
-    if(escrever_header(arq_bin, cabecalho) == 1) {
-        printf("Falha no processamento do arquivo.");
-        return;
-    }
+    // escreve o header
+    escrever_header(arq_bin, cabecalho);
 
-    char* tec_prev = malloc(100 * sizeof(char));
+    // aloca string para armazenar tecnologia anterior e verificar repeticoes
+    char* tec_prev = malloc(50 * sizeof(char));
 
     // executa o loop ate chegar ao fim do arquivo
     while(1) {
-        // le cada linha do csv e armazena em uma string
+        // le cada linha do csv e armazena em uma string (sai do loop caso encontre EOF)
         char* entrada = malloc(100 * sizeof(char));
         if(fgets(entrada, 100, arq_csv) == NULL) {
             free(entrada);
@@ -64,10 +60,20 @@ void funcionalidade1() {
 
         // divide a string lida nos componentes do struct
         reg.nomeTecnologiaOrigem = strtok(entrada, ",");
-        reg.grupo = atoi(strtok(NULL, ","));
-        reg.popularidade = atoi(strtok(NULL, ","));
+
+        // no caso de campos campos inteiros, checa-se por NULL antes de converter a string
+        char* campo;
+
+        campo = strtok(NULL, ",");
+        reg.grupo = checa_int_nulo(campo);
+
+        campo = strtok(NULL, ",");
+        reg.popularidade = checa_int_nulo(campo);
+
         reg.nomeTecnologiaDestino = strtok(NULL, ",");
-        reg.peso = atoi(strtok(NULL, ","));
+        
+        campo = strtok(NULL, ",");
+        reg.peso = checa_int_nulo(campo);
         
         // salva o nome da tecnologia previa, para avaliacao do numero de tecnologias distintas (o csv providenciado esta ordenado nesse sentido)
         if(cabecalho.nroParesTecnologias != 0) {
@@ -81,28 +87,31 @@ void funcionalidade1() {
         reg.tamanhoTecnologiaOrigem = strlen(reg.nomeTecnologiaOrigem);
         reg.tamanhoTecnologiaDestino = strlen(reg.nomeTecnologiaDestino);
 
-        // escreve o registro e checa erros
-        if(escrever_registro(arq_bin, reg) == 1) {
-            printf("Falha no processamento do arquivo.");
-            return;
-        }
+        // escreve o registro
+        escrever_registro(arq_bin, reg);
 
         // libera a entrada lida
         free(entrada);
-        cabecalho.nroParesTecnologias++;
 
+        // atualiza informacoes do cabecalho
+        cabecalho.nroParesTecnologias++;
+        cabecalho.proxRRN++;
     }
     free(tec_prev);
 
-    // escreve registro de cabecalho atualizado e checa erros
-    fseek(arq_bin, 0, SEEK_SET);
-    if(escrever_header(arq_bin, cabecalho) == 1) {
-        printf("Falha no processamento do arquivo.");
-        return;
-    }
+    // muda status do cabecalho com fim da escrita de dados
+    cabecalho.status = 1;
 
+    // escreve registro de cabecalho atualizado
+    fseek(arq_bin, 0, SEEK_SET);
+    escrever_header(arq_bin, cabecalho);
+
+    // fecha arquivos de dados
     fclose(arq_csv);
     fclose(arq_bin);
+
+    // aplica a funcao binarioNaTela, como solicitado
+    binarioNaTela(nome_bin);
 }
 
 /**
@@ -116,55 +125,42 @@ void funcionalidade2() {
     // abre o arquivo de entrada
     FILE* arq_bin = fopen(nome_bin, "rb");
     if(arq_bin == NULL) {
-        printf("Falha no processamento do arquivo.");
+        printf("Falha no processamento do arquivo.\n");
         exit(EXIT_FAILURE);
     }
 
     // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
     header cabecalho;
-    int saida = ler_header(arq_bin, &cabecalho);
-    if(saida == 1) {
+    int erro = ler_header(arq_bin, &cabecalho);
+    if(erro) {
         printf("Registro inexistente.");
         return;
     }
-    else if(saida == 2) {
-        printf("Falha no processamento do arquivo.");
-        return;
-    }
-    fseek(arq_bin, calcula_byte_off(cabecalho.proxRRN), SEEK_SET);
-
+    
     // cria struct de registro a ser empregado nas leituras
     registro reg;
 
     // loop de leitura e escrita dos dados
     while(1) {
-        // funcao de leitura dos registros, retornando erros
-        int saida = ler_registro(arq_bin, &reg);
-        if(saida == 1) {
+        // funcao de leitura dos registros, retornando quando encontra EOF
+        int end = ler_registro(arq_bin, &reg);
+        if(end) {
             // break com fim do arquivo
             break;
         }
-        else if(saida == 2) {
-            printf("Falha no processamento do arquivo.");
-            return;
-        }
 
-        // checa se registros de texto sao nulos
-        if(reg.tamanhoTecnologiaOrigem == 1) {
-            free(reg.nomeTecnologiaOrigem);
-            reg.nomeTecnologiaOrigem = malloc(5 * sizeof(char));
-            strcpy(reg.nomeTecnologiaOrigem, "NULO");
+        // checa se registros de texto sao nulos e os substitui caso sim
+        if(reg.tamanhoTecnologiaOrigem == 0) {
         }
-        if(reg.tamanhoTecnologiaDestino == 1) {
+        if(reg.tamanhoTecnologiaDestino == 0) {
             free(reg.nomeTecnologiaDestino);
             reg.nomeTecnologiaDestino = malloc(5 * sizeof(char));
             strcpy(reg.nomeTecnologiaDestino, "NULO");
         }
 
-
         // imprime os dados contidos no registro lido, caso nao removido
-        if(reg.removido != 1)
-            printf("%s, %d, %d, %s, %d\n", reg.nomeTecnologiaOrigem, reg.grupo, reg.popularidade, reg.nomeTecnologiaDestino, reg.peso);
+        if(reg.removido != '1')
+            imprime_registro(reg);
 
         // libera as strings alocadas
         free(reg.nomeTecnologiaOrigem);
@@ -258,13 +254,13 @@ void funcionalidade3(){
                 free(reg.nomeTecnologiaDestino);
             }
 
-            contRNN++; // Acresce para busca no proximo registro.
+            contRRN++; // Acresce para busca no proximo registro.
         }
     }
 }    char nomeCampo[30]; // nome do campo a ser buscado
 
 
-funcionalidade4(){
+void funcionalidade4(){
     char nome_bin[30]; // Nome do arquivo binario
     int RRNbuscado; // Quantidade de busca;
 
@@ -303,7 +299,7 @@ funcionalidade4(){
     if(reg.removido != 1)
         printf("%s, %d, %d, %s, %d\n", reg.nomeTecnologiaOrigem, reg.grupo, reg.popularidade, reg.nomeTecnologiaDestino, reg.peso);
     else{
-        printf("Registro inexistente.\n")
+        printf("Registro inexistente.\n");
     }
 
     // libera as strings alocadas
@@ -312,3 +308,14 @@ funcionalidade4(){
 
 }
 
+/**
+ * @brief checa se um campo inteiro lido como string eh nulo, retornando -1 caso seja, ou seu valor convertido, caso nao
+ * @param campo string correspondente ao campo que deve ser checado
+ * @return valor do campo ou -1
+ */
+int checa_int_nulo(char* campo) {
+    if(campo != NULL) {
+        return atoi(campo);
+    }
+    return -1;
+}
