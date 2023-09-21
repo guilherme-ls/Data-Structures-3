@@ -169,7 +169,7 @@ void funcionalidade2() {
 void funcionalidade3(){
     char nome_bin[30]; // Nome do arquivo binario
     char nomeCampo[30]; // nome do campo a ser buscado
-    char* valorCampoBuscado = malloc(80 *sizeof(char)); // valor do campo a ser buscado
+    char* temp = malloc(80 *sizeof(char)); // valor temporario do campo a ser buscado
     int n; // Quantidade de busca;
 
     // Recebe o nome do arquivo de entrada e a quantidade de valores para buscar
@@ -185,9 +185,10 @@ void funcionalidade3(){
     for(int i = 0; i < n; i++){
         
         // Recebo o nome e valor do campo a serem buscados
-        scanf("%s \"%s", nomeCampo, valorCampoBuscado);
-        valorCampoBuscado = strtok(valorCampoBuscado, "\"");
-
+        scanf("%s \"%s", nomeCampo, temp);
+        char* valorCampoBuscado;
+        valorCampoBuscado = strtok(temp, "\"");
+        
         
         // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
         header cabecalho;
@@ -199,24 +200,32 @@ void funcionalidade3(){
 
         // variaveis de apoio
         registro reg; // registro a ser devolvido
-        char valorCampoAtual[80]; // valor do campo sendo lido no momento
+        char* valorCampoAtual = malloc(sizeof(char) * 80); // valor do campo sendo lido no momento
         int contRRN = 0; // valor do RRN do registro a ser lido
-
+        int contBuscado = 0; // Quantidade de registros que satisfazem busca
         while(1){
             fseek(arq_bin, calcula_byte_off(contRRN), SEEK_SET);
-            int saida = ler_campo(arq_bin, valorCampoAtual, nomeCampo);
+            int saida = ler_campo(arq_bin, &valorCampoAtual, nomeCampo);
             if(saida == 1) {
                 // break com fim do arquivo
                 break;
             }
             else if(saida == 2) {
                 printf("Falha no processamento do arquivo.");
+                free(valorCampoBuscado);
                 return;
             }
-
+            
             // verifica se o registro atual satisfaz a busca
-            if(strcmp(valorCampoBuscado, valorCampoAtual)){ 
-                ler_registro(arq_bin, &reg); // lê registro atual 
+            if(strcmp(valorCampoBuscado, valorCampoAtual) == 0){
+                contBuscado++;
+                fseek(arq_bin, calcula_byte_off(contRRN), SEEK_SET);
+                int end = ler_registro(arq_bin, &reg); // lê registro atual 
+                if(end) {
+                    // break com fim do arquivo
+                    break;
+                }
+
 
                 // imprime os dados contidos no registro lido, caso nao removido
                 if(reg.removido != 1)
@@ -229,9 +238,17 @@ void funcionalidade3(){
             // Acresce para busca no proximo registro.
             contRRN++;
         }
+        if(contBuscado == 0){
+            printf("Registro inexistente.\n");
+        }
+        free(valorCampoAtual);
+        if(i < n-1){
+            fseek(arq_bin, TAM_HEADER, SEEK_SET);
+        }
     }
-}    char nomeCampo[30]; // nome do campo a ser buscado
-
+    free(temp);
+    fclose(arq_bin); // Fechar arquivo
+}   
 
 void funcionalidade4(){
     char nome_bin[30]; // Nome do arquivo binario
@@ -255,7 +272,14 @@ void funcionalidade4(){
     registro reg;
 
     // lê registro atual
-    ler_registro(arq_bin, &reg);
+    int end = ler_registro(arq_bin, &reg);
+    if(end){
+        printf("Registro inexistente.\n");
+        fclose(arq_bin);
+
+        // break com fim do arquivo
+        return;
+    }
 
     // imprime os dados contidos no registro lido, caso nao removido
     if(reg.removido != 1)
@@ -267,6 +291,7 @@ void funcionalidade4(){
     // libera as strings alocadas
     free(reg.nomeTecnologiaOrigem);
     free(reg.nomeTecnologiaDestino);
+    fclose(arq_bin);
 }
 
 /**
