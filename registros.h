@@ -32,6 +32,7 @@ typedef struct registro registro;
 // funcoes de manipulacao de registros
 int escrever_registro(FILE* arquivo, registro reg);
 int ler_registro(FILE* arquivo, registro* reg);
+int ler_campo(FILE* arquivo, char* valCampo, char* nomeCampo);
 int escrever_header(FILE* arquivo, header cabecalho);
 int ler_header(FILE* arquivo, header* cabecalho);
 int calcula_byte_off(int RRN);
