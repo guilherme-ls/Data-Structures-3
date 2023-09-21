@@ -21,16 +21,14 @@ int main() {
             funcionalidade2();
             break;
         case 3:
-
+            funcionalidade3();
             break;
         case 4:
+            funcionalidade4();
             break;
         default:
-            printf("comando nao encontrado\n");
+            printf("comando nao encontrado.\n");
     }
-
-
-
 
     return 0;
 }

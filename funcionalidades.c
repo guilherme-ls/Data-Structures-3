@@ -149,15 +149,6 @@ void funcionalidade2() {
             break;
         }
 
-        // checa se registros de texto sao nulos e os substitui caso sim
-        if(reg.tamanhoTecnologiaOrigem == 0) {
-        }
-        if(reg.tamanhoTecnologiaDestino == 0) {
-            free(reg.nomeTecnologiaDestino);
-            reg.nomeTecnologiaDestino = malloc(5 * sizeof(char));
-            strcpy(reg.nomeTecnologiaDestino, "NULO");
-        }
-
         // imprime os dados contidos no registro lido, caso nao removido
         if(reg.removido != '1')
             imprime_registro(reg);
@@ -202,20 +193,15 @@ void funcionalidade3(){
         header cabecalho;
         int saida = ler_header(arq_bin, &cabecalho);
         if(saida == 1) {
-            printf("Registro inexistente.");
+            printf("Registro inexistente.\n");
             return;
         }
-        else if(saida == 2) {
-            printf("Falha no processamento do arquivo.");
-            return;
-        }
-        
 
         // variaveis de apoio
         registro reg; // registro a ser devolvido
         char valorCampoAtual[80]; // valor do campo sendo lido no momento
         int contRRN = 0; // valor do RRN do registro a ser lido
-        int contArquivosEncontrados = 0; // quantidade de arquivos que satisfazem busca
+
         while(1){
             fseek(arq_bin, calcula_byte_off(contRRN), SEEK_SET);
             int saida = ler_campo(arq_bin, valorCampoAtual, nomeCampo);
@@ -231,30 +217,17 @@ void funcionalidade3(){
             // verifica se o registro atual satisfaz a busca
             if(strcmp(valorCampoBuscado, valorCampoAtual)){ 
                 ler_registro(arq_bin, &reg); // lê registro atual 
-                
-                // checa se registros de texto sao nulos
-                if(reg.tamanhoTecnologiaOrigem == 1) {
-                    free(reg.nomeTecnologiaOrigem);
-                    reg.nomeTecnologiaOrigem = malloc(5 * sizeof(char));
-                    strcpy(reg.nomeTecnologiaOrigem, "NULO");
-                }
-                if(reg.tamanhoTecnologiaDestino == 1) {
-                    free(reg.nomeTecnologiaDestino);
-                    reg.nomeTecnologiaDestino = malloc(5 * sizeof(char));
-                    strcpy(reg.nomeTecnologiaDestino, "NULO");
-                }
-
 
                 // imprime os dados contidos no registro lido, caso nao removido
                 if(reg.removido != 1)
-                    printf("%s, %d, %d, %s, %d\n", reg.nomeTecnologiaOrigem, reg.grupo, reg.popularidade, reg.nomeTecnologiaDestino, reg.peso);
+                    imprime_registro(reg);
 
                 // libera as strings alocadas
                 free(reg.nomeTecnologiaOrigem);
                 free(reg.nomeTecnologiaDestino);
             }
-
-            contRRN++; // Acresce para busca no proximo registro.
+            // Acresce para busca no proximo registro.
+            contRRN++;
         }
     }
 }    char nomeCampo[30]; // nome do campo a ser buscado
@@ -275,37 +248,25 @@ void funcionalidade4(){
         exit(EXIT_FAILURE);
     }
 
+    // Busca registro no RRN especificado
     fseek(arq_bin, calcula_byte_off(RRNbuscado), SEEK_SET);
 
     // cria struct de registro a ser empregado nas leituras
     registro reg;
 
-    ler_registro(arq_bin, &reg); // lê registro atual 
-                
-    // checa se registros de texto sao nulos
-    if(reg.tamanhoTecnologiaOrigem == 1) {
-        free(reg.nomeTecnologiaOrigem);
-        reg.nomeTecnologiaOrigem = malloc(5 * sizeof(char));
-        strcpy(reg.nomeTecnologiaOrigem, "NULO");
-    }
-    if(reg.tamanhoTecnologiaDestino == 1) {
-        free(reg.nomeTecnologiaDestino);
-        reg.nomeTecnologiaDestino = malloc(5 * sizeof(char));
-        strcpy(reg.nomeTecnologiaDestino, "NULO");
-    }
-
+    // lê registro atual
+    ler_registro(arq_bin, &reg);
 
     // imprime os dados contidos no registro lido, caso nao removido
     if(reg.removido != 1)
-        printf("%s, %d, %d, %s, %d\n", reg.nomeTecnologiaOrigem, reg.grupo, reg.popularidade, reg.nomeTecnologiaDestino, reg.peso);
-    else{
+        imprime_registro(reg);
+    else {
         printf("Registro inexistente.\n");
     }
 
     // libera as strings alocadas
     free(reg.nomeTecnologiaOrigem);
     free(reg.nomeTecnologiaDestino);
-
 }
 
 /**

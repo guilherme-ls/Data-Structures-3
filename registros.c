@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "registros.h"
 
 /**
@@ -86,7 +87,7 @@ int ler_registro(FILE* arquivo, registro* reg) {
  * @brief le um campo especifico do registro atual no arquivo fornecido a partir da posicao corrente e o armazena em valCampo
  * @param arquivo arquivo a ser lido (binario)
  * @param valCampo char* (string) no qual sera armazenado o valor do campo lido
- * @return 2, caso ocorram erros, 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
+ * @return 2, caso o nome do campo seja invalido, 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
  */
 int ler_campo(FILE* arquivo, char* valCampo, char* nomeCampo) {
     char removido = '1'; // variavel para armazenar status de remoção do registro, com o intuito de identificar fim do arquivo.
@@ -102,15 +103,15 @@ int ler_campo(FILE* arquivo, char* valCampo, char* nomeCampo) {
     // Posiciona cabeça leitora no inicio do campo para leitura e extrai valor do campo de acordo com o nome do campo dado.
     if(strcmp(nomeCampo, "grupo") == 0){
         fread(&temp, sizeof(int), 1, arquivo);
-        snprintf(valCampo, sizeof(valCampo), "%d", temp);
+        snprintf(valCampo, strlen(valCampo), "%d", temp);
     }else if(strcmp(nomeCampo, "popularidade") == 0){
         fseek(arquivo, 4, SEEK_CUR);
         fread(&temp, sizeof(int), 1, arquivo);
-        snprintf(valCampo, sizeof(valCampo), "%d", temp);
+        snprintf(valCampo, strlen(valCampo), "%d", temp);
     }else if(strcmp(nomeCampo, "peso") == 0){
         fseek(arquivo, 8, SEEK_CUR);
         fread(&temp, sizeof(int), 1, arquivo);
-        snprintf(valCampo, sizeof(valCampo), "%d", temp);
+        snprintf(valCampo, strlen(valCampo), "%d", temp);
     }else if(strcmp(nomeCampo, "nomeTecnologiaOrigem") == 0){
         fseek(arquivo, 12, SEEK_CUR);
         fread(&tamanho, sizeof(int), 1, arquivo);
@@ -122,11 +123,6 @@ int ler_campo(FILE* arquivo, char* valCampo, char* nomeCampo) {
         fread(&tamanho, sizeof(int), 1, arquivo);
         fread(valCampo, sizeof(char), tamanho, arquivo);
     }else{
-        return 2;
-    }
-    
-    // detecta erros na leitura do registro
-    if(ferror(arquivo)) {
         return 2;
     }
 
