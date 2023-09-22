@@ -193,7 +193,7 @@ void inicializa_registro(registro* reg) {
  * @param cabecalho ponteiro para o registro de cabecalho a ser inicializado
  */
 void inicializa_cabecalho(header* cabecalho) {
-    cabecalho->status = 0;
+    cabecalho->status = '0';
     cabecalho->proxRRN = 0;
     cabecalho->nroTecnologias = 0;
     cabecalho->nroParesTecnologias = 0;

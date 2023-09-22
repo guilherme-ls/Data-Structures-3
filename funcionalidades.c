@@ -48,6 +48,7 @@ void funcionalidade1() {
 
     // aloca string para armazenar tecnologia anterior e verificar repeticoes
     char* tec_prev = malloc(50 * sizeof(char));
+    *tec_prev = '\0';
 
     // executa o loop ate chegar ao fim do arquivo
     while(1) {
@@ -59,33 +60,15 @@ void funcionalidade1() {
         }
 
         // divide a string lida nos componentes do struct
-        reg.nomeTecnologiaOrigem = strtok(entrada, ",");
-
-        // no caso de campos campos inteiros, checa-se por NULL antes de converter a string
-        char* campo;
-
-        campo = strtok(NULL, ",");
-        reg.grupo = checa_int_nulo(campo);
-
-        campo = strtok(NULL, ",");
-        reg.popularidade = checa_int_nulo(campo);
-
-        reg.nomeTecnologiaDestino = strtok(NULL, ",");
-        
-        campo = strtok(NULL, ",");
-        reg.peso = checa_int_nulo(campo);
+        divide_string(&reg, entrada);
         
         // salva o nome da tecnologia previa, para avaliacao do numero de tecnologias distintas (o csv providenciado esta ordenado nesse sentido)
-        if(cabecalho.nroParesTecnologias != 0) {
+        if(reg.tamanhoTecnologiaDestino != 0) {
             if(strcmp(tec_prev, reg.nomeTecnologiaDestino) != 0) {
                 cabecalho.nroTecnologias++;
+                strcpy(tec_prev, reg.nomeTecnologiaDestino);
             }
         }
-        strcpy(tec_prev, reg.nomeTecnologiaDestino);
-
-        // preenche  o tamanho dos nomes armazenados
-        reg.tamanhoTecnologiaOrigem = strlen(reg.nomeTecnologiaOrigem);
-        reg.tamanhoTecnologiaDestino = strlen(reg.nomeTecnologiaDestino);
 
         // escreve o registro
         escrever_registro(arq_bin, reg);
@@ -100,7 +83,7 @@ void funcionalidade1() {
     free(tec_prev);
 
     // muda status do cabecalho com fim da escrita de dados
-    cabecalho.status = 1;
+    cabecalho.status = '1';
 
     // escreve registro de cabecalho atualizado
     fseek(arq_bin, 0, SEEK_SET);
@@ -301,7 +284,34 @@ void funcionalidade4(){
  */
 int checa_int_nulo(char* campo) {
     if(campo != NULL) {
-        return atoi(campo);
+        if(*campo != '\0')
+            return atoi(campo);
     }
     return -1;
+}
+
+/**
+ * @brief divide a string fornecida nos campos do registro e os armazeno em reg
+ * @param reg registro no qual os campo serao armazenados
+ * @param entrada string a ser dividida em campos
+ */
+void divide_string(registro* reg, char* entrada) {
+    char* campo = entrada;
+
+    // no caso de campos campos inteiros, checa-se por NULL antes de converter a string
+    reg->nomeTecnologiaOrigem = strsep(&campo, ",");
+
+    reg->grupo = checa_int_nulo(strsep(&campo, ","));
+
+    reg->popularidade = checa_int_nulo(strsep(&campo, ","));
+
+    reg->nomeTecnologiaDestino = strsep(&campo, ",");
+    
+    reg->peso = checa_int_nulo(strsep(&campo, ","));
+
+    // preenche  o tamanho dos nomes armazenados
+    if(reg->nomeTecnologiaOrigem != NULL)
+        reg->tamanhoTecnologiaOrigem = strlen(reg->nomeTecnologiaOrigem);
+    if(reg->nomeTecnologiaDestino != NULL)
+        reg->tamanhoTecnologiaDestino = strlen(reg->nomeTecnologiaDestino);
 }

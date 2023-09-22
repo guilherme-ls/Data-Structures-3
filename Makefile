@@ -10,7 +10,7 @@ run :
 	./$(TARGET)
 
 valin :
-	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < test.in
+	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < TestCases/2.in > TestCases/2.out2
 
 valout :
 	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) > test.out
@@ -24,3 +24,6 @@ test :
 
 hex :
 	hexdump -Cv tec.bin
+
+dif :
+	diff -s TestCases/5.out TestCases/5.out2

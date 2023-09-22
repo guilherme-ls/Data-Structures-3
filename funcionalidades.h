@@ -8,4 +8,5 @@ void funcionalidade3();
 void funcionalidade4();
 
 // funcoes diversas para uso interno
+void divide_string(registro* reg, char* entrada);
 int checa_int_nulo(char* campo);
