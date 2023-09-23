@@ -54,8 +54,7 @@ void funcionalidade1() {
     while(1) {
         // le cada linha do csv e armazena em uma string (sai do loop caso encontre EOF)
         char* entrada = malloc(100 * sizeof(char));
-        if(fgets(entrada, 100, arq_csv) == NULL) {
-            free(entrada);
+        if(le_entrada(entrada, arq_csv)){
             break;
         }
 
@@ -314,4 +313,28 @@ void divide_string(registro* reg, char* entrada) {
         reg->tamanhoTecnologiaOrigem = strlen(reg->nomeTecnologiaOrigem);
     if(reg->nomeTecnologiaDestino != NULL)
         reg->tamanhoTecnologiaDestino = strlen(reg->nomeTecnologiaDestino);
+}
+
+
+/**
+ * @brief le uma linha do arquivo especificado e armazena na string fornecida
+ * @param entrada string onde sera armazenada a linha lida
+ * @param arq_csv arquivo a ser lido 
+ * @return 1 caso EOF, 0 caso executado com sucesso
+ */
+int le_entrada(char* entrada, FILE* arq_csv) {
+    if(fgets(entrada, 100, arq_csv) == NULL) {
+        free(entrada);
+        return 1;
+    }
+
+    // remove caracteres '\n' e '\r'
+    int size = strlen(entrada);
+    for(int i = 0; i < size; i++) {
+        if(entrada[i] == '\n' || entrada[i] == '\r') {
+            entrada[i] = '\0';
+        }
+    }
+
+    return 0;
 }
