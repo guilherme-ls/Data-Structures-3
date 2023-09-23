@@ -6,6 +6,7 @@
 #include <string.h>
 #include "registros.h"
 #include "funcionalidades.h"
+#include "funcoesAuxiliares.h"
 #include "funcoesFornecidas.h"
 
 /**
@@ -62,10 +63,10 @@ void funcionalidade1() {
         divide_string(&reg, entrada);
         
         // salva o nome da tecnologia previa, para avaliacao do numero de tecnologias distintas (o csv providenciado esta ordenado nesse sentido)
-        if(reg.tamanhoTecnologiaDestino != 0) {
-            if(strcmp(tec_prev, reg.nomeTecnologiaDestino) != 0) {
+        if(reg.tecnologiaDestino.tamanho != 0) {
+            if(strcmp(tec_prev, reg.tecnologiaDestino.nome) != 0) {
                 cabecalho.nroTecnologias++;
-                strcpy(tec_prev, reg.nomeTecnologiaDestino);
+                strcpy(tec_prev, reg.tecnologiaDestino.nome);
             }
         }
 
@@ -136,8 +137,8 @@ void funcionalidade2() {
             imprime_registro(reg);
 
         // libera as strings alocadas
-        free(reg.nomeTecnologiaOrigem);
-        free(reg.nomeTecnologiaDestino);
+        free(reg.tecnologiaOrigem.nome);
+        free(reg.tecnologiaDestino.nome);
     }
     // fecha arquivo de dados
     fclose(arq_bin);
@@ -214,8 +215,8 @@ void funcionalidade3(){
                     imprime_registro(reg);
 
                 // libera as strings alocadas
-                free(reg.nomeTecnologiaOrigem);
-                free(reg.nomeTecnologiaDestino);
+                free(reg.tecnologiaOrigem.nome);
+                free(reg.tecnologiaDestino.nome);
             }
             // Acresce para busca no proximo registro.
             contRRN++;
@@ -271,70 +272,7 @@ void funcionalidade4(){
     }
 
     // libera as strings alocadas
-    free(reg.nomeTecnologiaOrigem);
-    free(reg.nomeTecnologiaDestino);
+    free(reg.tecnologiaOrigem.nome);
+    free(reg.tecnologiaDestino.nome);
     fclose(arq_bin);
-}
-
-/**
- * @brief checa se um campo inteiro lido como string eh nulo, retornando -1 caso seja, ou seu valor convertido, caso nao
- * @param campo string correspondente ao campo que deve ser checado
- * @return valor do campo ou -1
- */
-int checa_int_nulo(char* campo) {
-    if(campo != NULL) {
-        if(*campo != '\0')
-            return atoi(campo);
-    }
-    return -1;
-}
-
-/**
- * @brief divide a string fornecida nos campos do registro e os armazeno em reg
- * @param reg registro no qual os campo serao armazenados
- * @param entrada string a ser dividida em campos
- */
-void divide_string(registro* reg, char* entrada) {
-    char* campo = entrada;
-
-    // no caso de campos campos inteiros, checa-se por NULL antes de converter a string
-    reg->nomeTecnologiaOrigem = strsep(&campo, ",");
-
-    reg->grupo = checa_int_nulo(strsep(&campo, ","));
-
-    reg->popularidade = checa_int_nulo(strsep(&campo, ","));
-
-    reg->nomeTecnologiaDestino = strsep(&campo, ",");
-    
-    reg->peso = checa_int_nulo(strsep(&campo, ","));
-
-    // preenche  o tamanho dos nomes armazenados
-    if(reg->nomeTecnologiaOrigem != NULL)
-        reg->tamanhoTecnologiaOrigem = strlen(reg->nomeTecnologiaOrigem);
-    if(reg->nomeTecnologiaDestino != NULL)
-        reg->tamanhoTecnologiaDestino = strlen(reg->nomeTecnologiaDestino);
-}
-
-
-/**
- * @brief le uma linha do arquivo especificado e armazena na string fornecida
- * @param entrada string onde sera armazenada a linha lida
- * @param arq_csv arquivo a ser lido 
- * @return 1 caso EOF, 0 caso executado com sucesso
- */
-int le_entrada(char* entrada, FILE* arq_csv) {
-    if(fgets(entrada, 100, arq_csv) == NULL) {
-        free(entrada);
-        return 1;
-    }
-
-    // remove caracteres '\n' e '\r'
-    int size = strlen(entrada);
-    for(int i = 0; i < size; i++) {
-        if(entrada[i] == '\n' || entrada[i] == '\r') {
-            entrada[i] = '\0';
-        }
-    }
-
-    return 0;
 }

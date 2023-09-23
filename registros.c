@@ -12,7 +12,7 @@
  * @return tamanho do lixo
  */
 int calcula_lixo(registro reg) {
-    return (TAM_REG - (TAM_REG_STATIC + reg.tamanhoTecnologiaOrigem + reg.tamanhoTecnologiaDestino));
+    return (TAM_REG - (TAM_REG_STATIC + reg.tecnologiaOrigem.tamanho + reg.tecnologiaDestino.tamanho));
 }
 
 /**
@@ -25,17 +25,17 @@ void escrever_registro(FILE* arquivo, registro reg) {
     int tam_lixo = calcula_lixo(reg);
     char* lixo = (char *)malloc(tam_lixo * sizeof(char));
     for(int i = 0; i < tam_lixo; i++)
-        lixo[i] = '$';
+        lixo[i] = LIXO;
 
     // escrita do registro no binário
     fwrite(&reg.removido, sizeof(char), 1, arquivo);
     fwrite(&reg.grupo, sizeof(int), 1, arquivo);
     fwrite(&reg.popularidade, sizeof(int), 1, arquivo);
     fwrite(&reg.peso, sizeof(int), 1, arquivo);
-    fwrite(&reg.tamanhoTecnologiaOrigem, sizeof(int), 1, arquivo);
-    fwrite(reg.nomeTecnologiaOrigem, sizeof(char), reg.tamanhoTecnologiaOrigem, arquivo);
-    fwrite(&reg.tamanhoTecnologiaDestino, sizeof(int), 1, arquivo);
-    fwrite(reg.nomeTecnologiaDestino, sizeof(char), reg.tamanhoTecnologiaDestino, arquivo);
+    fwrite(&reg.tecnologiaOrigem.tamanho, sizeof(int), 1, arquivo);
+    fwrite(reg.tecnologiaOrigem.nome, sizeof(char), reg.tecnologiaOrigem.tamanho, arquivo);
+    fwrite(&reg.tecnologiaDestino.tamanho, sizeof(int), 1, arquivo);
+    fwrite(reg.tecnologiaDestino.nome, sizeof(char), reg.tecnologiaDestino.tamanho, arquivo);
     fwrite(lixo, sizeof(char), tam_lixo, arquivo);
 
     // libera o lixo
@@ -60,20 +60,20 @@ int ler_registro(FILE* arquivo, registro* reg) {
     fread(&(reg->peso), sizeof(int), 1, arquivo);
 
     // leitura do tamanho do registro de texto inicial e alocacao da string necessaria
-    fread(&(reg->tamanhoTecnologiaOrigem), sizeof(int), 1, arquivo);
-    reg->nomeTecnologiaOrigem = malloc((reg->tamanhoTecnologiaOrigem + 1) * sizeof(char));
+    fread(&(reg->tecnologiaOrigem.tamanho), sizeof(int), 1, arquivo);
+    reg->tecnologiaOrigem.nome = malloc((reg->tecnologiaOrigem.tamanho + 1) * sizeof(char));
 
     // leitura da string e preenchimento do terminador nulo
-    fread(reg->nomeTecnologiaOrigem, sizeof(char), reg->tamanhoTecnologiaOrigem, arquivo);
-    reg->nomeTecnologiaOrigem[reg->tamanhoTecnologiaOrigem] = '\0';
+    fread(reg->tecnologiaOrigem.nome, sizeof(char), reg->tecnologiaOrigem.tamanho, arquivo);
+    reg->tecnologiaOrigem.nome[reg->tecnologiaOrigem.tamanho] = '\0';
 
     // leitura do tamanho do segundo registro de texto e alocacao da string necessaria
-    fread(&(reg->tamanhoTecnologiaDestino), sizeof(int), 1, arquivo);
-    reg->nomeTecnologiaDestino = malloc((reg->tamanhoTecnologiaDestino + 1) * sizeof(char));
+    fread(&(reg->tecnologiaDestino.tamanho), sizeof(int), 1, arquivo);
+    reg->tecnologiaDestino.nome = malloc((reg->tecnologiaDestino.tamanho + 1) * sizeof(char));
 
     // leitura da string e preenchimento do terminador nulo
-    fread(reg->nomeTecnologiaDestino, sizeof(char), reg->tamanhoTecnologiaDestino, arquivo);
-    reg->nomeTecnologiaDestino[reg->tamanhoTecnologiaDestino] = '\0';
+    fread(reg->tecnologiaDestino.nome, sizeof(char), reg->tecnologiaDestino.tamanho, arquivo);
+    reg->tecnologiaDestino.nome[reg->tecnologiaDestino.tamanho] = '\0';
 
     // calcula tamanho do lixo e o pula
     fseek(arquivo, calcula_lixo(*reg), SEEK_CUR);
@@ -112,12 +112,12 @@ int ler_campo(FILE* arquivo, char** valCampo, char* nomeCampo) {
         fseek(arquivo, 8, SEEK_CUR);
         fread(&temp, sizeof(int), 1, arquivo);
         snprintf(*valCampo, sizeof(char) * 80, "%d", temp);
-    }else if(strcmp(nomeCampo, "nomeTecnologiaOrigem") == 0){
+    }else if(strcmp(nomeCampo, "tecnologiaOrigem.nome") == 0){
         fseek(arquivo, 12, SEEK_CUR);
         fread(&tamanho, sizeof(int), 1, arquivo);
         fread(*valCampo, sizeof(char), tamanho, arquivo);
         (*valCampo)[tamanho] = '\0';
-    }else if(strcmp(nomeCampo, "nomeTecnologiaDestino") == 0){
+    }else if(strcmp(nomeCampo, "tecnologiaDestino.nome") == 0){
         fseek(arquivo, 12, SEEK_CUR);
         fread(&tamanho, sizeof(int), 1, arquivo);
         fseek(arquivo, tamanho, SEEK_CUR);
@@ -182,10 +182,10 @@ void inicializa_registro(registro* reg) {
     reg->grupo = -1;
     reg->popularidade = -1;
     reg->peso = -1;
-    reg->tamanhoTecnologiaOrigem = 0;
-    reg->nomeTecnologiaOrigem = NULL;
-    reg->tamanhoTecnologiaDestino = 0;
-    reg->nomeTecnologiaDestino = NULL;
+    reg->tecnologiaOrigem.tamanho = 0;
+    reg->tecnologiaOrigem.nome = NULL;
+    reg->tecnologiaDestino.tamanho = 0;
+    reg->tecnologiaDestino.nome = NULL;
 }
 
 /**
@@ -205,14 +205,14 @@ void inicializa_cabecalho(header* cabecalho) {
  */
 void imprime_registro(registro reg) {
     // printa primeiro campo de texto, caso exista, ou NULO, caso nao
-    imprime_campo_texto(reg.nomeTecnologiaOrigem, reg.tamanhoTecnologiaOrigem, ", ");
+    imprime_campo_texto(reg.tecnologiaOrigem, ", ");
 
     // printa campos numericos, caso positivos, ou NULO, caso -1
     imprime_campo_numerico(reg.grupo, ", ");
     imprime_campo_numerico(reg.popularidade, ", ");
 
     // printa segundo campo de texto, conforme especificacoes ja destacadas
-    imprime_campo_texto(reg.nomeTecnologiaDestino, reg.tamanhoTecnologiaDestino, ", ");
+    imprime_campo_texto(reg.tecnologiaDestino, ", ");
 
     // printa ultimo campo numerico, conforme especificacoes ja destacadas
     imprime_campo_numerico(reg.peso, "\n");
@@ -224,12 +224,12 @@ void imprime_registro(registro reg) {
  * @param tam tamanho do texto a ser printado
  * @param fim string a ser inserida apos o campo impresso (para separacao)
  */
-void imprime_campo_texto(char* texto, int tam, char* fim) {
-    if(tam == 0) {
+void imprime_campo_texto(string texto, char* fim) {
+    if(texto.tamanho == 0) {
         printf("NULO");
     }
     else {
-        printf("%s", texto);
+        printf("%s", texto.nome);
     }
     printf("%s", fim);
 }

@@ -1,7 +1,7 @@
 CC= gcc
 CFLAGS= -Wall -g -I.
 TARGET= main
-CFILES= main.c registros.c funcionalidades.c funcoesFornecidas.c
+CFILES= main.c registros.c funcionalidades.c funcoesAuxiliares.c funcoesFornecidas.c
 
 all :
 	$(CC) $(CFLAGS) $(CFILES) -o $(TARGET)
@@ -10,7 +10,7 @@ run :
 	./$(TARGET)
 
 valin :
-	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < TestCases/2.in > TestCases/2.out2
+	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < TestCases/5.in > TestCases/5.out2
 
 valout :
 	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) > test.out
