@@ -6,6 +6,7 @@
 #include <string.h>
 #include "registros.h"
 #include "funcionalidades.h"
+#include "funcoesAuxiliares.h"
 #include "funcoesFornecidas.h"
 
 /**
@@ -48,44 +49,26 @@ void funcionalidade1() {
 
     // aloca string para armazenar tecnologia anterior e verificar repeticoes
     char* tec_prev = malloc(50 * sizeof(char));
+    *tec_prev = '\0';
 
     // executa o loop ate chegar ao fim do arquivo
     while(1) {
         // le cada linha do csv e armazena em uma string (sai do loop caso encontre EOF)
         char* entrada = malloc(100 * sizeof(char));
-        if(fgets(entrada, 100, arq_csv) == NULL) {
-            free(entrada);
+        if(le_entrada(entrada, arq_csv)){
             break;
         }
 
         // divide a string lida nos componentes do struct
-        reg.nomeTecnologiaOrigem = strtok(entrada, ",");
-
-        // no caso de campos campos inteiros, checa-se por NULL antes de converter a string
-        char* campo;
-
-        campo = strtok(NULL, ",");
-        reg.grupo = checa_int_nulo(campo);
-
-        campo = strtok(NULL, ",");
-        reg.popularidade = checa_int_nulo(campo);
-
-        reg.nomeTecnologiaDestino = strtok(NULL, ",");
-        
-        campo = strtok(NULL, ",");
-        reg.peso = checa_int_nulo(campo);
+        divide_string(&reg, entrada);
         
         // salva o nome da tecnologia previa, para avaliacao do numero de tecnologias distintas (o csv providenciado esta ordenado nesse sentido)
-        if(cabecalho.nroParesTecnologias != 0) {
-            if(strcmp(tec_prev, reg.nomeTecnologiaDestino) != 0) {
+        if(reg.tecnologiaDestino.tamanho != 0) {
+            if(strcmp(tec_prev, reg.tecnologiaDestino.nome) != 0) {
                 cabecalho.nroTecnologias++;
+                strcpy(tec_prev, reg.tecnologiaDestino.nome);
             }
         }
-        strcpy(tec_prev, reg.nomeTecnologiaDestino);
-
-        // preenche  o tamanho dos nomes armazenados
-        reg.tamanhoTecnologiaOrigem = strlen(reg.nomeTecnologiaOrigem);
-        reg.tamanhoTecnologiaDestino = strlen(reg.nomeTecnologiaDestino);
 
         // escreve o registro
         escrever_registro(arq_bin, reg);
@@ -100,7 +83,7 @@ void funcionalidade1() {
     free(tec_prev);
 
     // muda status do cabecalho com fim da escrita de dados
-    cabecalho.status = 1;
+    cabecalho.status = '1';
 
     // escreve registro de cabecalho atualizado
     fseek(arq_bin, 0, SEEK_SET);
@@ -154,8 +137,8 @@ void funcionalidade2() {
             imprime_registro(reg);
 
         // libera as strings alocadas
-        free(reg.nomeTecnologiaOrigem);
-        free(reg.nomeTecnologiaDestino);
+        free(reg.tecnologiaOrigem.nome);
+        free(reg.tecnologiaDestino.nome);
     }
     // fecha arquivo de dados
     fclose(arq_bin);
@@ -240,8 +223,8 @@ void funcionalidade3(){
                     imprime_registro(reg);
 
                 // libera as strings alocadas
-                free(reg.nomeTecnologiaOrigem);
-                free(reg.nomeTecnologiaDestino);
+                free(reg.tecnologiaOrigem.nome);
+                free(reg.tecnologiaDestino.nome);
             }
             // Acresce para busca no proximo registro.
             contRRN++;
@@ -297,19 +280,7 @@ void funcionalidade4(){
     }
 
     // libera as strings alocadas
-    free(reg.nomeTecnologiaOrigem);
-    free(reg.nomeTecnologiaDestino);
+    free(reg.tecnologiaOrigem.nome);
+    free(reg.tecnologiaDestino.nome);
     fclose(arq_bin);
-}
-
-/**
- * @brief checa se um campo inteiro lido como string eh nulo, retornando -1 caso seja, ou seu valor convertido, caso nao
- * @param campo string correspondente ao campo que deve ser checado
- * @return valor do campo ou -1
- */
-int checa_int_nulo(char* campo) {
-    if(campo != NULL) {
-        return atoi(campo);
-    }
-    return -1;
 }

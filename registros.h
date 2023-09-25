@@ -1,14 +1,20 @@
 // Guilherme Lorete Schmidt - 13676857
 // Emanuel Percinio Goncalves de Oliveira - 13676878
 
+#ifndef REGISTROS
+#define REGISTROS
+
 // tamanho do registro de cabecalho
 #define TAM_HEADER 13
 
 // tamanho do registro de dados
 #define TAM_REG 76
 
-// teamanho da parte alocada estaticamente do registro de dados
+// tamanho da parte alocada estaticamente do registro de dados
 #define TAM_REG_STATIC 21
+
+// caractere a ser empregado como lixo na escrita do registro
+#define LIXO '$'
 
 // registros 'headers' com 13 bytes, com campos especificados
 struct header {
@@ -17,6 +23,14 @@ struct header {
     int nroTecnologias;
     int nroParesTecnologias;
 };
+typedef struct header header;
+
+// struct para strings com indicadores de tamanho
+struct string {
+    int tamanho;
+    char* nome;
+};
+typedef struct string string;
 
 // registros de 76 bytes, com campos especificados
 struct registro {
@@ -24,14 +38,9 @@ struct registro {
     int grupo;
     int popularidade;
     int peso;
-    int tamanhoTecnologiaOrigem;
-    char* nomeTecnologiaOrigem;
-    int tamanhoTecnologiaDestino;
-    char* nomeTecnologiaDestino;
+    string tecnologiaOrigem;
+    string tecnologiaDestino;
 };
-
-// typedef dos structs criados
-typedef struct header header;
 typedef struct registro registro;
 
 // funcoes de manipulacao de registros
@@ -44,5 +53,7 @@ int calcula_byte_off(int RRN);
 void inicializa_registro(registro* reg);
 void inicializa_cabecalho(header* cabecalho);
 void imprime_registro(registro reg);
-void imprime_campo_texto(char* texto, int tam, char* fim);
+void imprime_campo_texto(string texto, char* fim);
 void imprime_campo_numerico(int num, char* fim);
+
+#endif
