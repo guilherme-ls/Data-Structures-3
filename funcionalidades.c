@@ -170,6 +170,7 @@ void funcionalidade3(){
     char nome_bin[30]; // Nome do arquivo binario
     char nomeCampo[30]; // nome do campo a ser buscado
     char* temp = malloc(80 *sizeof(char)); // valor temporario do campo a ser buscado
+    char* valorCampoBuscado;
     int n; // Quantidade de busca;
 
     // Recebe o nome do arquivo de entrada e a quantidade de valores para buscar
@@ -185,10 +186,17 @@ void funcionalidade3(){
     for(int i = 0; i < n; i++){
         
         // Recebo o nome e valor do campo a serem buscados
-        scanf("%s \"%s", nomeCampo, temp);
-        char* valorCampoBuscado;
+        scanf("%s", nomeCampo);
+        scanf("%s", temp);
+        /*if(strcmp(nomeCampo, "grupo") == 0 || strcmp(nomeCampo, "popularidade") == 0 || strcmp(nomeCampo, "peso") == 0){
+            scanf("%s", temp);
+        }else{
+            scanf("%s", temp);
+        }*/
+
         valorCampoBuscado = strtok(temp, "\"");
         
+
         
         // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
         header cabecalho;
