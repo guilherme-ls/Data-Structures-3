@@ -152,8 +152,6 @@ void funcionalidade2() {
 void funcionalidade3(){
     char nome_bin[30]; // Nome do arquivo binario
     char nomeCampo[30]; // nome do campo a ser buscado
-    char* temp = malloc(80 *sizeof(char)); // valor temporario do campo a ser buscado
-    char* valorCampoBuscado;
     int n; // Quantidade de busca;
 
     // Recebe o nome do arquivo de entrada e a quantidade de valores para buscar
@@ -161,33 +159,39 @@ void funcionalidade3(){
 
     // abre o arquivo de entrada
     FILE* arq_bin = fopen(nome_bin, "rb");
-
+    // checa erros na abertura do arquivo
     if(arq_bin == NULL) {
-        printf("Falha no processamento do arquivo.");
+        printf("Falha no processamento do arquivo.\n");
         exit(EXIT_FAILURE);
     }
+
+    // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
+    header cabecalho;
+    int saida = ler_header(arq_bin, &cabecalho);
+    if(saida == 1) {
+        printf("Falha no processamento do arquivo.\n");
+        fclose(arq_bin);
+        return;
+    }
+    
+    // retorna erro caso 'status' do arquivo lido seja '0'
+    if(cabecalho.status == '0') {
+        printf("Falha no processamento do arquivo.\n");
+        fclose(arq_bin);
+        return;
+    }
+
+    // declara variáveis a serem empregadas no loop de leitura
+    char* temp = malloc(80 *sizeof(char)); // valor temporario do campo a ser buscado
+    char* valorCampoBuscado; // ponteiro para armazenamento do campo buscado apos remocao de ""
+
+    // repete o processo de busca para cada campo distinto a ser avaliado 
     for(int i = 0; i < n; i++){
-        
         // Recebo o nome e valor do campo a serem buscados
         scanf("%s", nomeCampo);
         scanf("%s", temp);
-        /*if(strcmp(nomeCampo, "grupo") == 0 || strcmp(nomeCampo, "popularidade") == 0 || strcmp(nomeCampo, "peso") == 0){
-            scanf("%s", temp);
-        }else{
-            scanf("%s", temp);
-        }*/
 
         valorCampoBuscado = strtok(temp, "\"");
-        
-
-        
-        // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
-        header cabecalho;
-        int saida = ler_header(arq_bin, &cabecalho);
-        if(saida == 1) {
-            printf("Registro inexistente.\n");
-            return;
-        }
 
         // variaveis de apoio
         registro reg; // registro a ser devolvido
