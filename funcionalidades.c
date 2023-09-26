@@ -26,7 +26,7 @@ void funcionalidade1() {
     FILE *arq_bin = fopen(nome_bin, "wb");
     if(arq_bin == NULL) {
         printf("Falha no processamento do arquivo.\n");
-        exit(EXIT_FAILURE);
+        return;
     }
 
     // abre arquivo de entrada em modo de leitura
@@ -34,7 +34,7 @@ void funcionalidade1() {
     if(arq_csv == NULL) {
         printf("Falha no processamento do arquivo.\n");
         fclose(arq_bin);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     // pula o cabecalho do csv lido
@@ -113,7 +113,7 @@ void funcionalidade2() {
     FILE* arq_bin = fopen(nome_bin, "rb");
     if(arq_bin == NULL) {
         printf("Falha no processamento do arquivo.\n");
-        exit(EXIT_FAILURE);
+        return;
     }
 
     // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
