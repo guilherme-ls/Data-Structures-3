@@ -1,5 +1,5 @@
 CC= gcc
-CFLAGS= -Wall -g -I.
+CFLAGS= -Wall -g -I. -O3
 TARGET= main
 CFILES= main.c registros.c funcionalidades.c funcoesAuxiliares.c funcoesFornecidas.c
 
@@ -10,14 +10,14 @@ run :
 	./$(TARGET)
 
 valin :
-	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < TestCases/5.in > TestCases/5.out2
+	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < TestCases/8.in > TestCases/8.out2
 
 valout :
 	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) > test.out
 
 # pode trocar os numeros para diferentes testes
 test :
-	for number in `seq 7 8` ; do \
+	for number in `seq 4 10` ; do \
 	./$(TARGET) < TestCases/$$number.in > TestCases/$$number.out2; \
 	diff -s TestCases/$$number.out TestCases/$$number.out2; \
 	done

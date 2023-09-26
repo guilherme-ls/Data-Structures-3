@@ -252,7 +252,7 @@ void funcionalidade4(){
     FILE* arq_bin = fopen(nome_bin, "rb");
 
     if(arq_bin == NULL) {
-        printf("Falha no processamento do arquivo.");
+        printf("Falha no processamento do arquivo.\n");
         exit(EXIT_FAILURE);
     }
 
