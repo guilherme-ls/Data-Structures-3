@@ -1,5 +1,5 @@
 CC= gcc
-CFLAGS= -Wall -g -I. -O3
+CFLAGS= -Wall -g -I.
 TARGET= main
 CFILES= main.c registros.c funcionalidades.c funcoesAuxiliares.c funcoesFornecidas.c
 

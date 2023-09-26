@@ -9,13 +9,16 @@
 #include "funcoesAuxiliares.h"
 #include "funcoesFornecidas.h"
 
+// define tamanho de strings para leitura do nome de arquivos
+#define TAM_ARQ_LEITURA 100
+
 /**
  * @brief Executa a funcionalidade 1, lendo um dado arquivo csv e convertendo seus dados para registros em binario
  */
 void funcionalidade1() {
     // recebe arquivos de entrada e saida
-    char nome_csv[30];
-    char nome_bin[30];
+    char nome_csv[TAM_ARQ_LEITURA];
+    char nome_bin[TAM_ARQ_LEITURA];
     scanf("%s", nome_csv);
     scanf("%s", nome_bin);
 
@@ -30,6 +33,7 @@ void funcionalidade1() {
     FILE *arq_csv = fopen(nome_csv, "r");
     if(arq_csv == NULL) {
         printf("Falha no processamento do arquivo.\n");
+        fclose(arq_bin);
         exit(EXIT_FAILURE);
     }
 
@@ -102,7 +106,7 @@ void funcionalidade1() {
  */
 void funcionalidade2() {
     // recebe o nome do arquivo de entrada
-    char nome_bin[30];
+    char nome_bin[TAM_ARQ_LEITURA];
     scanf("%s", nome_bin);
 
     // abre o arquivo de entrada
@@ -150,8 +154,8 @@ void funcionalidade2() {
           retornando os registros que satisfazem a busca ou as respectivas exceções.
  */
 void funcionalidade3(){
-    char nome_bin[30]; // Nome do arquivo binario
-    char nomeCampo[30]; // nome do campo a ser buscado
+    char nome_bin[TAM_ARQ_LEITURA]; // Nome do arquivo binario
+    char nomeCampo[TAM_ARQ_LEITURA]; // nome do campo a ser buscado
     int n; // Quantidade de busca;
 
     // Recebe o nome do arquivo de entrada e a quantidade de valores para buscar
@@ -250,7 +254,7 @@ void funcionalidade3(){
 }   
 
 void funcionalidade4(){
-    char nome_bin[30]; // Nome do arquivo binario
+    char nome_bin[TAM_ARQ_LEITURA]; // Nome do arquivo binario
     int RRNbuscado; // Quantidade de busca;
 
     // Recebe o nome do arquivo de entrada e a quantidade de valores para buscar
