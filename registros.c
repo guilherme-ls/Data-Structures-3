@@ -112,12 +112,12 @@ int ler_campo(FILE* arquivo, char** valCampo, char* nomeCampo) {
         fseek(arquivo, 8, SEEK_CUR);
         fread(&temp, sizeof(int), 1, arquivo);
         snprintf(*valCampo, sizeof(char) * 80, "%d", temp);
-    }else if(strcmp(nomeCampo, "tecnologiaOrigem.nome") == 0){
+    }else if(strcmp(nomeCampo, "nomeTecnologiaOrigem") == 0){
         fseek(arquivo, 12, SEEK_CUR);
         fread(&tamanho, sizeof(int), 1, arquivo);
         fread(*valCampo, sizeof(char), tamanho, arquivo);
         (*valCampo)[tamanho] = '\0';
-    }else if(strcmp(nomeCampo, "tecnologiaDestino.nome") == 0){
+    }else if(strcmp(nomeCampo, "nomeTecnologiaDestino") == 0){
         fseek(arquivo, 12, SEEK_CUR);
         fread(&tamanho, sizeof(int), 1, arquivo);
         fseek(arquivo, tamanho, SEEK_CUR);

@@ -201,9 +201,13 @@ void funcionalidade3(){
                 // break com fim do arquivo
                 break;
             }
+
+            // Erro encontrado durante a busca no arquivo
             else if(saida == 2) {
                 printf("Falha no processamento do arquivo.");
-                free(valorCampoBuscado);
+                free(valorCampoAtual); 
+                free(temp);
+                fclose(arq_bin);
                 return;
             }
             
