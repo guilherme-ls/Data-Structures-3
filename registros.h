@@ -43,7 +43,9 @@ struct registro {
 };
 typedef struct registro registro;
 
+
 // funcoes de manipulacao de registros
+
 void escrever_registro(FILE* arquivo, registro reg);
 int ler_registro(FILE* arquivo, registro* reg);
 int ler_campo(FILE* arquivo, char** valCampo, char* nomeCampo);
