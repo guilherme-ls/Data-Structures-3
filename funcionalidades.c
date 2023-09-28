@@ -121,7 +121,7 @@ void funcionalidade2() {
     header cabecalho;
     int erro = ler_header(arq_bin, &cabecalho);
     if(erro) {
-        printf("Registro inexistente.");
+        printf("Registro inexistente.\n");
         return;
     }
     
