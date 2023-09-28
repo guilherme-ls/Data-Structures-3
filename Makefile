@@ -1,10 +1,9 @@
 CC= gcc
 CFLAGS= -Wall -g -I.
 TARGET= main
-CFILES= main.c registros.c funcionalidades.c funcoesAuxiliares.c funcoesFornecidas.c
 
 all :
-	$(CC) $(CFLAGS) $(CFILES) -o $(TARGET)
+	$(CC) $(CFLAGS) *.c -o $(TARGET)
 
 run :
 	./$(TARGET)

@@ -5,6 +5,7 @@
 #define FUNCIONALIDADES
 
 // funcoes para cada funcionalidade criada
+
 void funcionalidade1();
 void funcionalidade2();
 void funcionalidade3();

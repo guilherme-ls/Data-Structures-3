@@ -8,6 +8,7 @@
 #include "funcionalidades.h"
 #include "funcoesAuxiliares.h"
 #include "funcoesFornecidas.h"
+#include "lista.h"
 
 // define tamanho de strings para leitura do nome de arquivos
 #define TAM_ARQ_LEITURA 100
@@ -51,9 +52,9 @@ void funcionalidade1() {
     // escreve o header
     escrever_header(arq_bin, cabecalho);
 
-    // aloca string para armazenar tecnologia anterior e verificar repeticoes
-    char* tec_prev = malloc(50 * sizeof(char));
-    *tec_prev = '\0';
+    // cria lista para serem inseridas as tecnologias lidas
+    lista l;
+    inicializa_lista(&l);
 
     // executa o loop ate chegar ao fim do arquivo
     while(1) {
@@ -66,13 +67,11 @@ void funcionalidade1() {
         // divide a string lida nos componentes do struct
         divide_string(&reg, entrada);
         
-        // salva o nome da tecnologia previa, para avaliacao do numero de tecnologias distintas (o csv providenciado esta ordenado nesse sentido)
-        if(reg.tecnologiaDestino.tamanho != 0) {
-            if(strcmp(tec_prev, reg.tecnologiaDestino.nome) != 0) {
-                cabecalho.nroTecnologias++;
-                strcpy(tec_prev, reg.tecnologiaDestino.nome);
-            }
-        }
+        // salva o nome de cada tecnologia em uma lista sem repeticoes
+        if(reg.tecnologiaOrigem.tamanho != 0)
+            inserir(&l, reg.tecnologiaOrigem.nome);
+        if(reg.tecnologiaDestino.tamanho != 0)
+            inserir(&l, reg.tecnologiaDestino.nome);
 
         // escreve o registro
         escrever_registro(arq_bin, reg);
@@ -84,7 +83,9 @@ void funcionalidade1() {
         cabecalho.nroParesTecnologias++;
         cabecalho.proxRRN++;
     }
-    free(tec_prev);
+    // define numero de tecnologias distintas com base no tamanho da lista criada (e destroi lista)
+    cabecalho.nroTecnologias = l.tam;
+    destruir(&l);
 
     // muda status do cabecalho com fim da escrita de dados
     cabecalho.status = '1';
@@ -166,7 +167,7 @@ void funcionalidade3(){
     // checa erros na abertura do arquivo
     if(arq_bin == NULL) {
         printf("Falha no processamento do arquivo.\n");
-        exit(EXIT_FAILURE);
+        return;
     }
 
     // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
@@ -203,6 +204,7 @@ void funcionalidade3(){
         int contRRN = 0; // valor do RRN do registro a ser lido
         int contBuscado = 0; // Quantidade de registros que satisfazem busca
         while(1){
+            // vai a posicao do RRN especificado
             fseek(arq_bin, calcula_byte_off(contRRN), SEEK_SET);
             int saida = ler_campo(arq_bin, &valorCampoAtual, nomeCampo);
             if(saida == 1) {
