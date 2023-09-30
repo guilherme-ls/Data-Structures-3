@@ -80,7 +80,9 @@ void funcionalidade1() {
         free(entrada);
 
         // atualiza informacoes do cabecalho
-        cabecalho.nroParesTecnologias++;
+        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
+            cabecalho.nroParesTecnologias++;
+        
         cabecalho.proxRRN++;
     }
     // define numero de tecnologias distintas com base no tamanho da lista criada (e destroi lista)
