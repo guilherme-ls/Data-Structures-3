@@ -24,19 +24,15 @@ void funcionalidade1() {
     scanf("%s", nome_bin);
 
     // abre arquivo de saida em modo de escrita
-    FILE *arq_bin = fopen(nome_bin, "wb");
-    if(arq_bin == NULL) {
-        printf("Falha no processamento do arquivo.\n");
-        return;
-    }
+    FILE *arq_bin;
+    open(&arq_bin, nome_bin, "wb");
 
     // abre arquivo de entrada em modo de leitura
-    FILE *arq_csv = fopen(nome_csv, "r");
-    if(arq_csv == NULL) {
-        printf("Falha no processamento do arquivo.\n");
+    FILE *arq_csv;
+    if(open(&arq_csv, nome_csv, "r")) {
         fclose(arq_bin);
-        return;
     }
+    
 
     // pula o cabecalho do csv lido
     while(fgetc(arq_csv) != '\n');
@@ -113,11 +109,8 @@ void funcionalidade2() {
     scanf("%s", nome_bin);
 
     // abre o arquivo de entrada
-    FILE* arq_bin = fopen(nome_bin, "rb");
-    if(arq_bin == NULL) {
-        printf("Falha no processamento do arquivo.\n");
-        return;
-    }
+    FILE* arq_bin;
+    open(&arq_bin, nome_bin, "rb");
 
     // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
     header cabecalho;
@@ -165,12 +158,8 @@ void funcionalidade3(){
     scanf("%s %d", nome_bin, &n);  
 
     // abre o arquivo de entrada
-    FILE* arq_bin = fopen(nome_bin, "rb");
-    // checa erros na abertura do arquivo
-    if(arq_bin == NULL) {
-        printf("Falha no processamento do arquivo.\n");
-        return;
-    }
+    FILE* arq_bin;
+    open(&arq_bin, nome_bin, "rb");
 
     // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
     header cabecalho;
@@ -265,12 +254,8 @@ void funcionalidade4(){
     scanf("%s %d", nome_bin, &RRNbuscado);  
 
     // abre o arquivo de entrada
-    FILE* arq_bin = fopen(nome_bin, "rb");
-
-    if(arq_bin == NULL) {
-        printf("Falha no processamento do arquivo.\n");
-        exit(EXIT_FAILURE);
-    }
+    FILE* arq_bin;
+    open(&arq_bin, nome_bin, "rb");
 
     // Busca registro no RRN especificado
     fseek(arq_bin, calcula_byte_off(RRNbuscado), SEEK_SET);
