@@ -8,6 +8,22 @@
 #include "funcoesAuxiliares.h"
 
 /**
+ * @brief abre um arquivo com o nome e modo especificados
+ * @param arq variavel na qual se armazena o ponteiro para o arquivo aberto
+ * @param nome nome do arquivo a ser aberto
+ * @param mode modo em que o arquivo sera aberto
+ * @return 0, caso o arquivo seja aberto com sucesso, ou 1, em caso de falha
+ */
+int open(FILE** arq, char* nome, char* mode) {
+    *arq = fopen(nome, mode);
+    if(arq == NULL) {
+        printf("Falha no processamento do arquivo.\n");
+        return 1;
+    }
+    return 0;
+}
+
+/**
  * @brief checa se um campo inteiro lido como string eh nulo, retornando -1 caso seja, ou seu valor convertido, caso nao
  * @param campo string correspondente ao campo que deve ser checado
  * @return valor do campo ou -1
