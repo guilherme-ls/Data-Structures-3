@@ -26,12 +26,6 @@ void funcionalidade1() {
     // abre arquivo de saida em modo de escrita
     FILE *arq_bin;
     open(&arq_bin, nome_bin, "wb");
-
-    // abre arquivo de entrada em modo de leitura
-    FILE *arq_csv;
-    if(open(&arq_csv, nome_csv, "r")) {
-        fclose(arq_bin);
-    }
     
 
     // pula o cabecalho do csv lido
