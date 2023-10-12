@@ -4,6 +4,7 @@
 #ifndef FUNCOES_AUXILIARES
 #define FUNCOES_AUXILIARES
 
+int check_cabecalho(FILE* arq_bin, header* cabecalho);
 int open(FILE** arq, char* nome, char* mode);
 void divide_string(registro* reg, char* entrada);
 int checa_int_nulo(char* campo);

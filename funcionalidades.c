@@ -25,12 +25,17 @@ void funcionalidade1() {
 
     // abre arquivo de saida em modo de escrita
     FILE *arq_bin;
-    open(&arq_bin, nome_bin, "wb");
+    if(open(&arq_bin, nome_bin, "wb")) {
+        // fim da execucao em caso de erros
+        return;
+    }
 
     // abre arquivo de entrada em modo de leitura
     FILE *arq_csv;
     if(open(&arq_csv, nome_csv, "r")) {
+        // fim da execucao em caso de erros
         fclose(arq_bin);
+        return;
     }
     
 
@@ -110,18 +115,24 @@ void funcionalidade2() {
 
     // abre o arquivo de entrada
     FILE* arq_bin;
-    open(&arq_bin, nome_bin, "rb");
+    if(open(&arq_bin, nome_bin, "rb")) {
+        // fim da execucao em caso de erros
+        return;
+    }
 
-    // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
+    // le registro de cabecalho e retorna quaisquer erros
     header cabecalho;
-    int erro = ler_header(arq_bin, &cabecalho);
-    if(erro) {
-        printf("Registro inexistente.\n");
+    int erro = check_cabecalho(arq_bin, &cabecalho);
+    if(erro == 1) {
+        // fim da execucao em caso de erros
         return;
     }
     
     // cria struct de registro a ser empregado nas leituras
     registro reg;
+
+    // contador do número de registros lidos
+    int cont_reg = 0;
 
     // loop de leitura e escrita dos dados
     while(1) {
@@ -133,13 +144,21 @@ void funcionalidade2() {
         }
 
         // imprime os dados contidos no registro lido, caso nao removido
-        if(reg.removido != '1')
+        if(reg.removido != '1') {
             imprime_registro(reg);
+            cont_reg++;
+        }
 
         // libera as strings alocadas
         free(reg.tecnologiaOrigem.nome);
         free(reg.tecnologiaDestino.nome);
     }
+    // checa se nao existem registros a serem exibidos
+    if(cont_reg == 0) {
+        // mensagem de saida especificada caso nao existam registros
+        printf("Registro inexistente.\n");
+    }
+
     // fecha arquivo de dados
     fclose(arq_bin);
 }
@@ -159,21 +178,16 @@ void funcionalidade3(){
 
     // abre o arquivo de entrada
     FILE* arq_bin;
-    open(&arq_bin, nome_bin, "rb");
-
-    // le registro de cabecalho e vai ao primeiro RRN, retorna quaisquer erros
-    header cabecalho;
-    int saida = ler_header(arq_bin, &cabecalho);
-    if(saida == 1) {
-        printf("Falha no processamento do arquivo.\n");
-        fclose(arq_bin);
+    if(open(&arq_bin, nome_bin, "rb")) {
+        // fim da execucao em caso de erros
         return;
     }
-    
-    // retorna erro caso 'status' do arquivo lido seja '0'
-    if(cabecalho.status == '0') {
-        printf("Falha no processamento do arquivo.\n");
-        fclose(arq_bin);
+
+    // le registro de cabecalho e retorna quaisquer erros
+    header cabecalho;
+    int erro = check_cabecalho(arq_bin, &cabecalho);
+    if(erro == 1) {
+        // fim da execucao em caso de erros
         return;
     }
 
@@ -183,7 +197,7 @@ void funcionalidade3(){
 
     // repete o processo de busca para cada campo distinto a ser avaliado 
     for(int i = 0; i < n; i++){
-        // Recebo o nome e valor do campo a serem buscados
+        // recebe o nome e valor do campo a serem buscados
         scanf("%s", nomeCampo);
         scanf("%s", temp);
 
@@ -255,7 +269,17 @@ void funcionalidade4(){
 
     // abre o arquivo de entrada
     FILE* arq_bin;
-    open(&arq_bin, nome_bin, "rb");
+    if(open(&arq_bin, nome_bin, "rb")) {
+        return;
+    }
+
+    // le registro de cabecalho e retorna quaisquer erros
+    header cabecalho;
+    int erro = check_cabecalho(arq_bin, &cabecalho);
+    if(erro == 1) {
+        // fim da execucao em caso de erros
+        return;
+    }
 
     // Busca registro no RRN especificado
     fseek(arq_bin, calcula_byte_off(RRNbuscado), SEEK_SET);

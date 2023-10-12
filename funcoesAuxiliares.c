@@ -8,6 +8,31 @@
 #include "funcoesAuxiliares.h"
 
 /**
+ * @brief le o registro de cabecalho e checa pela ocorrencia de erros, lidando com estes
+ * @param arq_bin arquivo binario ja aberto no qual deve ser lido o registro
+ * @param cabecalho struct de cabecalho no qual devem ser armazenadas as informacoes lidas
+ * @return 0, caso o registro seja lido com sucesso, ou 1, em caso de falha
+ */
+int check_cabecalho(FILE* arq_bin, header* cabecalho) {
+    int erro = ler_header(arq_bin, cabecalho);
+    if(erro == 1) {
+        // fim da execucao em caso de erros
+        printf("Falha no processamento do arquivo.\n");
+        fclose(arq_bin);
+        return 1;
+    }
+
+    // retorna erro caso 'status' do arquivo lido seja '0'
+    if(cabecalho->status == '0') {
+        printf("Falha no processamento do arquivo.\n");
+        fclose(arq_bin);
+        return 1;
+    }
+
+    return 0;
+}
+
+/**
  * @brief abre um arquivo com o nome e modo especificados
  * @param arq variavel na qual se armazena o ponteiro para o arquivo aberto
  * @param nome nome do arquivo a ser aberto
@@ -16,7 +41,7 @@
  */
 int open(FILE** arq, char* nome, char* mode) {
     *arq = fopen(nome, mode);
-    if(arq == NULL) {
+    if(*arq == NULL) {
         printf("Falha no processamento do arquivo.\n");
         return 1;
     }
