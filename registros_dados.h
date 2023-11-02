@@ -1,8 +1,8 @@
 // Guilherme Lorete Schmidt - 13676857
 // Emanuel Percinio Goncalves de Oliveira - 13676878
 
-#ifndef REGISTROS
-#define REGISTROS
+#ifndef REGISTROS_DADOS
+#define REGISTROS_DADOS
 
 // tamanho do registro de cabecalho
 #define TAM_HEADER 13

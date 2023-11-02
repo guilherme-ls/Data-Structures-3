@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "registros.h"
-#include "funcionalidades.h"
+#include "registros_dados.h"
+#include "funcionalidades_dados.h"
 
 int main() {
     // detecta o comando numerico para selecionar a funcionalidade
