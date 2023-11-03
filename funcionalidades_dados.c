@@ -37,7 +37,6 @@ void funcionalidade1() {
         fclose(arq_bin);
         return;
     }
-    
 
     // pula o cabecalho do csv lido
     while(fgetc(arq_csv) != '\n');
@@ -209,8 +208,7 @@ void funcionalidade3(){
         int contRRN = 0; // valor do RRN do registro a ser lido
         int contBuscado = 0; // Quantidade de registros que satisfazem busca
         while(1){
-            // vai a posicao do RRN especificado
-            fseek(arq_bin, calcula_byte_off(contRRN), SEEK_SET);
+            // le campo especificado no registro atual
             int saida = ler_campo(arq_bin, &valorCampoAtual, nomeCampo);
             if(saida == 1) {
                 // break com fim do arquivo
@@ -227,7 +225,7 @@ void funcionalidade3(){
             }
             
             // verifica se o registro atual satisfaz a busca
-            if(strcmp(valorCampoBuscado, valorCampoAtual) == 0){
+            if(strcmp(valorCampoBuscado, valorCampoAtual) == 0) {
                 contBuscado++;
                 fseek(arq_bin, calcula_byte_off(contRRN), SEEK_SET);
                 int end = ler_registro(arq_bin, &reg); // lê registro atual 
@@ -236,7 +234,6 @@ void funcionalidade3(){
                     break;
                 }
 
-
                 // imprime os dados contidos no registro lido, caso nao removido
                 if(reg.removido != 1)
                     imprime_registro(reg);
@@ -244,6 +241,10 @@ void funcionalidade3(){
                 // libera as strings alocadas
                 free(reg.tecnologiaOrigem.nome);
                 free(reg.tecnologiaDestino.nome);
+            }
+            else {
+                // pula para o proximo registro caso a busca nao seja satisfeita
+                fseek(arq_bin, calcula_byte_off(contRRN+1), SEEK_SET);
             }
             // Acresce para busca no proximo registro.
             contRRN++;
@@ -258,9 +259,9 @@ void funcionalidade3(){
     }
     free(temp);
     fclose(arq_bin); // Fechar arquivo
-}   
+}
 
-void funcionalidade4(){
+void funcionalidade4() {
     char nome_bin[TAM_ARQ_LEITURA]; // Nome do arquivo binario
     int RRNbuscado; // Quantidade de busca;
 

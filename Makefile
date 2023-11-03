@@ -9,7 +9,7 @@ run :
 	./$(TARGET)
 
 valin :
-	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < TestCases/5.in
+	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) < test.in
 
 valout :
 	valgrind --leak-check=full --show-leak-kinds=all -s ./$(TARGET) > test.out

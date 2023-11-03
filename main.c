@@ -6,6 +6,7 @@
 #include <string.h>
 #include "registros_dados.h"
 #include "funcionalidades_dados.h"
+#include "funcionalidades_arvores.h"
 
 int main() {
     // detecta o comando numerico para selecionar a funcionalidade
@@ -25,6 +26,9 @@ int main() {
             break;
         case 4:
             funcionalidade4();
+            break;
+        case 5:
+            funcionalidade5();
             break;
         default:
             printf("comando nao encontrado.\n");
