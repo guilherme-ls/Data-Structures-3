@@ -1,3 +1,4 @@
-3 arquivos/binario6.bin 2
-nomeTecnologiaOrigem "SWIFT"
-popularidade 13
+6 binario6.bin indice6.bin 3
+nomeTecnologiaOrigemDestino "C#.NET"
+nomeTecnologiaOrigemDestino "LINQ.NET"
+nomeTecnologiaOrigem "C#"
