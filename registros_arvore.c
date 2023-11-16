@@ -137,3 +137,30 @@ void inicializa_cabecalho_arvore(header_arvore* cabecalho) {
     cabecalho->noRaiz = -1;
     cabecalho->RRNproxNo = 0;
 }
+
+/**
+ * @brief realiza a busca binaria nas chaves de um registro do arquivo de indice
+*/
+int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg){
+    // variaveis de apoio
+    int menor = 0;
+    int maior = reg.nroChavesNo - 1;
+    int meio = -1;
+
+    while(menor <= maior){
+        // calculo da posicao do meio
+        meio = menor + (maior - menor) / 2;
+        
+        // Encontrou chave
+        if(strcmp(chaveBuscada, reg.dados[meio].chave) == 0){
+            return meio;    
+        }else if(strcmp(chaveBuscada, reg.dados[meio].chave) > 0){
+            menor = meio + 1;
+        }else{
+            maior = meio - 1;
+        }
+    }
+
+    // retorna posicao onde chave deveria ser inserida
+    return meio;
+}

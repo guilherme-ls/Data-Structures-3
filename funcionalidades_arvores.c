@@ -2,9 +2,10 @@
 // Emanuel Percinio Goncalves de Oliveira - 13676878
 
 #include "funcionalidades_arvores.h"
+#include "funcoesAuxiliares.h"
 
 // define tamanho de strings para leitura do nome de arquivos
-#define TAM_ARQ_LEITURA 100
+#define TAM_ARQ_LEITURA 100 
 
 
 // aqui por enquanto
@@ -19,7 +20,7 @@ void concatena_chave(registro reg, char* string) {
 
 /**
  * @brief Executa a funcionalidade 1, lendo um dado arquivo csv e convertendo seus dados para registros em binario
- */
+*/
 void funcionalidade5() {
     // recebe arquivos de entrada e saida
     char nome_dados[TAM_ARQ_LEITURA];
@@ -106,4 +107,134 @@ void funcionalidade5() {
 
     // aplica a funcao binarioNaTela, como solicitado
     binarioNaTela(nome_arvore);
+}
+
+void funcionalidade6(){
+    char nome_dados[TAM_ARQ_LEITURA]; // Nome do arquivo binario de dados
+    char nome_arvore[TAM_ARQ_LEITURA]; // Nome do arquivo binario do indice
+    char nomeCampo[TAM_ARQ_LEITURA]; // nome do campo a ser buscado
+    int n; // Quantidade de busca;
+    int primeiraBuscaArvore = 0; // variavel controle para pôr no raiz em memoria primaria
+    registro_arvore reg_raiz_arvore; // variavel para armazenar no raiz da arvore
+
+    // Recebe o nome do arquivo de entrada e a quantidade de valores para buscar
+    scanf("%s %s %d", nome_dados, nome_arvore, &n);  
+
+    // abre o arquivo de dados
+    FILE* arq_dados;
+    if(open(&arq_dados, nome_dados, "rb")) {
+        // fim da execucao em caso de erros
+        return;
+    }
+
+    // le registro de cabecalho dos dados e retorna quaisquer erros
+    header cabecalho_dados;
+    int erro;
+    erro = check_cabecalho(arq_dados, &cabecalho_dados);
+    if(erro == 1) {
+        // fim da execucao em caso de erros
+        fclose(arq_dados);
+        return;
+    }
+
+    // abre o arquivo de indice (arvore B)
+    FILE* arq_arvore;
+    if(open(&arq_arvore, nome_arvore, "rb")) {
+        // fim da execucao em caso de erros
+        fclose(arq_dados);
+        return;
+    }
+
+    header_arvore cabecalho_arvore;
+    erro = check_cabecalho_arvore(arq_arvore, &cabecalho_arvore);
+    if(erro == 1){
+        // fim da execucao em caso de erro
+        fclose(arq_dados);
+        fclose(arq_arvore);
+        return;
+    }
+
+    // declara variáveis a serem empregadas no loop de leitura
+    char* temp = malloc(80 *sizeof(char)); // valor temporario do campo a ser buscado
+    char* valorCampoBuscado; // ponteiro para armazenamento do campo buscado apos remocao de ""
+
+    for(int i = 0; i < n; i++){
+        // recebe o nome e valor do campo a serem buscados
+        scanf("%s", nomeCampo);
+        scanf("%s", temp);
+
+        valorCampoBuscado = strtok(temp, "\"");
+
+        // Verifica se a busca deve ser feita no arquivo de indice ou diretamente no arquivo de dados
+        if(strcmp(nomeCampo, "nomeTecnologiaOrigemDestino") == 0){
+            // busca em arquivo de indice (arvore)
+            int regEncontrado = 1; // controle para saber se registro foi encontrado
+
+            if(primeiraBuscaArvore == 0){
+                // trazer raiz da arvore para memória primária
+                fseek(arq_arvore, calcula_byte_off_arvore(cabecalho_arvore.noRaiz), SEEK_SET); // posiciona cursor para no raiz
+                int check = ler_registro_arvore(arq_arvore, &reg_raiz_arvore);
+                primeiraBuscaArvore = 1;
+                if(check == 1){
+                    // arquivo vazio de registro de dados.
+                    printf("Registro inexistente.\n");
+                    break;
+                }
+            }
+
+            registro_arvore reg_no_atual;
+            reg_no_atual = reg_raiz_arvore;
+
+            int iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, reg_no_atual); // Variavel para indice retornado na busca binaria
+
+            //Busca no arquivo de indice
+            while(strcmp(valorCampoBuscado, reg_no_atual.dados[iBuscaAtual].chave) != 0){
+                if(reg_no_atual.ponteiro_arvore[iBuscaAtual] == -1){
+                    printf("Registro inexistente.\n");
+                    regEncontrado = 0;
+                    break;
+                }
+                fseek(arq_arvore, (reg_no_atual.ponteiro_arvore[iBuscaAtual] + 1) * TAM_REG_ARVORE, SEEK_SET);
+                int check = ler_registro_arvore(arq_arvore, &reg_no_atual);
+                if(check == 1){
+                    // fim do arquivo
+                    printf("Registro inexistente.\n");
+                    regEncontrado = 0; 
+                    break;
+                }
+            }
+            if(regEncontrado){
+                registro regBuscado;
+                int RRNDado = reg_no_atual.dados[iBuscaAtual].ponteiro_dado; // RRN do registro buscado no arquivo de dados
+                fseek(arq_dados, calcula_byte_off(RRNDado), SEEK_SET);
+                int end = ler_registro(arq_dados, &regBuscado);
+                if(end == 2){
+                    printf("Falha no processamento do arquivo.");
+                    free(temp);
+                    fclose(arq_dados);
+                    fclose(arq_arvore);
+                    return;
+                }else if(regBuscado.removido != 1){
+                    imprime_registro(regBuscado);
+                }else{
+                    printf("Registro inexistente.\n");
+                }
+            }
+
+            // Fim da funcionalidade. Libera memória e fecha arquivos.
+            free(temp);
+            fclose(arq_dados);
+            fclose(arq_arvore);
+        }else{
+            // busca direta em arquivo de dados
+            int end = busca_em_arq_dados(arq_dados, nomeCampo, valorCampoBuscado);
+            if(end == 2){
+                printf("Falha no processamento do arquivo.");
+                free(temp);
+                fclose(arq_dados);
+                fclose(arq_arvore);
+                return;
+            }
+        }
+    }
 }
