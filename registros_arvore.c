@@ -145,7 +145,7 @@ int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg){
     // variaveis de apoio
     int menor = 0;
     int maior = reg.nroChavesNo - 1;
-    int meio = -1;
+    int meio = 0;
 
     while(menor <= maior){
         // calculo da posicao do meio
@@ -163,4 +163,15 @@ int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg){
 
     // retorna posicao onde chave deveria ser inserida
     return meio;
+}
+
+void ler_chave_sem_lixo(char* chave_original, char* chave_limpa){
+    int j = 0; 
+    for(j = 0; j < TAM_CHAVE+1; j++){
+        if(chave_original[j] == '$'){
+            break;
+        }
+        chave_limpa[j] = chave_original[j];
+    }
+    chave_limpa[j] = '\0';
 }

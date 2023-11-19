@@ -99,7 +99,7 @@ int ler_campo(FILE* arquivo, char** valCampo, char* nomeCampo) {
         // retorno com fim do arquivo
         return 1;
     }
-
+    
     // Posiciona cabeça leitora no inicio do campo para leitura e extrai valor do campo de acordo com o nome do campo dado.
     if(strcmp(nomeCampo, "grupo") == 0){
         fread(&temp, sizeof(int), 1, arquivo);

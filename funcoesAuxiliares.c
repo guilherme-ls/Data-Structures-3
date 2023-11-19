@@ -139,49 +139,48 @@ int busca_em_arq_dados(FILE *arq_bin, char* nomeCampo, char* valorCampoBuscado){
     char* valorCampoAtual = malloc(sizeof(char) * 80); // valor do campo sendo lido no momento
     int contRRN = 0; // valor do RRN do registro a ser lido
     int contBuscado = 0; // Quantidade de registros que satisfazem busca
-    
     while(1){
-            // le campo especificado no registro atual
-            int saida = ler_campo(arq_bin, &valorCampoAtual, nomeCampo);
-            if(saida == 1) {
+        // le campo especificado no registro atual
+        int saida = ler_campo(arq_bin, &valorCampoAtual, nomeCampo);
+        if(saida == 1) {
+            // break com fim do arquivo
+            break;
+        }
+
+        // Erro encontrado durante a busca no arquivo
+        else if(saida == 2) {
+            free(valorCampoAtual); 
+            return 2;
+        }
+        
+        // verifica se o registro atual satisfaz a busca
+        if(strcmp(valorCampoBuscado, valorCampoAtual) == 0) {
+            contBuscado++;
+            fseek(arq_bin, calcula_byte_off(contRRN), SEEK_SET);
+            int end = ler_registro(arq_bin, &reg); // lê registro atual 
+            if(end) {
                 // break com fim do arquivo
                 break;
             }
 
-            // Erro encontrado durante a busca no arquivo
-            else if(saida == 2) {
-                free(valorCampoAtual); 
-                return 2;
-            }
-            
-            // verifica se o registro atual satisfaz a busca
-            if(strcmp(valorCampoBuscado, valorCampoAtual) == 0) {
-                contBuscado++;
-                fseek(arq_bin, calcula_byte_off(contRRN), SEEK_SET);
-                int end = ler_registro(arq_bin, &reg); // lê registro atual 
-                if(end) {
-                    // break com fim do arquivo
-                    break;
-                }
+            // imprime os dados contidos no registro lido, caso nao removido
+            if(reg.removido != '1')
+                imprime_registro(reg);
 
-                // imprime os dados contidos no registro lido, caso nao removido
-                if(reg.removido != 1)
-                    imprime_registro(reg);
-
-                // libera as strings alocadas
-                free(reg.tecnologiaOrigem.nome);
-                free(reg.tecnologiaDestino.nome);
-            }
-            else {
-                // pula para o proximo registro caso a busca nao seja satisfeita
-                fseek(arq_bin, calcula_byte_off(contRRN+1), SEEK_SET);
-            }
-            // Acresce para busca no proximo registro.
-            contRRN++;
+            // libera as strings alocadas
+            free(reg.tecnologiaOrigem.nome);
+            free(reg.tecnologiaDestino.nome);
         }
-        if(contBuscado == 0){
-            printf("Registro inexistente.\n");
+        else {
+            // pula para o proximo registro caso a busca nao seja satisfeita
+            fseek(arq_bin, calcula_byte_off(contRRN+1), SEEK_SET);
         }
-        free(valorCampoAtual);
-        return 0;
+        // Acresce para busca no proximo registro.
+        contRRN++;
+    }
+    if(contBuscado == 0){
+        printf("Registro inexistente.\n");
+    }
+    free(valorCampoAtual);
+    return 0;
 }
