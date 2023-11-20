@@ -1,1 +1,1222 @@
-28453.140000
+key = AZURE.NET -> 0
+key = SQL-SERVER.NET -> 1
+key = ASP.NET.NET -> 2
+key = ENTITY-FRAMEWORK.NET -> 3
+key = WPF.NET -> 4
+key = LINQ.NET -> 5
+key = WCF.NET -> 6
+key = C#.NET -> 7
+key = TDDAGILE -> 8
+key = (null) -> 9
+key = JQUERYAJAX -> 10
+key = MYSQLAJAX -> 11
+key = CSSAJAX -> 12
+Insere12
+return12
+12tive q splitar
+CSSAJAX->12 causou split
+split12!! on CSSAJAX 12
+5 foi promovido
+5 causou split em nó 2 gerando 6
+Inserido12
+key = PHPAJAX -> 13
+key = JAVASCRIPTAJAX -> 14
+key = JSONAJAX -> 15
+key = CLOUDAMAZON-WEB-SERVICES -> 16
+key = AZUREAMAZON-WEB-SERVICES -> 17
+key = DEVOPSAMAZON-WEB-SERVICES -> 18
+key = DOCKERAMAZON-WEB-SERVICES -> 19
+split12 on DOCKERAMAZON-WEB-SERVICES 19
+key = IOSANDROID -> 20
+key = ANDROID-STUDIOANDROID -> 21
+key = JAVAANDROID -> 22
+key = ANDROIDANDROID-STUDIO -> 23
+key = TYPESCRIPTANGULAR -> 24
+key = TYPESCRIPTANGULAR2 -> 25
+key = ANGULARJSANGULAR2 -> 26
+key = IONIC-FRAMEWORKANGULARJS -> 27
+key = (null) -> 28
+key = MONGODBANGULARJS -> 29
+key = (null) -> 30
+key = (null) -> 31
+key = TWITTER-BOOTSTRAPANGULARJS -> 32
+key = JAVASCRIPTANGULARJS -> 33
+key = EXPRESSANGULARJS -> 34
+key = NODE.JSANGULARJS -> 35
+key = JQUERYANGULARJS -> 36
+key = ASP.NET-WEB-APIANGULARJS -> 37
+key = ANGULAR2ANGULARJS -> 38
+key = HTML5ANGULARJS -> 39
+key = NGINXAPACHE -> 40
+key = MYSQLAPACHE -> 41
+key = LINUXAPACHE -> 42
+key = SCALAAPACHE-SPARK -> 43
+key = HADOOPAPACHE-SPARK -> 44
+key = RESTAPI -> 45
+key = .NETASP.NET -> 46
+key = SQLASP.NET -> 47
+key = SQL-SERVERASP.NET -> 48
+key = C#ASP.NET -> 49
+key = ASP.NET-WEB-APIASP.NET -> 50
+key = JQUERYASP.NET -> 51
+key = ENTITY-FRAMEWORKASP.NET -> 52
+key = MVCASP.NET -> 53
+key = AZUREASP.NET -> 54
+key = WPFASP.NET -> 55
+key = LINQASP.NET -> 56
+key = WCFASP.NET -> 57
+key = VB.NETASP.NET -> 58
+key = ASP.NETASP.NET-WEB-API -> 59
+key = AZUREASP.NET-WEB-API -> 60
+key = C#ASP.NET-WEB-API -> 61
+split12 on C#ASP.NET-WEB-API 61
+key = ANGULARJSASP.NET-WEB-API -> 62
+key = SQL-SERVERASP.NET-WEB-API -> 63
+key = WCFASP.NET-WEB-API -> 64
+key = ENTITY-FRAMEWORKASP.NET-WEB-API -> 65
+key = .NETAZURE -> 66
+key = C#AZURE -> 67
+key = ASP.NET-WEB-APIAZURE -> 68
+key = ASP.NETAZURE -> 69
+key = AMAZON-WEB-SERVICESAZURE -> 70
+key = LINUXBASH -> 71
+key = SHELLBASH -> 72
+key = GITBASH -> 73
+key = JQUERYBOOTSTRAP -> 74
+key = CSSBOOTSTRAP -> 75
+key = C++C -> 76
+key = PYTHONC -> 77
+key = EMBEDDEDC -> 78
+key = JAVAC -> 79
+key = LINQC# -> 80
+key = SQLC# -> 81
+key = ASP.NETC# -> 82
+key = ASP.NET-WEB-APIC# -> 83
+key = ENTITY-FRAMEWORKC# -> 84
+key = (null) -> 85
+key = .NETC# -> 86
+key = SQL-SERVERC# -> 87
+key = XAMARINC# -> 88
+key = AZUREC# -> 89
+key = WPFC# -> 90
+key = UNITY3DC# -> 91
+key = WCFC# -> 92
+key = VISUAL-STUDIOC# -> 93
+key = QTC++ -> 94
+key = CC++ -> 95
+key = JAVAC++ -> 96
+key = PYTHONC++ -> 97
+key = AMAZON-WEB-SERVICESCLOUD -> 98
+key = MYSQLCODEIGNITER -> 99
+key = JQUERYCODEIGNITER -> 100
+key = LARAVELCODEIGNITER -> 101
+key = PHPCODEIGNITER -> 102
+key = AJAXCODEIGNITER -> 103
+key = WORDPRESSCODEIGNITER -> 104
+key = AJAXCSS -> 105
+key = MYSQLCSS -> 106
+key = (null) -> 107
+key = JQUERYCSS -> 108
+key = HTMLCSS -> 109
+key = JAVASCRIPTCSS -> 110
+key = HTML5CSS -> 111
+key = BOOTSTRAPCSS -> 112
+key = TWITTER-BOOTSTRAPCSS -> 113
+key = LESSCSS -> 114
+key = WORDPRESSCSS -> 115
+key = ANGULARJSCSS -> 116
+key = SASSCSS -> 117
+key = PHPCSS -> 118
+key = AMAZON-WEB-SERVICESDEVOPS -> 119
+key = DOCKERDEVOPS -> 120
+key = JENKINSDEVOPS -> 121
+key = PYTHONDJANGO -> 122
+key = FLASKDJANGO -> 123
+key = POSTGRESQLDJANGO -> 124
+key = AMAZON-WEB-SERVICESDOCKER -> 125
+key = GODOCKER -> 126
+key = DEVOPSDOCKER -> 127
+key = JENKINSDOCKER -> 128
+key = WORDPRESSDRUPAL -> 129
+key = MAVENECLIPSE -> 130
+key = REDISELASTICSEARCH -> 131
+key = MONGODBELASTICSEARCH -> 132
+key = CEMBEDDED -> 133
+key = .NETENTITY-FRAMEWORK -> 134
+key = WPFENTITY-FRAMEWORK -> 135
+key = ASP.NETENTITY-FRAMEWORK -> 136
+key = SQL-SERVERENTITY-FRAMEWORK -> 137
+key = LINQENTITY-FRAMEWORK -> 138
+key = WCFENTITY-FRAMEWORK -> 139
+key = ASP.NET-WEB-APIENTITY-FRAMEWORK -> 140
+key = C#ENTITY-FRAMEWORK -> 141
+key = VBAEXCEL -> 142
+key = EXCEL-VBAEXCEL -> 143
+key = (null) -> 144
+key = EXCELEXCEL-VBA -> 145
+key = REACTJSEXPRESS -> 146
+key = REDUXEXPRESS -> 147
+key = ANGULARJSEXPRESS -> 148
+key = NODE.JSEXPRESS -> 149
+key = MONGODBEXPRESS -> 150
+key = PYTHONFLASK -> 151
+key = DJANGOFLASK -> 152
+key = JENKINSGIT -> 153
+key = GITHUBGIT -> 154
+key = BASHGIT -> 155
+key = LINUXGIT -> 156
+key = GITGITHUB -> 157
+key = DOCKERGO -> 158
+key = SCALAHADOOP -> 159
+key = APACHE-SPARKHADOOP -> 160
+key = SCALAHASKELL -> 161
+key = JSPHIBERNATE -> 162
+key = JAVAHIBERNATE -> 163
+key = (null) -> 164
+key = MAVENHIBERNATE -> 165
+key = RESTHIBERNATE -> 166
+key = WEB-SERVICESHIBERNATE -> 167
+key = SPRING-MVCHIBERNATE -> 168
+key = JAVA-EEHIBERNATE -> 169
+key = (null) -> 170
+key = MYSQLHTML -> 171
+key = JAVASCRIPTHTML -> 172
+key = PHPHTML -> 173
+key = CSSHTML -> 174
+key = SASSHTML -> 175
+key = JQUERYHTML -> 176
+key = PHPHTML5 -> 177
+key = WORDPRESSHTML5 -> 178
+key = JAVASCRIPTHTML5 -> 179
+key = ANGULARJSHTML5 -> 180
+key = LESSHTML5 -> 181
+key = TWITTER-BOOTSTRAP-3HTML5 -> 182
+key = JQUERYHTML5 -> 183
+key = CSSHTML5 -> 184
+split12 on CSSHTML5 184
+key = TWITTER-BOOTSTRAPHTML5 -> 185
+key = SASSHTML5 -> 186
+key = ANGULARJSIONIC-FRAMEWORK -> 187
+key = ANDROIDIOS -> 188
+key = SWIFTIOS -> 189
+key = OSXIOS -> 190
+key = OBJECTIVE-CIOS -> 191
+key = IPHONEIOS -> 192
+key = XCODEIOS -> 193
+key = SWIFTIPHONE -> 194
+key = XCODEIPHONE -> 195
+key = IOSIPHONE -> 196
+key = OBJECTIVE-CIPHONE -> 197
+key = SPRINGJAVA -> 198
+key = C++JAVA -> 199
+key = JSPJAVA -> 200
+key = JAVA-EEJAVA -> 201
+key = ANDROIDJAVA -> 202
+key = HIBERNATEJAVA -> 203
+key = CJAVA -> 204
+key = SPRING-MVCJAVA -> 205
+key = (null) -> 206
+key = HIBERNATEJAVA-EE -> 207
+key = SPRING-MVCJAVA-EE -> 208
+key = JAVAJAVA-EE -> 209
+key = JQUERYJAVASCRIPT -> 210
+key = TWITTER-BOOTSTRAPJAVASCRIPT -> 211
+key = NODE.JSJAVASCRIPT -> 212
+key = (null) -> 213
+key = ANGULARJSJAVASCRIPT -> 214
+key = PHPJAVASCRIPT -> 215
+key = AJAXJAVASCRIPT -> 216
+key = REACTJSJAVASCRIPT -> 217
+key = CSSJAVASCRIPT -> 218
+key = HTMLJAVASCRIPT -> 219
+key = SASSJAVASCRIPT -> 220
+key = HTML5JAVASCRIPT -> 221
+key = GITJENKINS -> 222
+key = DEVOPSJENKINS -> 223
+key = MAVENJENKINS -> 224
+key = DOCKERJENKINS -> 225
+key = JSONJQUERY -> 226
+key = HTMLJQUERY -> 227
+key = WORDPRESSJQUERY -> 228
+key = SASSJQUERY -> 229
+key = ASP.NETJQUERY -> 230
+key = PHPJQUERY -> 231
+key = CSSJQUERY -> 232
+key = HTML5JQUERY -> 233
+key = AJAXJQUERY -> 234
+key = TWITTER-BOOTSTRAPJQUERY -> 235
+key = MYSQLJQUERY -> 236
+key = ANGULARJSJQUERY -> 237
+key = TWITTER-BOOTSTRAP-3JQUERY -> 238
+key = JAVASCRIPTJQUERY -> 239
+key = CODEIGNITERJQUERY -> 240
+key = BOOTSTRAPJQUERY -> 241
+key = RESTJSON -> 242
+key = JQUERYJSON -> 243
+key = XMLJSON -> 244
+key = AJAXJSON -> 245
+key = HIBERNATEJSP -> 246
+key = JAVAJSP -> 247
+key = SPRING-MVCJSP -> 248
+key = SPRINGJSP -> 249
+key = VUE.JSLARAVEL -> 250
+key = PHPLARAVEL -> 251
+key = MYSQLLARAVEL -> 252
+key = CODEIGNITERLARAVEL -> 253
+split12 on CODEIGNITERLARAVEL 253
+promovi12
+12tive q splitar
+CSSAJAX->12 causou split
+split12!! on CSSAJAX 12
+promovi12
+key = SASSLESS -> 254
+key = CSSLESS -> 255
+key = HTML5LESS -> 256
+key = WCFLINQ -> 257
+key = SQL-SERVERLINQ -> 258
+key = C#LINQ -> 259
+key = ASP.NETLINQ -> 260
+key = ENTITY-FRAMEWORKLINQ -> 261
+key = .NETLINQ -> 262
+key = WPFLINQ -> 263
+key = BASHLINUX -> 264
+key = GITLINUX -> 265
+key = UNIXLINUX -> 266
+key = OSXLINUX -> 267
+key = UBUNTULINUX -> 268
+key = (null) -> 269
+key = NGINXLINUX -> 270
+key = WINDOWSLINUX -> 271
+key = PYTHONLINUX -> 272
+key = (null) -> 273
+key = PYTHONMACHINE-LEARNING -> 274
+key = RMACHINE-LEARNING -> 275
+key = RMATLAB -> 276
+key = SPRING-MVCMAVEN -> 277
+key = (null) -> 278
+key = ECLIPSEMAVEN -> 279
+key = SPRINGMAVEN -> 280
+key = HIBERNATEMAVEN -> 281
+key = EXPRESSMONGODB -> 282
+key = NODE.JSMONGODB -> 283
+key = REACTJSMONGODB -> 284
+key = (null) -> 285
+key = MYSQLMONGODB -> 286
+key = REDISMONGODB -> 287
+key = (null) -> 288
+key = ANGULARJSMONGODB -> 289
+key = ASP.NETMVC -> 290
+key = CSSMYSQL -> 291
+key = JQUERYMYSQL -> 292
+key = MONGODBMYSQL -> 293
+key = LARAVELMYSQL -> 294
+key = PHPMYSQL -> 295
+key = POSTGRESQLMYSQL -> 296
+key = (null) -> 297
+key = HTMLMYSQL -> 298
+key = AJAXMYSQL -> 299
+key = APACHEMYSQL -> 300
+key = CODEIGNITERMYSQL -> 301
+key = LINUXNGINX -> 302
+key = REDISNGINX -> 303
+key = APACHENGINX -> 304
+key = JAVASCRIPTNODE.JS -> 305
+key = REACTJSNODE.JS -> 306
+key = EXPRESSNODE.JS -> 307
+key = ANGULARJSNODE.JS -> 308
+key = (null) -> 309
+key = REACT-NATIVENODE.JS -> 310
+key = REDUXNODE.JS -> 311
+key = XCODEOBJECTIVE-C -> 312
+key = IPHONEOBJECTIVE-C -> 313
+key = SWIFTOBJECTIVE-C -> 314
+key = (null) -> 315
+key = OSXOBJECTIVE-C -> 316
+key = SQLORACLE -> 317
+key = PLSQLORACLE -> 318
+key = WINDOWSOSX -> 319
+key = OBJECTIVE-COSX -> 320
+key = IOSOSX -> 321
+key = LINUXOSX -> 322
+key = REGEXPERL -> 323
+key = CSSPHOTOSHOP -> 324
+key = CSSPHP -> 325
+key = LARAVELPHP -> 326
+key = WORDPRESSPHP -> 327
+key = JQUERYPHP -> 328
+key = JAVASCRIPTPHP -> 329
+key = AJAXPHP -> 330
+key = HTMLPHP -> 331
+key = MYSQLPHP -> 332
+key = HTML5PHP -> 333
+key = CODEIGNITERPHP -> 334
+key = ORACLEPLSQL -> 335
+key = SQLPLSQL -> 336
+key = MYSQLPOSTGRESQL -> 337
+key = REDISPOSTGRESQL -> 338
+key = RUBY-ON-RAILSPOSTGRESQL -> 339
+key = MONGODBPOSTGRESQL -> 340
+key = DJANGOPOSTGRESQL -> 341
+key = RUBYPOSTGRESQL -> 342
+key = WINDOWSPOWERSHELL -> 343
+key = FLASKPYTHON -> 344
+key = C++PYTHON -> 345
+key = MACHINE-LEARNINGPYTHON -> 346
+key = DJANGOPYTHON -> 347
+key = CPYTHON -> 348
+key = RPYTHON -> 349
+key = LINUXPYTHON -> 350
+key = C++QT -> 351
+key = PYTHONR -> 352
+key = MATLABR -> 353
+key = MACHINE-LEARNINGR -> 354
+key = REACTJSREACT-NATIVE -> 355
+key = (null) -> 356
+key = NODE.JSREACT-NATIVE -> 357
+key = NODE.JSREACTJS -> 358
+key = SASSREACTJS -> 359
+key = REACT-NATIVEREACTJS -> 360
+key = (null) -> 361
+key = ANGULARJSREACTJS -> 362
+key = MONGODBREACTJS -> 363
+key = EXPRESSREACTJS -> 364
+key = JAVASCRIPTREACTJS -> 365
+key = MONGODBREDIS -> 366
+key = NGINXREDIS -> 367
+key = ELASTICSEARCHREDIS -> 368
+key = POSTGRESQLREDIS -> 369
+key = REACTJSREDUX -> 370
+key = NODE.JSREDUX -> 371
+key = REACT-NATIVEREDUX -> 372
+key = EXPRESSREDUX -> 373
+key = PERLREGEX -> 374
+key = SPRINGREST -> 375
+key = WEB-SERVICESREST -> 376
+key = APIREST -> 377
+key = HIBERNATEREST -> 378
+key = JSONREST -> 379
+key = POSTGRESQLRUBY -> 380
+key = RUBY-ON-RAILSRUBY -> 381
+key = (null) -> 382
+key = RUBYRUBY-ON-RAILS -> 383
+key = JQUERYSASS -> 384
+key = JAVASCRIPTSASS -> 385
+key = REACTJSSASS -> 386
+key = HTMLSASS -> 387
+key = HTML5SASS -> 388
+key = LESSSASS -> 389
+key = ANGULARJSSASS -> 390
+key = CSSSASS -> 391
+key = TWITTER-BOOTSTRAPSASS -> 392
+key = HADOOPSCALA -> 393
+key = HASKELLSCALA -> 394
+key = APACHE-SPARKSCALA -> 395
+key = TESTINGSELENIUM -> 396
+key = BASHSHELL -> 397
+split12 on BOOTSTRAPCSS 112
+key = LINUXSHELL -> 398
+key = WEB-SERVICESSPRING -> 399
+key = SPRING-MVCSPRING -> 400
+key = RESTSPRING -> 401
+key = SPRING-BOOTSPRING -> 402
+key = MAVENSPRING -> 403
+key = JAVA-EESPRING -> 404
+key = HIBERNATESPRING -> 405
+key = JSPSPRING -> 406
+key = JAVASPRING -> 407
+key = SPRINGSPRING-BOOT -> 408
+key = HIBERNATESPRING-BOOT -> 409
+key = SPRING-MVCSPRING-BOOT -> 410
+key = MAVENSPRING-MVC -> 411
+key = JAVA-EESPRING-MVC -> 412
+key = SPRINGSPRING-MVC -> 413
+key = JSPSPRING-MVC -> 414
+key = SPRING-BOOTSPRING-MVC -> 415
+key = HIBERNATESPRING-MVC -> 416
+key = JAVASPRING-MVC -> 417
+key = PLSQLSQL -> 418
+key = SQL-SERVERSQL -> 419
+key = C#SQL -> 420
+key = ORACLESQL -> 421
+key = ASP.NETSQL -> 422
+key = ASP.NET-WEB-APISQL-SERVER -> 423
+key = WCFSQL-SERVER -> 424
+key = VB.NETSQL-SERVER -> 425
+key = .NETSQL-SERVER -> 426
+key = ENTITY-FRAMEWORKSQL-SERVER -> 427
+key = (null) -> 428
+key = LINQSQL-SERVER -> 429
+key = SQLSQL-SERVER -> 430
+key = C#SQL-SERVER -> 431
+key = XCODESWIFT -> 432
+key = IPHONESWIFT -> 433
+key = OBJECTIVE-CSWIFT -> 434
+key = IOSSWIFT -> 435
+key = AGILETDD -> 436
+key = SELENIUMTESTING -> 437
+key = ANGULARJSTWITTER-BOOTSTRAP -> 438
+key = HTML5TWITTER-BOOTSTRAP -> 439
+key = (null) -> 440
+key = JQUERYTWITTER-BOOTSTRAP -> 441
+key = JAVASCRIPTTWITTER-BOOTSTRAP -> 442
+key = CSSTWITTER-BOOTSTRAP -> 443
+key = JQUERYTWITTER-BOOTSTRAP-3 -> 444
+key = HTML5TWITTER-BOOTSTRAP-3 -> 445
+key = ANGULAR2TYPESCRIPT -> 446
+key = ANGULARTYPESCRIPT -> 447
+key = LINUXUBUNTU -> 448
+key = C#UNITY3D -> 449
+key = LINUXUNIX -> 450
+key = ASP.NETVB.NET -> 451
+key = SQL-SERVERVB.NET -> 452
+key = C#VB.NET -> 453
+key = EXCEL-VBAVBA -> 454
+key = EXCELVBA -> 455
+key = C#VISUAL-STUDIO -> 456
+key = LARAVELVUE.JS -> 457
+key = .NETWCF -> 458
+key = ENTITY-FRAMEWORKWCF -> 459
+key = C#WCF -> 460
+key = SQL-SERVERWCF -> 461
+key = WPFWCF -> 462
+key = LINQWCF -> 463
+key = ASP.NETWCF -> 464
+key = ASP.NET-WEB-APIWCF -> 465
+key = RESTWEB-SERVICES -> 466
+key = HIBERNATEWEB-SERVICES -> 467
+key = SPRINGWEB-SERVICES -> 468
+key = (null) -> 469
+key = (null) -> 470
+key = (null) -> 471
+key = PHPWORDPRESS -> 472
+key = HTML5WORDPRESS -> 473
+key = CSSWORDPRESS -> 474
+key = CODEIGNITERWORDPRESS -> 475
+key = DRUPALWORDPRESS -> 476
+key = JQUERYWORDPRESS -> 477
+key = LINQWPF -> 478
+key = WCFWPF -> 479
+key = ENTITY-FRAMEWORKWPF -> 480
+key = C#WPF -> 481
+key = ASP.NETWPF -> 482
+key = .NETWPF -> 483
+key = C#XAMARIN -> 484
+key = OBJECTIVE-CXCODE -> 485
+key = SWIFTXCODE -> 486
+key = IPHONEXCODE -> 487
+key = IOSXCODE -> 488
+key = JSONXML -> 489
+No Raiz 171
+| Node 171 H=6 N=2
+|| Node 55 H=5 N=2
+||| Node 22 H=4 N=3
+|||| Node 7 H=3 N=3
+||||| Node 2 H=2 N=3
+|||||| Node 0 H=1 N=2
+|||||| .NETASP.NET -> 46
+|||||| .NETAZURE -> 66
+||||| .NETC# -> 86
+|||||| Node 51 H=1 N=2
+|||||| .NETENTITY-FRAMEWORK -> 134
+|||||| .NETLINQ -> 262
+||||| .NETSQL-SERVER -> 426
+|||||| Node 208 H=1 N=2
+|||||| .NETWCF -> 458
+|||||| .NETWPF -> 483
+||||| AGILETDD -> 436
+|||||| Node 239 H=1 N=1
+|||||| AJAXCODEIGNITER -> 103
+|||| AJAXCSS -> 105
+||||| Node 209 H=2 N=1
+|||||| Node 103 H=1 N=2
+|||||| AJAXJAVASCRIPT -> 216
+|||||| AJAXJQUERY -> 234
+||||| AJAXJSON -> 245
+|||||| Node 141 H=1 N=2
+|||||| AJAXMYSQL -> 299
+|||||| AJAXPHP -> 330
+|||| AMAZON-WEB-SERVICESAZURE -> 70
+||||| Node 104 H=2 N=1
+|||||| Node 36 H=1 N=2
+|||||| AMAZON-WEB-SERVICESCLOUD -> 98
+|||||| AMAZON-WEB-SERVICESDEVOPS -> 119
+||||| AMAZON-WEB-SERVICESDOCKER -> 125
+|||||| Node 64 H=1 N=1
+|||||| ANDROID-STUDIOANDROID -> 21
+|||| ANDROIDANDROID-STUDIO -> 23
+||||| Node 52 H=2 N=3
+|||||| Node 23 H=1 N=2
+|||||| ANDROIDIOS -> 188
+|||||| ANDROIDJAVA -> 202
+||||| ANGULAR2ANGULARJS -> 38
+|||||| Node 215 H=1 N=1
+|||||| ANGULAR2TYPESCRIPT -> 446
+||||| ANGULARJSANGULAR2 -> 26
+|||||| Node 15 H=1 N=2
+|||||| ANGULARJSASP.NET-WEB-API -> 62
+|||||| ANGULARJSCSS -> 116
+||||| ANGULARJSEXPRESS -> 148
+|||||| Node 78 H=1 N=2
+|||||| ANGULARJSHTML5 -> 180
+|||||| ANGULARJSIONIC-FRAMEWORK -> 187
+||| ANGULARJSJAVASCRIPT -> 214
+|||| Node 112 H=3 N=3
+||||| Node 111 H=2 N=2
+|||||| Node 110 H=1 N=2
+|||||| ANGULARJSJQUERY -> 237
+|||||| ANGULARJSMONGODB -> 289
+||||| ANGULARJSNODE.JS -> 308
+|||||| Node 172 H=1 N=2
+|||||| ANGULARJSREACTJS -> 362
+|||||| ANGULARJSSASS -> 390
+||||| ANGULARJSTWITTER-BOOTSTRAP -> 438
+|||||| Node 216 H=1 N=1
+|||||| ANGULARTYPESCRIPT -> 447
+|||| APACHE-SPARKHADOOP -> 160
+||||| Node 217 H=2 N=1
+|||||| Node 92 H=1 N=3
+|||||| APACHE-SPARKSCALA -> 395
+|||||| APACHEMYSQL -> 300
+|||||| APACHENGINX -> 304
+||||| APIREST -> 377
+|||||| Node 178 H=1 N=1
+|||||| ASP.NET-WEB-APIANGULARJS -> 37
+|||| ASP.NET-WEB-APIASP.NET -> 50
+||||| Node 34 H=2 N=2
+|||||| Node 33 H=1 N=2
+|||||| ASP.NET-WEB-APIAZURE -> 68
+|||||| ASP.NET-WEB-APIC# -> 83
+||||| ASP.NET-WEB-APIENTITY-FRAMEWORK -> 140
+|||||| Node 205 H=1 N=2
+|||||| ASP.NET-WEB-APISQL-SERVER -> 423
+|||||| ASP.NET-WEB-APIWCF -> 465
+||||| ASP.NET.NET -> 2
+|||||| Node 28 H=1 N=2
+|||||| ASP.NETASP.NET-WEB-API -> 59
+|||||| ASP.NETAZURE -> 69
+|||| ASP.NETC# -> 82
+||||| Node 206 H=2 N=2
+|||||| Node 69 H=1 N=2
+|||||| ASP.NETENTITY-FRAMEWORK -> 136
+|||||| ASP.NETJQUERY -> 230
+||||| ASP.NETLINQ -> 260
+|||||| Node 137 H=1 N=2
+|||||| ASP.NETMVC -> 290
+|||||| ASP.NETSQL -> 422
+||||| ASP.NETVB.NET -> 451
+|||||| Node 224 H=1 N=2
+|||||| ASP.NETWCF -> 464
+|||||| ASP.NETWPF -> 482
+||| AZURE.NET -> 0
+|||| Node 53 H=3 N=3
+||||| Node 24 H=2 N=2
+|||||| Node 12 H=1 N=2
+|||||| AZUREAMAZON-WEB-SERVICES -> 17
+|||||| AZUREASP.NET -> 54
+||||| AZUREASP.NET-WEB-API -> 60
+|||||| Node 42 H=1 N=2
+|||||| AZUREC# -> 89
+|||||| BASHGIT -> 155
+||||| BASHLINUX -> 264
+|||||| Node 185 H=1 N=1
+|||||| BASHSHELL -> 397
+|||| BOOTSTRAPCSS -> 112
+||||| Node 186 H=2 N=1
+|||||| Node 114 H=1 N=1
+|||||| BOOTSTRAPJQUERY -> 241
+||||| C#.NET -> 7
+|||||| Node 5 H=1 N=2
+|||||| C#ASP.NET -> 49
+|||||| C#ASP.NET-WEB-API -> 61
+|||| C#AZURE -> 67
+||||| Node 43 H=2 N=3
+|||||| Node 40 H=1 N=2
+|||||| C#ENTITY-FRAMEWORK -> 141
+|||||| C#LINQ -> 259
+||||| C#SQL -> 420
+|||||| Node 211 H=1 N=2
+|||||| C#SQL-SERVER -> 431
+|||||| C#UNITY3D -> 449
+||||| C#VB.NET -> 453
+|||||| Node 220 H=1 N=2
+|||||| C#VISUAL-STUDIO -> 456
+|||||| C#WCF -> 460
+||||| C#WPF -> 481
+|||||| Node 240 H=1 N=1
+|||||| C#XAMARIN -> 484
+|||| C++C -> 76
+||||| Node 221 H=2 N=1
+|||||| Node 127 H=1 N=3
+|||||| C++JAVA -> 199
+|||||| C++PYTHON -> 345
+|||||| C++QT -> 351
+||||| CC++ -> 95
+|||||| Node 73 H=1 N=2
+|||||| CEMBEDDED -> 133
+|||||| CJAVA -> 204
+||| CLOUDAMAZON-WEB-SERVICES -> 16
+|||| Node 187 H=3 N=2
+||||| Node 160 H=2 N=1
+|||||| Node 29 H=1 N=2
+|||||| CODEIGNITERJQUERY -> 240
+|||||| CODEIGNITERLARAVEL -> 253
+||||| CODEIGNITERMYSQL -> 301
+|||||| Node 159 H=1 N=3
+|||||| CODEIGNITERPHP -> 334
+|||||| CODEIGNITERWORDPRESS -> 475
+|||||| CPYTHON -> 348
+|||| CSSAJAX -> 12
+||||| Node 120 H=2 N=2
+|||||| Node 119 H=1 N=1
+|||||| CSSBOOTSTRAP -> 75
+||||| CSSHTML -> 174
+|||||| Node 87 H=1 N=2
+|||||| CSSHTML5 -> 184
+|||||| CSSJAVASCRIPT -> 218
+||||| CSSJQUERY -> 232
+|||||| Node 125 H=1 N=2
+|||||| CSSLESS -> 255
+|||||| CSSMYSQL -> 291
+|||| CSSPHOTOSHOP -> 324
+||||| Node 233 H=2 N=1
+|||||| Node 152 H=1 N=2
+|||||| CSSPHP -> 325
+|||||| CSSSASS -> 391
+||||| CSSTWITTER-BOOTSTRAP -> 443
+|||||| Node 232 H=1 N=1
+|||||| CSSWORDPRESS -> 474
+|| DEVOPSAMAZON-WEB-SERVICES -> 18
+||| Node 113 H=4 N=2
+|||| Node 35 H=3 N=2
+||||| Node 13 H=2 N=2
+|||||| Node 11 H=1 N=2
+|||||| DEVOPSDOCKER -> 127
+|||||| DEVOPSJENKINS -> 223
+||||| DJANGOFLASK -> 152
+|||||| Node 107 H=1 N=3
+|||||| DJANGOPOSTGRESQL -> 341
+|||||| DJANGOPYTHON -> 347
+|||||| DOCKERAMAZON-WEB-SERVICES -> 19
+||||| DOCKERDEVOPS -> 120
+|||||| Node 67 H=1 N=3
+|||||| DOCKERGO -> 158
+|||||| DOCKERJENKINS -> 225
+|||||| DRUPALWORDPRESS -> 476
+|||| ECLIPSEMAVEN -> 279
+||||| Node 133 H=2 N=1
+|||||| Node 132 H=1 N=2
+|||||| ELASTICSEARCHREDIS -> 368
+|||||| EMBEDDEDC -> 78
+||||| ENTITY-FRAMEWORK.NET -> 3
+|||||| Node 1 H=1 N=2
+|||||| ENTITY-FRAMEWORKASP.NET -> 52
+|||||| ENTITY-FRAMEWORKASP.NET-WEB-API -> 65
+|||| ENTITY-FRAMEWORKC# -> 84
+||||| Node 75 H=2 N=2
+|||||| Node 74 H=1 N=2
+|||||| ENTITY-FRAMEWORKLINQ -> 261
+|||||| ENTITY-FRAMEWORKSQL-SERVER -> 427
+||||| ENTITY-FRAMEWORKWCF -> 459
+|||||| Node 235 H=1 N=1
+|||||| ENTITY-FRAMEWORKWPF -> 480
+||||| EXCEL-VBAEXCEL -> 143
+|||||| Node 210 H=1 N=3
+|||||| EXCEL-VBAVBA -> 454
+|||||| EXCELEXCEL-VBA -> 145
+|||||| EXCELVBA -> 455
+||| EXPRESSANGULARJS -> 34
+|||| Node 237 H=3 N=1
+||||| Node 236 H=2 N=1
+|||||| Node 32 H=1 N=2
+|||||| EXPRESSMONGODB -> 282
+|||||| EXPRESSNODE.JS -> 307
+||||| EXPRESSREACTJS -> 364
+|||||| Node 176 H=1 N=1
+|||||| EXPRESSREDUX -> 373
+|||| FLASKDJANGO -> 123
+||||| Node 177 H=2 N=1
+|||||| Node 144 H=1 N=2
+|||||| FLASKPYTHON -> 344
+|||||| GITBASH -> 73
+||||| GITGITHUB -> 157
+|||||| Node 79 H=1 N=3
+|||||| GITHUBGIT -> 154
+|||||| GITJENKINS -> 222
+|||||| GITLINUX -> 265
+||| GODOCKER -> 126
+|||| Node 134 H=3 N=3
+||||| Node 66 H=2 N=2
+|||||| Node 65 H=1 N=2
+|||||| HADOOPAPACHE-SPARK -> 44
+|||||| HADOOPSCALA -> 393
+||||| HASKELLSCALA -> 394
+|||||| Node 183 H=1 N=1
+|||||| HIBERNATEJAVA -> 203
+||||| HIBERNATEJAVA-EE -> 207
+|||||| Node 116 H=1 N=2
+|||||| HIBERNATEJSP -> 246
+|||||| HIBERNATEMAVEN -> 281
+|||| HIBERNATEREST -> 378
+||||| Node 192 H=2 N=2
+|||||| Node 191 H=1 N=2
+|||||| HIBERNATESPRING -> 405
+|||||| HIBERNATESPRING-BOOT -> 409
+||||| HIBERNATESPRING-MVC -> 416
+|||||| Node 227 H=1 N=1
+|||||| HIBERNATEWEB-SERVICES -> 467
+||||| HTML5ANGULARJS -> 39
+|||||| Node 19 H=1 N=2
+|||||| HTML5CSS -> 111
+|||||| HTML5JAVASCRIPT -> 221
+|||| HTML5JQUERY -> 233
+||||| Node 117 H=2 N=2
+|||||| Node 109 H=1 N=2
+|||||| HTML5LESS -> 256
+|||||| HTML5PHP -> 333
+||||| HTML5SASS -> 388
+|||||| Node 181 H=1 N=2
+|||||| HTML5TWITTER-BOOTSTRAP -> 439
+|||||| HTML5TWITTER-BOOTSTRAP-3 -> 445
+||||| HTML5WORDPRESS -> 473
+|||||| Node 230 H=1 N=1
+|||||| HTMLCSS -> 109
+|||| HTMLJAVASCRIPT -> 219
+||||| Node 231 H=2 N=1
+|||||| Node 106 H=1 N=2
+|||||| HTMLJQUERY -> 227
+|||||| HTMLMYSQL -> 298
+||||| HTMLPHP -> 331
+|||||| Node 157 H=1 N=2
+|||||| HTMLSASS -> 387
+|||||| IONIC-FRAMEWORKANGULARJS -> 27
+|| IOSANDROID -> 20
+||| Node 238 H=4 N=1
+|||| Node 76 H=3 N=3
+||||| Node 20 H=2 N=2
+|||||| Node 17 H=1 N=2
+|||||| IOSIPHONE -> 196
+|||||| IOSOSX -> 321
+||||| IOSSWIFT -> 435
+|||||| Node 246 H=1 N=1
+|||||| IOSXCODE -> 488
+||||| IPHONEIOS -> 192
+|||||| Node 148 H=1 N=3
+|||||| IPHONEOBJECTIVE-C -> 313
+|||||| IPHONESWIFT -> 433
+|||||| IPHONEXCODE -> 487
+|||| JAVA-EEHIBERNATE -> 169
+||||| Node 247 H=2 N=1
+|||||| Node 98 H=1 N=3
+|||||| JAVA-EEJAVA -> 201
+|||||| JAVA-EESPRING -> 404
+|||||| JAVA-EESPRING-MVC -> 412
+||||| JAVAANDROID -> 22
+|||||| Node 94 H=1 N=1
+|||||| JAVAC -> 79
+|||| JAVAC++ -> 96
+||||| Node 99 H=2 N=1
+|||||| Node 82 H=1 N=3
+|||||| JAVAHIBERNATE -> 163
+|||||| JAVAJAVA-EE -> 209
+|||||| JAVAJSP -> 247
+||||| JAVASCRIPTAJAX -> 14
+|||||| Node 14 H=1 N=2
+|||||| JAVASCRIPTANGULARJS -> 33
+|||||| JAVASCRIPTCSS -> 110
+|||| JAVASCRIPTHTML -> 172
+||||| Node 86 H=2 N=3
+|||||| Node 85 H=1 N=2
+|||||| JAVASCRIPTHTML5 -> 179
+|||||| JAVASCRIPTJQUERY -> 239
+||||| JAVASCRIPTNODE.JS -> 305
+|||||| Node 156 H=1 N=2
+|||||| JAVASCRIPTPHP -> 329
+|||||| JAVASCRIPTREACTJS -> 365
+||||| JAVASCRIPTSASS -> 385
+|||||| Node 195 H=1 N=3
+|||||| JAVASCRIPTTWITTER-BOOTSTRAP -> 442
+|||||| JAVASPRING -> 407
+|||||| JAVASPRING-MVC -> 417
+||||| JENKINSDEVOPS -> 121
+|||||| Node 59 H=1 N=3
+|||||| JENKINSDOCKER -> 128
+|||||| JENKINSGIT -> 153
+|||||| JQUERYAJAX -> 10
+||| JQUERYANGULARJS -> 36
+|||| Node 214 H=3 N=1
+||||| Node 60 H=2 N=2
+|||||| Node 26 H=1 N=2
+|||||| JQUERYASP.NET -> 51
+|||||| JQUERYBOOTSTRAP -> 74
+||||| JQUERYCODEIGNITER -> 100
+|||||| Node 58 H=1 N=2
+|||||| JQUERYCSS -> 108
+|||||| JQUERYHTML -> 176
+||||| JQUERYHTML5 -> 183
+|||||| Node 101 H=1 N=2
+|||||| JQUERYJAVASCRIPT -> 210
+|||||| JQUERYJSON -> 243
+|||| JQUERYMYSQL -> 292
+||||| Node 213 H=2 N=1
+|||||| Node 155 H=1 N=2
+|||||| JQUERYPHP -> 328
+|||||| JQUERYSASS -> 384
+||||| JQUERYTWITTER-BOOTSTRAP -> 441
+|||||| Node 212 H=1 N=2
+|||||| JQUERYTWITTER-BOOTSTRAP-3 -> 444
+|||||| JQUERYWORDPRESS -> 477
+| JSONAJAX -> 15
+|| Node 245 H=5 N=1
+||| Node 54 H=4 N=2
+|||| Node 21 H=3 N=2
+||||| Node 10 H=2 N=3
+|||||| Node 9 H=1 N=2
+|||||| JSONJQUERY -> 226
+|||||| JSONREST -> 379
+||||| JSONXML -> 489
+|||||| Node 248 H=1 N=1
+|||||| JSPHIBERNATE -> 162
+||||| JSPJAVA -> 200
+|||||| Node 108 H=1 N=3
+|||||| JSPSPRING -> 406
+|||||| JSPSPRING-MVC -> 414
+|||||| LARAVELCODEIGNITER -> 101
+||||| LARAVELMYSQL -> 294
+|||||| Node 193 H=1 N=2
+|||||| LARAVELPHP -> 326
+|||||| LARAVELVUE.JS -> 457
+|||| LESSCSS -> 114
+||||| Node 194 H=2 N=2
+|||||| Node 80 H=1 N=3
+|||||| LESSHTML5 -> 181
+|||||| LESSSASS -> 389
+|||||| LINQ.NET -> 5
+||||| LINQASP.NET -> 56
+|||||| Node 48 H=1 N=2
+|||||| LINQC# -> 80
+|||||| LINQENTITY-FRAMEWORK -> 138
+||||| LINQSQL-SERVER -> 429
+|||||| Node 223 H=1 N=2
+|||||| LINQWCF -> 463
+|||||| LINQWPF -> 478
+|||| LINUXAPACHE -> 42
+||||| Node 81 H=2 N=3
+|||||| Node 37 H=1 N=2
+|||||| LINUXBASH -> 71
+|||||| LINUXGIT -> 156
+||||| LINUXNGINX -> 302
+|||||| Node 149 H=1 N=2
+|||||| LINUXOSX -> 322
+|||||| LINUXPYTHON -> 350
+||||| LINUXSHELL -> 398
+|||||| Node 218 H=1 N=2
+|||||| LINUXUBUNTU -> 448
+|||||| LINUXUNIX -> 450
+||||| MACHINE-LEARNINGPYTHON -> 346
+|||||| Node 165 H=1 N=2
+|||||| MACHINE-LEARNINGR -> 354
+|||||| MATLABR -> 353
+||| MAVENECLIPSE -> 130
+|||| Node 201 H=3 N=1
+||||| Node 200 H=2 N=1
+|||||| Node 83 H=1 N=2
+|||||| MAVENHIBERNATE -> 165
+|||||| MAVENJENKINS -> 224
+||||| MAVENSPRING -> 403
+|||||| Node 199 H=1 N=1
+|||||| MAVENSPRING-MVC -> 411
+|||| MONGODBANGULARJS -> 29
+||||| Node 150 H=2 N=2
+|||||| Node 27 H=1 N=2
+|||||| MONGODBELASTICSEARCH -> 132
+|||||| MONGODBEXPRESS -> 150
+||||| MONGODBMYSQL -> 293
+|||||| Node 138 H=1 N=2
+|||||| MONGODBPOSTGRESQL -> 340
+|||||| MONGODBREACTJS -> 363
+||||| MONGODBREDIS -> 366
+|||||| Node 173 H=1 N=1
+|||||| MVCASP.NET -> 53
+||| MYSQLAJAX -> 11
+|||| Node 151 H=3 N=1
+||||| Node 38 H=2 N=3
+|||||| Node 8 H=1 N=2
+|||||| MYSQLAPACHE -> 41
+|||||| MYSQLCODEIGNITER -> 99
+||||| MYSQLCSS -> 106
+|||||| Node 57 H=1 N=2
+|||||| MYSQLHTML -> 171
+|||||| MYSQLJQUERY -> 236
+||||| MYSQLLARAVEL -> 252
+|||||| Node 118 H=1 N=3
+|||||| MYSQLMONGODB -> 286
+|||||| MYSQLPHP -> 332
+|||||| MYSQLPOSTGRESQL -> 337
+||||| NGINXAPACHE -> 40
+|||||| Node 158 H=1 N=2
+|||||| NGINXLINUX -> 270
+|||||| NGINXREDIS -> 367
+|||| NODE.JSANGULARJS -> 35
+||||| Node 136 H=2 N=2
+|||||| Node 18 H=1 N=2
+|||||| NODE.JSEXPRESS -> 149
+|||||| NODE.JSJAVASCRIPT -> 212
+||||| NODE.JSMONGODB -> 283
+|||||| Node 135 H=1 N=2
+|||||| NODE.JSREACT-NATIVE -> 357
+|||||| NODE.JSREACTJS -> 358
+||||| NODE.JSREDUX -> 371
+|||||| Node 175 H=1 N=1
+|||||| OBJECTIVE-CIOS -> 191
+|| OBJECTIVE-CIPHONE -> 197
+||| Node 244 H=4 N=1
+|||| Node 97 H=3 N=2
+||||| Node 96 H=2 N=2
+|||||| Node 95 H=1 N=2
+|||||| OBJECTIVE-COSX -> 320
+|||||| OBJECTIVE-CSWIFT -> 434
+||||| OBJECTIVE-CXCODE -> 485
+|||||| Node 241 H=1 N=1
+|||||| ORACLEPLSQL -> 335
+||||| ORACLESQL -> 421
+|||||| Node 204 H=1 N=1
+|||||| OSXIOS -> 190
+|||| OSXLINUX -> 267
+||||| Node 242 H=2 N=1
+|||||| Node 147 H=1 N=2
+|||||| OSXOBJECTIVE-C -> 316
+|||||| PERLREGEX -> 374
+||||| PHPAJAX -> 13
+|||||| Node 93 H=1 N=1
+|||||| PHPCODEIGNITER -> 102
+|||| PHPCSS -> 118
+||||| Node 62 H=2 N=2
+|||||| Node 61 H=1 N=2
+|||||| PHPHTML -> 173
+|||||| PHPHTML5 -> 177
+||||| PHPJAVASCRIPT -> 215
+|||||| Node 102 H=1 N=2
+|||||| PHPJQUERY -> 231
+|||||| PHPLARAVEL -> 251
+||||| PHPMYSQL -> 295
+|||||| Node 139 H=1 N=2
+|||||| PHPWORDPRESS -> 472
+|||||| PLSQLORACLE -> 318
+||| PLSQLSQL -> 418
+|||| Node 243 H=3 N=1
+||||| Node 229 H=2 N=1
+|||||| Node 228 H=1 N=1
+|||||| POSTGRESQLDJANGO -> 124
+||||| POSTGRESQLMYSQL -> 296
+|||||| Node 174 H=1 N=2
+|||||| POSTGRESQLREDIS -> 369
+|||||| POSTGRESQLRUBY -> 380
+|||| PYTHONC -> 77
+||||| Node 140 H=2 N=1
+|||||| Node 49 H=1 N=2
+|||||| PYTHONC++ -> 97
+|||||| PYTHONDJANGO -> 122
+||||| PYTHONFLASK -> 151
+|||||| Node 129 H=1 N=3
+|||||| PYTHONLINUX -> 272
+|||||| PYTHONMACHINE-LEARNING -> 274
+|||||| PYTHONR -> 352
+| QTC++ -> 94
+|| Node 170 H=5 N=1
+||| Node 169 H=4 N=1
+|||| Node 63 H=3 N=3
+||||| Node 50 H=2 N=3
+|||||| Node 47 H=1 N=3
+|||||| REACT-NATIVENODE.JS -> 310
+|||||| REACT-NATIVEREACTJS -> 360
+|||||| REACT-NATIVEREDUX -> 372
+||||| REACTJSEXPRESS -> 146
+|||||| Node 166 H=1 N=1
+|||||| REACTJSJAVASCRIPT -> 217
+||||| REACTJSMONGODB -> 284
+|||||| Node 142 H=1 N=2
+|||||| REACTJSNODE.JS -> 306
+|||||| REACTJSREACT-NATIVE -> 355
+||||| REACTJSREDUX -> 370
+|||||| Node 180 H=1 N=1
+|||||| REACTJSSASS -> 386
+|||| REDISELASTICSEARCH -> 131
+||||| Node 167 H=2 N=1
+|||||| Node 105 H=1 N=3
+|||||| REDISMONGODB -> 287
+|||||| REDISNGINX -> 303
+|||||| REDISPOSTGRESQL -> 338
+||||| REDUXEXPRESS -> 147
+|||||| Node 145 H=1 N=2
+|||||| REDUXNODE.JS -> 311
+|||||| REGEXPERL -> 323
+|||| RESTAPI -> 45
+||||| Node 143 H=2 N=2
+|||||| Node 77 H=1 N=2
+|||||| RESTHIBERNATE -> 166
+|||||| RESTJSON -> 242
+||||| RESTSPRING -> 401
+|||||| Node 225 H=1 N=1
+|||||| RESTWEB-SERVICES -> 466
+||||| RMACHINE-LEARNING -> 275
+|||||| Node 130 H=1 N=2
+|||||| RMATLAB -> 276
+|||||| RPYTHON -> 349
+|||| RUBY-ON-RAILSPOSTGRESQL -> 339
+||||| Node 226 H=2 N=1
+|||||| Node 179 H=1 N=1
+|||||| RUBY-ON-RAILSRUBY -> 381
+||||| RUBYPOSTGRESQL -> 342
+|||||| Node 163 H=1 N=2
+|||||| RUBYRUBY-ON-RAILS -> 383
+|||||| SASSCSS -> 117
+||| SASSHTML -> 175
+|||| Node 168 H=3 N=3
+||||| Node 122 H=2 N=1
+|||||| Node 90 H=1 N=2
+|||||| SASSHTML5 -> 186
+|||||| SASSJAVASCRIPT -> 220
+||||| SASSJQUERY -> 229
+|||||| Node 121 H=1 N=2
+|||||| SASSLESS -> 254
+|||||| SASSREACTJS -> 359
+|||| SCALAAPACHE-SPARK -> 43
+||||| Node 91 H=2 N=2
+|||||| Node 39 H=1 N=3
+|||||| SCALAHADOOP -> 159
+|||||| SCALAHASKELL -> 161
+|||||| SELENIUMTESTING -> 437
+||||| SHELLBASH -> 72
+|||||| Node 84 H=1 N=2
+|||||| SPRING-BOOTSPRING -> 402
+|||||| SPRING-BOOTSPRING-MVC -> 415
+||||| SPRING-MVCHIBERNATE -> 168
+|||||| Node 202 H=1 N=1
+|||||| SPRING-MVCJAVA -> 205
+|||| SPRING-MVCJAVA-EE -> 208
+||||| Node 203 H=2 N=1
+|||||| Node 100 H=1 N=2
+|||||| SPRING-MVCJSP -> 248
+|||||| SPRING-MVCMAVEN -> 277
+||||| SPRING-MVCSPRING -> 400
+|||||| Node 198 H=1 N=1
+|||||| SPRING-MVCSPRING-BOOT -> 410
+|||| SPRINGJAVA -> 198
+||||| Node 197 H=2 N=1
+|||||| Node 131 H=1 N=2
+|||||| SPRINGJSP -> 249
+|||||| SPRINGMAVEN -> 280
+||||| SPRINGREST -> 375
+|||||| Node 196 H=1 N=3
+|||||| SPRINGSPRING-BOOT -> 408
+|||||| SPRINGSPRING-MVC -> 413
+|||||| SPRINGWEB-SERVICES -> 468
+|| SQL-SERVER.NET -> 1
+||| Node 124 H=4 N=2
+|||| Node 123 H=3 N=2
+||||| Node 6 H=2 N=3
+|||||| Node 4 H=1 N=2
+|||||| SQL-SERVERASP.NET -> 48
+|||||| SQL-SERVERASP.NET-WEB-API -> 63
+||||| SQL-SERVERC# -> 87
+|||||| Node 70 H=1 N=2
+|||||| SQL-SERVERENTITY-FRAMEWORK -> 137
+|||||| SQL-SERVERLINQ -> 258
+||||| SQL-SERVERSQL -> 419
+|||||| Node 219 H=1 N=2
+|||||| SQL-SERVERVB.NET -> 452
+|||||| SQL-SERVERWCF -> 461
+||||| SQLASP.NET -> 47
+|||||| Node 41 H=1 N=2
+|||||| SQLC# -> 81
+|||||| SQLORACLE -> 317
+|||| SQLPLSQL -> 336
+||||| Node 162 H=2 N=1
+|||||| Node 161 H=1 N=2
+|||||| SQLSQL-SERVER -> 430
+|||||| SWIFTIOS -> 189
+||||| SWIFTIPHONE -> 194
+|||||| Node 146 H=1 N=2
+|||||| SWIFTOBJECTIVE-C -> 314
+|||||| SWIFTXCODE -> 486
+|||| TDDAGILE -> 8
+||||| Node 89 H=2 N=3
+|||||| Node 25 H=1 N=2
+|||||| TESTINGSELENIUM -> 396
+|||||| TWITTER-BOOTSTRAP-3HTML5 -> 182
+||||| TWITTER-BOOTSTRAP-3JQUERY -> 238
+|||||| Node 184 H=1 N=1
+|||||| TWITTER-BOOTSTRAPANGULARJS -> 32
+||||| TWITTER-BOOTSTRAPCSS -> 113
+|||||| Node 88 H=1 N=2
+|||||| TWITTER-BOOTSTRAPHTML5 -> 185
+|||||| TWITTER-BOOTSTRAPJAVASCRIPT -> 211
+||||| TWITTER-BOOTSTRAPJQUERY -> 235
+|||||| Node 182 H=1 N=1
+|||||| TWITTER-BOOTSTRAPSASS -> 392
+||| TYPESCRIPTANGULAR -> 24
+|||| Node 46 H=3 N=2
+||||| Node 45 H=2 N=3
+|||||| Node 16 H=1 N=2
+|||||| TYPESCRIPTANGULAR2 -> 25
+|||||| UBUNTULINUX -> 268
+||||| UNITY3DC# -> 91
+|||||| Node 128 H=1 N=1
+|||||| UNIXLINUX -> 266
+||||| VB.NETASP.NET -> 58
+|||||| Node 44 H=1 N=2
+|||||| VB.NETSQL-SERVER -> 425
+|||||| VBAEXCEL -> 142
+||||| VISUAL-STUDIOC# -> 93
+|||||| Node 207 H=1 N=1
+|||||| VUE.JSLARAVEL -> 250
+|||| WCF.NET -> 6
+||||| Node 31 H=2 N=3
+|||||| Node 3 H=1 N=2
+|||||| WCFASP.NET -> 57
+|||||| WCFASP.NET-WEB-API -> 64
+||||| WCFC# -> 92
+|||||| Node 56 H=1 N=2
+|||||| WCFENTITY-FRAMEWORK -> 139
+|||||| WCFLINQ -> 257
+||||| WCFSQL-SERVER -> 424
+|||||| Node 234 H=1 N=1
+|||||| WCFWPF -> 479
+||||| WEB-SERVICESHIBERNATE -> 167
+|||||| Node 126 H=1 N=2
+|||||| WEB-SERVICESREST -> 376
+|||||| WEB-SERVICESSPRING -> 399
+|||| WINDOWSLINUX -> 271
+||||| Node 189 H=2 N=1
+|||||| Node 188 H=1 N=1
+|||||| WINDOWSOSX -> 319
+||||| WINDOWSPOWERSHELL -> 343
+|||||| Node 164 H=1 N=1
+|||||| WORDPRESSCODEIGNITER -> 104
+||| WORDPRESSCSS -> 115
+|||| Node 190 H=3 N=1
+||||| Node 154 H=2 N=1
+|||||| Node 71 H=1 N=2
+|||||| WORDPRESSDRUPAL -> 129
+|||||| WORDPRESSHTML5 -> 178
+||||| WORDPRESSJQUERY -> 228
+|||||| Node 153 H=1 N=1
+|||||| WORDPRESSPHP -> 327
+|||| WPF.NET -> 4
+||||| Node 72 H=2 N=3
+|||||| Node 30 H=1 N=2
+|||||| WPFASP.NET -> 55
+|||||| WPFC# -> 90
+||||| WPFENTITY-FRAMEWORK -> 135
+|||||| Node 68 H=1 N=2
+|||||| WPFLINQ -> 263
+|||||| WPFWCF -> 462
+||||| XAMARINC# -> 88
+|||||| Node 222 H=1 N=1
+|||||| XCODEIOS -> 193
+||||| XCODEIPHONE -> 195
+|||||| Node 115 H=1 N=3
+|||||| XCODEOBJECTIVE-C -> 312
+|||||| XCODESWIFT -> 432
+|||||| XMLJSON -> 244
+28940.100000
