@@ -13,5 +13,6 @@
 #define FUNCIONALIDADES_ARVORES
 
 void funcionalidade5();
+void funcionalidade6();
 
 #endif

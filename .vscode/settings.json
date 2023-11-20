@@ -1,0 +1,9 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "*.m": "matlab",
+        "registros_arvore.h": "c",
+        "funcoesauxiliares.h": "c",
+        "funcionalidades_arvores.h": "c"
+    }
+}

@@ -30,6 +30,9 @@ int main() {
         case 5:
             funcionalidade5();
             break;
+        case 6:
+            funcionalidade6();
+            break;
         default:
             printf("comando nao encontrado.\n");
     }

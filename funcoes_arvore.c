@@ -58,13 +58,24 @@ dado* insert(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altura) {
     if(altura != NULL)
         *altura = reg.alturaNo;
 
+    
     // encontra ponteiro adequado para a chave dada
+    int num_chave = busca_binaria_reg_arvore(data->chave, reg);
+    
+    // garantir que estamo na posicao do maior elemento de chave maior que a atual
+    if(num_chave < reg.nroChavesNo && strcmp(data->chave, reg.dados[num_chave].chave) > 0){
+        num_chave += 1;
+    }
+    
+    
+    /*
     int num_chave = 0;
     for(; num_chave < reg.nroChavesNo; num_chave++) {
         if(strcmp(data->chave, reg.dados[num_chave].chave) < 0)
             break;
     }
-
+    */    
+    
     // analisa o ponteiro determinado, inserindo o elemento no registro atual caso seja -1, ou continuando a busca caso contrario
     dado* insere;
     if(reg.ponteiro_arvore[num_chave] == -1)
