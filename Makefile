@@ -16,7 +16,7 @@ valout :
 
 # pode trocar os numeros para diferentes testes
 test :
-	for number in `seq 3 3` ; do \
+	for number in `seq 1 10` ; do \
 	./$(TARGET) < TestCases/$$number.in > TestCases/$$number.out2; \
 	diff -s TestCases/$$number.out TestCases/$$number.out2; \
 	done

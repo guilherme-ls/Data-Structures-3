@@ -67,15 +67,6 @@ dado* insert(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altura) {
         num_chave += 1;
     }
     
-    
-    /*
-    int num_chave = 0;
-    for(; num_chave < reg.nroChavesNo; num_chave++) {
-        if(strcmp(data->chave, reg.dados[num_chave].chave) < 0)
-            break;
-    }
-    */    
-    
     // analisa o ponteiro determinado, inserindo o elemento no registro atual caso seja -1, ou continuando a busca caso contrario
     dado* insere;
     if(reg.ponteiro_arvore[num_chave] == -1)
