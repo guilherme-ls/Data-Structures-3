@@ -71,7 +71,7 @@ void funcionalidade5() {
 
     // loop de leitura e escrita dos dados
     while(1) {
-        // funcao de leitura dos registros, retornando quando encontra EOF
+        // funcao de leitura dos registros, retornando 1 quando encontra EOF
         int end = ler_registro(arq_dados, &reg);
         if(end) {
             // break com fim do arquivo
@@ -109,7 +109,11 @@ void funcionalidade5() {
     binarioNaTela(nome_arvore);
 }
 
+/**
+ * @brief Executa a funcionalidade 6, lendo dois arquivos (dados e indice), realizando n buscas solicitadas, sendo no arquivo de indice, quando possível, ou no de dados.
+*/
 void funcionalidade6(){
+    // Inicialização de variáveis
     char nome_dados[TAM_ARQ_LEITURA];  // Nome do arquivo binario de dados
     char nome_arvore[TAM_ARQ_LEITURA];  // Nome do arquivo binario do indice
     char nomeCampo[TAM_ARQ_LEITURA];  // nome do campo a ser buscado
@@ -163,7 +167,6 @@ void funcionalidade6(){
         // recebe o nome e valor do campo a serem buscados
         scanf("%s", nomeCampo);
         scanf("%s", temp);
-
         valorCampoBuscado = strtok(temp, "\"");
 
         // Verifica se a busca deve ser feita no arquivo de indice ou diretamente no arquivo de dados
@@ -173,36 +176,31 @@ void funcionalidade6(){
             int regEncontrado = 1; // controle para saber se registro foi encontrado
             chaveAtual = malloc(TAM_CHAVE+1 * sizeof(char)); // Valor para chave do indice sem o lixo
 
+            if(cabecalho_arvore.noRaiz == -1){
+                // Arquivo de arvore vazio.
+                printf("Registro inexistente.\n");
+                continue;
+            }
+
             if(primeiraBuscaArvore){
                 // trazer raiz da arvore para memória primária
-                fseek(arq_arvore, calcula_byte_off_arvore(cabecalho_arvore.noRaiz), SEEK_SET); // posiciona cursor para no raiz
-                int check = ler_registro_arvore(arq_arvore, &reg_raiz_arvore);
+                pega_raiz(arq_arvore, cabecalho_arvore, &reg_raiz_arvore); 
                 primeiraBuscaArvore = 0;
-                if(check == 1){
-                    // arquivo vazio de registro de dados.
-                    printf("Registro inexistente.\n");
-                    break;
-                }
-            }else{
-                // Leva cursor para o primeiro registro do arquivo de indice
-                //fseek(arq_arvore, TAM_HEADER_ARVORE, SEEK_SET);
             }
 
             reg_no_atual = reg_raiz_arvore; // começa busca pela raiz
 
             int iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, reg_no_atual); // Variavel para indice retornado na busca binaria
-
-            ler_chave_sem_lixo(reg_no_atual.dados[iBuscaAtual].chave, chaveAtual);
+            ler_chave_sem_lixo(reg_no_atual.dados[iBuscaAtual].chave, chaveAtual);  // Lê a chave retornada na busca.
         
             //Busca no arquivo de indice (arvore B)
             while(strcmp(valorCampoBuscado, chaveAtual) != 0){
                 free(chaveAtual);
                 chaveAtual = malloc(TAM_CHAVE+1 * sizeof(char)); // Valor para chave do indice sem o lixo
 
-                // garantir que estamo na posicao do maior elemento de chave maior que a atual
-                if(iBuscaAtual < reg_no_atual.nroChavesNo && strcmp(valorCampoBuscado, reg_no_atual.dados[iBuscaAtual].chave) > 0){
+                // garantir que estamos na posicao do maior elemento de chave maior que a atual
+                if(iBuscaAtual < reg_no_atual.nroChavesNo && strcmp(valorCampoBuscado, reg_no_atual.dados[iBuscaAtual].chave) > 0)
                     iBuscaAtual += 1;
-                }
 
                 if(reg_no_atual.ponteiro_arvore[iBuscaAtual] == -1){
                     // Não existe subárvore, fim da busca.
@@ -210,22 +208,21 @@ void funcionalidade6(){
                     regEncontrado = 0;
                     break;
                 }
-                fseek(arq_arvore, (reg_no_atual.ponteiro_arvore[iBuscaAtual] + 1) * TAM_REG_ARVORE, SEEK_SET);
-                int check = ler_registro_arvore(arq_arvore, &reg_no_atual);
+                fseek(arq_arvore, (reg_no_atual.ponteiro_arvore[iBuscaAtual] + 1) * TAM_REG_ARVORE, SEEK_SET); // Posiciona cursor no proximo registro da arvore.
+                int check = ler_registro_arvore(arq_arvore, &reg_no_atual);  // leitura do próximo registro de indice para busca.
                 if(check == 1){
                     // fim do arquivo
                     printf("Registro inexistente.\n");
                     regEncontrado = 0; 
                     break;
                 }
-                iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, reg_no_atual);
-                ler_chave_sem_lixo(reg_no_atual.dados[iBuscaAtual].chave, chaveAtual);
+                iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, reg_no_atual);  // Realiza busca binária no registro da arvore.
+                ler_chave_sem_lixo(reg_no_atual.dados[iBuscaAtual].chave, chaveAtual);  // Lê a chave retornada na busca.
             }
             if(regEncontrado){
+                // O registro foi encontrado
                 registro regBuscado;
-                int RRNDado = reg_no_atual.dados[iBuscaAtual].ponteiro_dado; // RRN do registro buscado no arquivo de dados
-                fseek(arq_dados, calcula_byte_off(RRNDado), SEEK_SET);
-                int end = ler_registro(arq_dados, &regBuscado);
+                int end = ler_reg_dados_do_indice(arq_dados, reg_no_atual, &regBuscado, iBuscaAtual); // ler registro a partir da referencia no arquivo de indice
                 if(end == 2){
                     printf("Falha no processamento do arquivo.");
                     free(temp);
@@ -234,6 +231,7 @@ void funcionalidade6(){
                     fclose(arq_arvore);
                     return;
                 }else if(regBuscado.removido != '1'){
+                    // Por garantia, checar se registro não está removido.
                     imprime_registro(regBuscado);
                 }else{
                     printf("Registro inexistente.\n");
@@ -267,4 +265,105 @@ void funcionalidade6(){
     free(temp);
     fclose(arq_dados);
     fclose(arq_arvore);
+}
+
+void funcionalidade7(){
+    char nome_dados[TAM_ARQ_LEITURA];  // Nome do arquivo binario de dados
+    char nome_arvore[TAM_ARQ_LEITURA];  // Nome do arquivo binario do indice
+
+    int n;  // Quantidade de inserções;
+
+
+    // Recebe o nome do arquivo de entrada e a quantidade de valores para inserir
+    scanf("%s %s %d", nome_dados, nome_arvore, &n);  
+
+    // abre o arquivo de dados
+    FILE* arq_dados;
+    if(open(&arq_dados, nome_dados, "rb")) {
+        // fim da execucao em caso de erros
+        return;
+    }
+
+    // le registro de cabecalho dos dados e retorna quaisquer erros
+    header cabecalho_dados;
+    int erro;
+    erro = check_cabecalho(arq_dados, &cabecalho_dados);
+    if(erro == 1) {
+        // fim da execucao em caso de erros
+        return;
+    }
+
+    // abre o arquivo de indice (arvore B)
+    FILE* arq_arvore;
+    if(open(&arq_arvore, nome_arvore, "rb")) {
+        // fim da execucao em caso de erros
+        fclose(arq_dados);
+        return;
+    }
+
+    header_arvore cabecalho_arvore;
+    erro = check_cabecalho_arvore(arq_arvore, &cabecalho_arvore);
+    if(erro == 1){
+        // fim da execucao em caso de erro
+        fclose(arq_dados);
+        return;
+    }
+
+    // cria registro de dados e o inicializa com dados generalizados
+    registro reg;
+    inicializa_registro(&reg);
+    
+    // Leva cursor para o proxRNN do arquvio de dados
+    fseek(arq_dados, calcula_byte_off(cabecalho_dados.proxRRN), SEEK_SET);
+
+    // RRN para inserção no arquivo de indice
+    int RRNarvore = cabecalho_arvore.RRNproxNo;
+
+    // Muda o status dos cabeçalhos para incio da escrita
+    cabecalho_dados.status = '0';
+    cabecalho_arvore.status = '0';
+
+    // Loop para efetuar inserção.
+    for(int i = 0; i < n; i++){
+        // Inserção no arquivo de dados:
+
+        // lê a entrada e atualiza registro
+        entrada_para_registro(&reg);
+
+        // escreve o registro
+        escrever_registro(arq_dados, reg);
+
+        // atualiza informacoes do cabecalho
+        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
+            cabecalho_dados.nroParesTecnologias++;
+        
+        cabecalho_dados.proxRRN++;
+
+        // Inserção no arquivo de indice:
+
+        dado data;
+        concatena_chave(reg, data.chave);
+        data.ponteiro_dado = RRNarvore;
+        insere_raiz(arq_arvore, &cabecalho_arvore, &data);
+
+        RRNarvore++;
+    }
+
+    // Muda o status dos cabeçalhos com o fim da escrita
+    cabecalho_dados.status = '1';
+    cabecalho_arvore.status = '1';
+
+    // escreve registro de cabecalho da arvore atualizado
+    fseek(arq_arvore, 0, SEEK_SET);
+    escrever_header_arvore(arq_arvore, cabecalho_arvore);
+
+    // fecha arquivos de dados
+    fclose(arq_dados);
+    fclose(arq_arvore);
+
+    // aplica a funcao binarioNaTela, como solicitado
+    binarioNaTela(nome_dados);
+    binarioNaTela(nome_arvore);
+    
+
 }

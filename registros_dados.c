@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "registros_dados.h"
+#include "funcoesAuxiliares.h"
 
 /**
  * @brief calcula o tamanho do lixo ao final do registro
@@ -247,4 +248,46 @@ void imprime_campo_numerico(int num, char* fim) {
         printf("%d", num);
     }
     printf("%s", fim);
+}
+
+void entrada_para_registro(registro* reg){
+    // Inicialização de variaveis
+    char* tempOrigem = malloc(80 * sizeof(char));
+    char* nomeTecnologiaOrigem;
+    char grupo[80];
+    char popularidade[80];
+    char* tempDestino = malloc(80 * sizeof(char));
+    char* nomeTecnologiaDestino;
+    char peso[80];
+
+    scanf("%s, %s, %s, %s, %s", tempOrigem, grupo, popularidade, tempDestino, peso);
+
+    // tirando as aspas
+    if(strcmp(tempOrigem, "NULO") != 0){
+        nomeTecnologiaOrigem = strtok(tempOrigem, "\"");
+    }else{
+        nomeTecnologiaOrigem = NULL;
+    }
+    if(strcmp(tempDestino, "NULO") != 0){
+    nomeTecnologiaDestino = strtok(tempDestino, "\"");
+    }else{
+        nomeTecnologiaDestino = NULL;
+    }
+
+    // Atualiza registro
+    reg->tecnologiaOrigem.nome = nomeTecnologiaOrigem;
+    reg->grupo = checa_int_nulo(grupo);
+    reg->popularidade = checa_int_nulo(popularidade);
+    reg->tecnologiaDestino.nome = nomeTecnologiaDestino;
+    reg->peso = checa_int_nulo(peso);
+
+    // preenche  o tamanho dos nomes armazenados
+    if(reg->tecnologiaOrigem.nome != NULL)
+        reg->tecnologiaOrigem.tamanho = strlen(reg->tecnologiaOrigem.nome);
+    if(reg->tecnologiaDestino.nome != NULL)
+        reg->tecnologiaDestino.tamanho = strlen(reg->tecnologiaDestino.nome);    
+
+    // Libera memoria alocada
+    free(tempOrigem);
+    free(tempDestino);
 }

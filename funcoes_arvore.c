@@ -210,3 +210,16 @@ void clear_dado(dado* data) {
     data->chave[TAM_CHAVE] = '\0';
     data->ponteiro_dado = -1;
 }
+
+int pega_raiz(FILE* arq_arvore, header_arvore header, registro_arvore* reg){
+    fseek(arq_arvore, calcula_byte_off_arvore(header.noRaiz), SEEK_SET); // posiciona cursor para no raiz
+    int check = ler_registro_arvore(arq_arvore, reg);
+    return check;
+}
+
+int ler_reg_dados_do_indice(FILE* arq_dados, registro_arvore reg_arvore, registro* reg_dados, int iBuscaBinaria){
+    int RRNDado = reg_arvore.dados[iBuscaBinaria].ponteiro_dado; // RRN do registro buscado no arquivo de dados
+    fseek(arq_dados, calcula_byte_off(RRNDado), SEEK_SET); // Cursor para o registro encontrado no arquivo de dados
+    int end = ler_registro(arq_dados, reg_dados);
+    return end;
+}

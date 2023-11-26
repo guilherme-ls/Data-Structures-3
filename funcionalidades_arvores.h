@@ -14,5 +14,6 @@
 
 void funcionalidade5();
 void funcionalidade6();
+void funcionalidade7();
 
 #endif
