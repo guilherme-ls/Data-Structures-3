@@ -8,6 +8,20 @@
 #include "funcoesAuxiliares.h"
 
 /**
+ * @brief concatena as chaves em um dado registro e armazena na string fornecida
+ * @param reg registro com as chaves a serem concatenadas
+ * @param string string onde salvar a concatenacao
+ */
+void concatena_chave(registro reg, char* string) {
+    strcpy(string, reg.tecnologiaOrigem.nome);
+    strcat(string, reg.tecnologiaDestino.nome);
+    for(int i = reg.tecnologiaOrigem.tamanho + reg.tecnologiaDestino.tamanho; i < TAM_CHAVE; i++) {
+        string[i] = LIXO_ARVORE;
+    }
+    string[TAM_CHAVE] = '\0';
+}
+
+/**
  * @brief le o registro de cabecalho e checa pela ocorrencia de erros, lidando com estes
  * @param arq_bin arquivo binario ja aberto no qual deve ser lido o registro
  * @param cabecalho struct de cabecalho no qual devem ser armazenadas as informacoes lidas
