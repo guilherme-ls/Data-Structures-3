@@ -75,11 +75,8 @@ dado* insere_loop(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altu
 
     // caso a insercao tenha resultado em split e necessite da insercao de elemento na posicao atual
     if(insere != NULL) {
-        int num_chave = 0;
-        for(; num_chave < reg.nroChavesNo; num_chave++) {
-            if(strcmp(insere->chave, reg.dados[num_chave].chave) < 0)
-                break;
-        }
+        // calcula posicao ideal para insercao com a busca binaria e insere
+        int num_chave = busca_binaria_reg_arvore(insere->chave, reg);
         dado* retorno = insere_reg(arquivo, cabecalho, insere, &reg, num_chave, cabecalho->RRNproxNo - 1);
         free(insere);
         return retorno;
