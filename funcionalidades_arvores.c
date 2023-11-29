@@ -159,7 +159,7 @@ void funcionalidade6(){
         valorCampoBuscado = strtok(temp, "\"");
 
         // Verifica se a busca deve ser feita no arquivo de indice ou diretamente no arquivo de dados
-        if(strcmp(nomeCampo, "nomeTecnologiaOrigemDestino") == 0){
+        if(strcmp(nomeCampo, "nomeTecnologiaOrigemDestino") == 0) {
 
             // busca em arquivo de indice (arvore)
             int regEncontrado = 1; // controle para saber se registro foi encontrado

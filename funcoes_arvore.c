@@ -23,16 +23,11 @@ void insere_raiz(FILE* arquivo, header_arvore* cabecalho, dado *data) {
 
     // cria nova raiz resultante do split e atribui seu RRN
     registro_arvore new_reg;
-    inicializa_registro_arvore(&new_reg);
-    new_reg.RRNdoNo = cabecalho->RRNproxNo;
-    new_reg.nroChavesNo = 1;
-    cabecalho->RRNproxNo++;
-    new_reg.alturaNo = *altura + 1;
+    inicializa_registro_preparado_arvore(&new_reg, cabecalho, *altura + 1);
 
     // insere dados e ponteiros na raiz
+    insere_chave_reg(&new_reg, *promove, cabecalho->RRNproxNo - 2, 0);
     new_reg.ponteiro_arvore[0] = cabecalho->noRaiz;
-    new_reg.ponteiro_arvore[1] = cabecalho->RRNproxNo - 2;
-    new_reg.dados[0] = *promove;
 
     // muda noRaiz no cabecalho
     cabecalho->noRaiz = new_reg.RRNdoNo;
@@ -111,12 +106,9 @@ dado* insere_reg(FILE* arquivo, header_arvore* cabecalho, dado* data, registro_a
         dado clear;
         clear_dado(&clear);
 
-        // cria novo registro resultante do split e atribui seu RRN
+        // cria novo registro resultante do split e atribui seu RRN e altura
         registro_arvore new_reg;
-        inicializa_registro_arvore(&new_reg);
-        new_reg.RRNdoNo = cabecalho->RRNproxNo;
-        cabecalho->RRNproxNo++;
-        new_reg.alturaNo = reg->alturaNo;
+        inicializa_registro_preparado_arvore(&new_reg, cabecalho, reg->alturaNo);
 
         // reorganiza os registros para o split
         dado *promove = malloc(sizeof(dado));
@@ -154,7 +146,7 @@ dado* insere_reg(FILE* arquivo, header_arvore* cabecalho, dado* data, registro_a
         fseek(arquivo, calcula_byte_off_arvore(new_reg.RRNdoNo), SEEK_SET);
         escrever_registro_arvore(arquivo, new_reg);
 
-        // retorna dado a ser promovido na split
+        // retorna dado a ser promovido no split
         return promove;
     }
 }

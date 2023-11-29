@@ -125,7 +125,18 @@ void inicializa_registro_arvore(registro_arvore* reg) {
         reg->dados[i].ponteiro_dado = -1;
         reg->ponteiro_arvore[i+1] = -1;
     }
-    
+}
+
+/**
+ * @brief inicializa registro ja com informacoes gerais preenchidas
+ * @param reg registro a ser inicializado
+ * @param cabecalho cabecalho da arvore atual
+ */
+void inicializa_registro_preparado_arvore(registro_arvore* reg, header_arvore* cabecalho, int altura) {
+    inicializa_registro_arvore(reg);
+    reg->RRNdoNo = cabecalho->RRNproxNo;
+    cabecalho->RRNproxNo++;
+    reg->alturaNo = altura;
 }
 
 /**
