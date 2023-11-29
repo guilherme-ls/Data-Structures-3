@@ -4,6 +4,7 @@
         "*.m": "matlab",
         "registros_arvore.h": "c",
         "funcoesauxiliares.h": "c",
-        "funcionalidades_arvores.h": "c"
+        "funcionalidades_arvores.h": "c",
+        "registros_dados.h": "c"
     }
 }

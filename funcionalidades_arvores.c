@@ -349,13 +349,13 @@ void funcionalidade7(){
         RRNarvore++;
     }
 
-    // Muda o status dos cabeçalhos com o fim da escrita
-    cabecalho_dados.status = '1';
-    cabecalho_arvore.status = '1';
-
     // escreve registro de cabecalho da arvore atualizado
     fseek(arq_arvore, 0, SEEK_SET);
     escrever_header_arvore(arq_arvore, cabecalho_arvore);
+
+    // Muda o status dos cabeçalhos com o fim da escrita
+    cabecalho_dados.status = '1';
+    cabecalho_arvore.status = '1';
 
     // fecha arquivos de dados
     fclose(arq_dados);
