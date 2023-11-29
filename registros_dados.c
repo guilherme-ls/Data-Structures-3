@@ -258,7 +258,11 @@ void entrada_para_registro(registro* reg){
     char* nomeTecnologiaDestino = malloc(80 * sizeof(char));
     char peso[80];
 
-    scanf("%s, %s, %s, %s, %s", nomeTecnologiaOrigem, grupo, popularidade, nomeTecnologiaDestino, peso);
+    scanf("%s", nomeTecnologiaOrigem);
+    scanf("%s", grupo);
+    scanf("%s", popularidade);
+    scanf("%s", nomeTecnologiaDestino);
+    scanf("%s", peso);
 
     // verificando se os campos strings são nulos.
     if(strcmp(nomeTecnologiaOrigem, "NULO") == 0){
