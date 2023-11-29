@@ -18,5 +18,7 @@ void insere_chave_reg(registro_arvore* reg, dado chave, int ponteiro, int pos);
 void clear_dado(dado* data);
 int pega_raiz(FILE* arq_arvore, header_arvore header, registro_arvore* reg);
 int ler_reg_dados_do_indice(FILE* arq_dados, registro_arvore reg_arvore, registro* reg_dados, int iBuscaBinaria);
+int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg);
+void ler_chave_sem_lixo(char* chave_original, char* chave_limpa);
 
 #endif

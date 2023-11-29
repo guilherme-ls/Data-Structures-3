@@ -55,17 +55,14 @@ dado* insere_loop(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altu
     // le registro atual
     registro_arvore reg;
     ler_registro_arvore(arquivo, &reg);
+
+    // preenche altura atual, caso solicitado (nao nulo)
     if(altura != NULL)
         *altura = reg.alturaNo;
 
     // encontra ponteiro adequado para a chave dada
     int num_chave = busca_binaria_reg_arvore(data->chave, reg);
-    
-    // garantir que estamo na posicao do maior elemento de chave maior que a atual
-    if(num_chave < reg.nroChavesNo && strcmp(data->chave, reg.dados[num_chave].chave) > 0){
-        num_chave += 1;
-    }
-    
+
     // analisa o ponteiro determinado, inserindo o elemento no registro atual caso seja -1, ou continuando a busca caso contrario
     dado* insere;
     if(reg.ponteiro_arvore[num_chave] == -1)
@@ -230,16 +227,62 @@ int pega_raiz(FILE* arq_arvore, header_arvore header, registro_arvore* reg){
 }
 
 /**
- * @brief 
- * @param arq_dados 
- * @param reg_arvore 
- * @param reg_dados 
- * @param iBuscaBinaria 
- * @return 
+ * @brief le registro de dados proveniente de uma chave especificada no registro da arvore
+ * @param arq_dados arquivo de dados a ser lido
+ * @param reg_arvore registro da arvore contendo a chave a ser buscada
+ * @param reg_dados registro de dados, preenchido pela funcao
+ * @param iBuscaBinaria indice da chave buscada
+ * @return 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso 
  */
 int ler_reg_dados_do_indice(FILE* arq_dados, registro_arvore reg_arvore, registro* reg_dados, int iBuscaBinaria){
     int RRNDado = reg_arvore.dados[iBuscaBinaria].ponteiro_dado; // RRN do registro buscado no arquivo de dados
     fseek(arq_dados, calcula_byte_off(RRNDado), SEEK_SET); // Cursor para o registro encontrado no arquivo de dados
     int end = ler_registro(arq_dados, reg_dados);
     return end;
+}
+
+/**
+ * @brief realiza a busca binaria nas chaves de um registro do arquivo de indice
+ * @param chaveBuscada string da chave buscada
+ * @param reg registro onde buscar a chave
+ * @return posicao onde a chave deve ser inserida (ou onde foi encontrada)
+ */
+int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg){
+    // variaveis de apoio
+    int menor = 0;
+    int maior = reg.nroChavesNo - 1;
+    int meio = 0;
+
+    while(menor <= maior) {
+        // calculo da posicao do meio
+        meio = menor + (maior - menor) / 2;
+
+        if(strcmp(chaveBuscada, reg.dados[meio].chave) == 0){
+            // Encontrou chave
+            return meio;
+        }else if(strcmp(chaveBuscada, reg.dados[meio].chave) > 0){
+            menor = meio + 1;
+        }else{
+            maior = meio - 1;
+        }
+    }
+
+    // retorna posicao onde chave deveria ser inserida
+    return menor;
+}
+
+/**
+ * @brief funcao para remover os caracteres lixo de uma chave lida a partir da arvore
+ * @param chave_original chave lida, ainda com lixo
+ * @param chave_limpa nova chave, preenchida pela funcao
+ */
+void ler_chave_sem_lixo(char* chave_original, char* chave_limpa){
+    int j = 0; 
+    for(j = 0; j < TAM_CHAVE+1; j++){
+        if(chave_original[j] == '$'){
+            break;
+        }
+        chave_limpa[j] = chave_original[j];
+    }
+    chave_limpa[j] = '\0';
 }

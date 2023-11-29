@@ -67,7 +67,7 @@ void funcionalidade5() {
             break;
         }
 
-        // imprime os dados contidos no registro lido, caso nao removido e caso a chave seja valida
+        // insere na arvore a chave do registro lido, caso nao removido e caso a chave seja valida
         if(reg.removido != '1' && reg.tecnologiaDestino.tamanho != 0 && reg.tecnologiaOrigem.tamanho != 0) {
             dado data;
             concatena_chave(reg, data.chave);
