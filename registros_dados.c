@@ -252,25 +252,19 @@ void imprime_campo_numerico(int num, char* fim) {
 
 void entrada_para_registro(registro* reg){
     // Inicialização de variaveis
-    char* tempOrigem = malloc(80 * sizeof(char));
-    char* nomeTecnologiaOrigem;
+    char* nomeTecnologiaOrigem = malloc(80 * sizeof(char));
     char grupo[80];
     char popularidade[80];
-    char* tempDestino = malloc(80 * sizeof(char));
-    char* nomeTecnologiaDestino;
+    char* nomeTecnologiaDestino = malloc(80 * sizeof(char));
     char peso[80];
 
-    scanf("%s, %s, %s, %s, %s", tempOrigem, grupo, popularidade, tempDestino, peso);
+    scanf("%s, %s, %s, %s, %s", nomeTecnologiaOrigem, grupo, popularidade, nomeTecnologiaDestino, peso);
 
-    // tirando as aspas
-    if(strcmp(tempOrigem, "NULO") != 0){
-        nomeTecnologiaOrigem = strtok(tempOrigem, "\"");
-    }else{
+    // verificando se os campos strings são nulos.
+    if(strcmp(nomeTecnologiaOrigem, "NULO") == 0){
         nomeTecnologiaOrigem = NULL;
     }
-    if(strcmp(tempDestino, "NULO") != 0){
-    nomeTecnologiaDestino = strtok(tempDestino, "\"");
-    }else{
+    if(strcmp(nomeTecnologiaDestino, "NULO") == 0){
         nomeTecnologiaDestino = NULL;
     }
 
@@ -288,6 +282,6 @@ void entrada_para_registro(registro* reg){
         reg->tecnologiaDestino.tamanho = strlen(reg->tecnologiaDestino.nome);    
 
     // Libera memoria alocada
-    free(tempOrigem);
-    free(tempDestino);
+    free(nomeTecnologiaOrigem);
+    free(nomeTecnologiaDestino);
 }
