@@ -103,14 +103,7 @@ dado* insere_loop(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altu
 dado* insere_reg(FILE* arquivo, header_arvore* cabecalho, dado* data, registro_arvore* reg, int pos, int pont) {
     // insere dado no registro atual quando possui espaco
     if(reg->nroChavesNo < ORDEM-1) {
-        for(int i = reg->nroChavesNo; i > pos; i--) {
-            reg->dados[i] = reg->dados[i - 1];
-            reg->ponteiro_arvore[i + 1] = reg->ponteiro_arvore[i];
-        }
-        reg->dados[pos] = *data;
-        reg->ponteiro_arvore[pos + 1] = pont;
-
-        reg->nroChavesNo++;
+        insere_chave_reg(reg, *data, pont, pos);
 
         // escreve registro modificado (necessario fseek pois ponteiro atual encontra-se no registro seguinte apos leitura)
         fseek(arquivo, calcula_byte_off_arvore(reg->RRNdoNo), SEEK_SET);
