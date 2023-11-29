@@ -5,18 +5,7 @@
 #include "funcoesAuxiliares.h"
 
 // define tamanho de strings para leitura do nome de arquivos
-#define TAM_ARQ_LEITURA 100 
-
-
-// aqui por enquanto
-void concatena_chave(registro reg, char* string) {
-    strcpy(string, reg.tecnologiaOrigem.nome);
-    strcat(string, reg.tecnologiaDestino.nome);
-    for(int i = reg.tecnologiaOrigem.tamanho + reg.tecnologiaDestino.tamanho; i < TAM_CHAVE; i++) {
-        string[i] = LIXO_ARVORE;
-    }
-    string[TAM_CHAVE] = '\0';
-}
+#define TAM_ARQ_LEITURA 100
 
 /**
  * @brief Executa a funcionalidade 1, lendo um dado arquivo csv e convertendo seus dados para registros em binario
