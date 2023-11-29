@@ -56,8 +56,7 @@ void escrever_header_arvore(FILE* arquivo, header_arvore cabecalho);
 int ler_header_arvore(FILE* arquivo, header_arvore* cabecalho);
 int calcula_byte_off_arvore(int RRN);
 void inicializa_registro_arvore(registro_arvore* reg);
+void inicializa_registro_preparado_arvore(registro_arvore* reg, header_arvore* cabecalho, int altura);
 void inicializa_cabecalho_arvore(header_arvore* cabecalho);
-int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg);
-void ler_chave_sem_lixo(char* chave_original, char* chave_limpa);
 
 #endif

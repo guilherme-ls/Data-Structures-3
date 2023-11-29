@@ -125,7 +125,18 @@ void inicializa_registro_arvore(registro_arvore* reg) {
         reg->dados[i].ponteiro_dado = -1;
         reg->ponteiro_arvore[i+1] = -1;
     }
-    
+}
+
+/**
+ * @brief inicializa registro ja com informacoes gerais preenchidas
+ * @param reg registro a ser inicializado
+ * @param cabecalho cabecalho da arvore atual
+ */
+void inicializa_registro_preparado_arvore(registro_arvore* reg, header_arvore* cabecalho, int altura) {
+    inicializa_registro_arvore(reg);
+    reg->RRNdoNo = cabecalho->RRNproxNo;
+    cabecalho->RRNproxNo++;
+    reg->alturaNo = altura;
 }
 
 /**
@@ -136,42 +147,4 @@ void inicializa_cabecalho_arvore(header_arvore* cabecalho) {
     cabecalho->status = '0';
     cabecalho->noRaiz = -1;
     cabecalho->RRNproxNo = 0;
-}
-
-/**
- * @brief realiza a busca binaria nas chaves de um registro do arquivo de indice
-*/
-int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg){
-    // variaveis de apoio
-    int menor = 0;
-    int maior = reg.nroChavesNo - 1;
-    int meio = 0;
-
-    while(menor <= maior){
-        // calculo da posicao do meio
-        meio = menor + (maior - menor) / 2;
-        
-        // Encontrou chave
-        if(strcmp(chaveBuscada, reg.dados[meio].chave) == 0){
-            return meio;
-        }else if(strcmp(chaveBuscada, reg.dados[meio].chave) > 0){
-            menor = meio + 1;
-        }else{
-            maior = meio - 1;
-        }
-    }
-
-    // retorna posicao onde chave deveria ser inserida
-    return meio;
-}
-
-void ler_chave_sem_lixo(char* chave_original, char* chave_limpa){
-    int j = 0; 
-    for(j = 0; j < TAM_CHAVE+1; j++){
-        if(chave_original[j] == '$'){
-            break;
-        }
-        chave_limpa[j] = chave_original[j];
-    }
-    chave_limpa[j] = '\0';
 }
