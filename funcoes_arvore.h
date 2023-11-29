@@ -11,10 +11,12 @@
 #define FUNCOES_ARVORE
 
 void insere_raiz(FILE* arquivo, header_arvore* cabecalho, dado *data);
-dado* insert(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altura);
-dado* insert_here(FILE* arquivo, header_arvore* cabecalho, dado* data, registro_arvore* reg, int pos, int pont);
+dado* insere_loop(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altura);
+dado* insere_reg(FILE* arquivo, header_arvore* cabecalho, dado* data, registro_arvore* reg, int pos, int pont);
+void divide_chaves(registro_arvore* reg, registro_arvore* new_reg, int comeco);
+void insere_chave_reg(registro_arvore* reg, dado chave, int ponteiro, int pos);
 void clear_dado(dado* data);
-int pega_raiz(FILE* arq_arvore, header_arvore header, registro_arvore* reg)
+int pega_raiz(FILE* arq_arvore, header_arvore header, registro_arvore* reg);
 int ler_reg_dados_do_indice(FILE* arq_dados, registro_arvore reg_arvore, registro* reg_dados, int iBuscaBinaria);
 
 #endif

@@ -153,7 +153,7 @@ int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg){
         
         // Encontrou chave
         if(strcmp(chaveBuscada, reg.dados[meio].chave) == 0){
-            return meio;    
+            return meio;
         }else if(strcmp(chaveBuscada, reg.dados[meio].chave) > 0){
             menor = meio + 1;
         }else{
