@@ -46,6 +46,12 @@ int check_cabecalho(FILE* arq_bin, header* cabecalho) {
     return 0;
 }
 
+/**
+ * @brief le o registro de cabecalho e checa pela ocorrencia de erros, lidando com estes
+ * @param arq_bin arquivo binario ja aberto no qual deve ser lido o registro
+ * @param cabecalho struct de cabecalho no qual devem ser armazenadas as informacoes lidas
+ * @return 0, caso o registro seja lido com sucesso, ou 1, em caso de falha
+ */
 int check_cabecalho_arvore(FILE* arq_bin, header_arvore* cabecalho) {
     int erro = ler_header_arvore(arq_bin, cabecalho);
     if(erro == 1) {
@@ -256,6 +262,11 @@ void entrada_para_registro(registro* reg){
         reg->tecnologiaDestino.tamanho = strlen(reg->tecnologiaDestino.nome);    
 }
 
+/**
+ * @brief executa a leitura do arquivo de dados inserindo suas tecnologias na lista fornecida
+ * @param arq_dados arquivo de dados a ser lido em sua totalidade
+ * @param l lista onde devem ser inseridas as tecnologias
+ */
 void le_arquivo_de_dados(FILE *arq_dados, lista *l){
     // Loop para efetuar leitura e coletar quantidade de tecnologias
     while(1) {
