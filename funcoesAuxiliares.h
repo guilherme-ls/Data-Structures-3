@@ -15,7 +15,6 @@ void divide_string(registro* reg, char* entrada);
 int checa_int_nulo(char* campo);
 int le_entrada(char* entrada, FILE* arq_csv);
 int busca_em_arq_dados(FILE *arq_bin, char* nomeCampo, char* valorCampoBuscado);
-void le_campo_funcionalidade_7(char *campo);
 void entrada_para_registro(registro* reg);
 void le_arquivo_de_dados(FILE *arq_dados, lista *l);
 

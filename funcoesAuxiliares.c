@@ -199,11 +199,32 @@ int busca_em_arq_dados(FILE *arq_bin, char* nomeCampo, char* valorCampoBuscado){
     return 0;
 }
 
-void le_campo_funcionalidade_7(char *campo) {
+/**
+ * @brief le entrada da funcionalide 7 (campo a campo) e retorna campo lido
+ * @return string do campo lido ou NULL
+ */
+char* le_campo_funcionalidade_7() {
     char *temp = (char *)malloc(80 * sizeof(char));
     scanf("%s", temp);
-    campo = strtok(temp, ",");
-    free(temp);
+    temp = strtok(temp, ",");
+    if(strcmp(temp, "NULO") == 0) {
+        free(temp);
+        return NULL;
+    }
+    return temp;
+}
+
+/**
+ * @brief recebe string de um campo lido e atribui seu valor de acordo
+ * @param campo string a ser convertida
+ * @return inteiro correspondente a string fornecida
+ */
+int checa_campo_inteiro_funcionalidade_7(char* campo) {
+    if(campo == NULL)
+        return -1;
+    int retorno = atoi(campo);
+    free(campo);
+    return retorno;
 }
 
 /**
@@ -212,57 +233,21 @@ void le_campo_funcionalidade_7(char *campo) {
 */
 void entrada_para_registro(registro* reg){
     // Inicialização de variaveis
-    char *nomeTecnologiaOrigem = malloc(80 * sizeof(char));
-    char *grupo = malloc(80 * sizeof(char));
-    char *popularidade = malloc(80 * sizeof(char));
-    char *nomeTecnologiaDestino = malloc(80 * sizeof(char));
-    char *peso = malloc(80 * sizeof(char));
+    char *nomeTecnologiaOrigem, *grupo, *popularidade, *nomeTecnologiaDestino, *peso;
 
-    scanf("%s", nomeTecnologiaOrigem);
-    nomeTecnologiaOrigem = strtok(nomeTecnologiaOrigem, ",");
-    scanf("%s", grupo);
-    grupo = strtok(grupo, ",");
-    scanf("%s", popularidade);
-    popularidade = strtok(popularidade, ",");
-    scanf("%s", nomeTecnologiaDestino);
-    nomeTecnologiaDestino = strtok(nomeTecnologiaDestino, ",");
-    scanf("%s", peso);
-    peso = strtok(peso, "\r\n");
+    nomeTecnologiaOrigem = le_campo_funcionalidade_7();
+    grupo = le_campo_funcionalidade_7();
+    popularidade = le_campo_funcionalidade_7();
+    nomeTecnologiaDestino = le_campo_funcionalidade_7();
+    peso = le_campo_funcionalidade_7();
 
-    // verificando se os campos strings são nulos.
-    if(strcmp(nomeTecnologiaOrigem, "NULO") == 0) {
-        free(nomeTecnologiaOrigem);
-        nomeTecnologiaOrigem = NULL;
-    }
-    else
-        reg->tecnologiaOrigem.nome = nomeTecnologiaOrigem;
+    // atribui campos do registro de acordo com as entradas lidas
+    reg->tecnologiaOrigem.nome = nomeTecnologiaOrigem;
+    reg->tecnologiaDestino.nome = nomeTecnologiaDestino;
 
-    if(strcmp(grupo, "NULO") == 0)
-        reg->grupo = -1;
-    else
-        reg->grupo = atoi(grupo);
-
-    if(strcmp(popularidade, "NULO") == 0)
-        reg->popularidade = -1;
-    else
-        reg->popularidade = atoi(popularidade);
-    
-    if(strcmp(nomeTecnologiaDestino, "NULO") == 0) {
-        free(nomeTecnologiaDestino);
-        nomeTecnologiaDestino = NULL;
-    }
-    else
-        reg->tecnologiaDestino.nome = nomeTecnologiaDestino;
-
-    if(strcmp(peso, "NULO") == 0)
-        reg->peso = -1;
-    else
-        reg->peso = atoi(peso);
-
-    // libera variaveis com inteiros previament
-    free(peso);
-    free(grupo);
-    free(popularidade);
+    reg->grupo = checa_campo_inteiro_funcionalidade_7(grupo);
+    reg->popularidade = checa_campo_inteiro_funcionalidade_7(popularidade);
+    reg->peso = checa_campo_inteiro_funcionalidade_7(peso);
 
     // preenche  o tamanho dos nomes armazenados
     if(reg->tecnologiaOrigem.nome != NULL)
