@@ -250,19 +250,46 @@ void imprime_campo_numerico(int num, char* fim) {
     printf("%s", fim);
 }
 
+/**
+ * @brief lê entrada de registros da funcionalidade 7 e salva na variavel dada
+ * @param reg variavel de registro os valores serão armazenados
+*/
 void entrada_para_registro(registro* reg){
     // Inicialização de variaveis
-    char* nomeTecnologiaOrigem = malloc(80 * sizeof(char));
+    char *temp1 = (char *)malloc(80 * sizeof(char));
+    char *temp2 = (char *)malloc(80 * sizeof(char));
+    char *temp3 = (char *)malloc(80 * sizeof(char));
+    char *temp4 = (char *)malloc(80 * sizeof(char));
+    char *temp5 = (char *)malloc(80 * sizeof(char));
+    char *nomeTecnologiaOrigem = malloc(80 * sizeof(char));
     char grupo[80];
     char popularidade[80];
-    char* nomeTecnologiaDestino = malloc(80 * sizeof(char));
+    char *nomeTecnologiaDestino = malloc(80 * sizeof(char));
     char peso[80];
 
-    scanf("%s", nomeTecnologiaOrigem);
-    scanf("%s", grupo);
-    scanf("%s", popularidade);
-    scanf("%s", nomeTecnologiaDestino);
-    scanf("%s", peso);
+    scanf("%s", temp1);
+    nomeTecnologiaOrigem = strtok(temp1, ",");
+    scanf("%s", temp2);
+    grupo = strtok(temp2, ",");
+    scanf("%s", temp3);
+    popularidade = strtok(temp3, ",");
+    scanf("%s", temp4);
+    nomeTecnologiaDestino = strtok(temp4, ",");
+    scanf("%s", temp5);
+    peso = strtok(temp5, ",");
+    free(temp1);
+    free(temp2);
+    free(temp3);
+    free(temp4);
+    free(temp5);
+
+    /*
+    le_campo_funcionalidade_7(nomeTecnologiaOrigem);
+    le_campo_funcionalidade_7(grupo);
+    le_campo_funcionalidade_7(popularidade);
+    le_campo_funcionalidade_7(nomeTecnologiaDestino);
+    le_campo_funcionalidade_7(peso);
+    */ 
 
     // verificando se os campos strings são nulos.
     if(strcmp(nomeTecnologiaOrigem, "NULO") == 0){
@@ -284,8 +311,4 @@ void entrada_para_registro(registro* reg){
         reg->tecnologiaOrigem.tamanho = strlen(reg->tecnologiaOrigem.nome);
     if(reg->tecnologiaDestino.nome != NULL)
         reg->tecnologiaDestino.tamanho = strlen(reg->tecnologiaDestino.nome);    
-
-    // Libera memoria alocada
-    free(nomeTecnologiaOrigem);
-    free(nomeTecnologiaDestino);
 }

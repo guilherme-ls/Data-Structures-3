@@ -198,3 +198,13 @@ int busca_em_arq_dados(FILE *arq_bin, char* nomeCampo, char* valorCampoBuscado){
     free(valorCampoAtual);
     return 0;
 }
+
+void le_campo_funcionalidade_7(char *campo) {
+  char *temp = (char *)malloc(80 * sizeof(char));
+
+  scanf("%s", temp);
+
+  campo = strtok(temp, ",");
+
+  free(temp);
+}
