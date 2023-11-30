@@ -201,16 +201,13 @@ int busca_em_arq_dados(FILE *arq_bin, char* nomeCampo, char* valorCampoBuscado){
 
 void le_campo_funcionalidade_7(char *campo) {
     char *temp = (char *)malloc(80 * sizeof(char));
-
     scanf("%s", temp);
-
     campo = strtok(temp, ",");
-
     free(temp);
 }
 
 /**
- * @brief lê entrada de registros da funcionalidade 7 e salva na variavel dada
+ * @brief le entrada de registros da funcionalidade 7 e salva na variavel dada
  * @param reg variavel de registro os valores serão armazenados
 */
 void entrada_para_registro(registro* reg){
