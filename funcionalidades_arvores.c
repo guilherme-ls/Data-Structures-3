@@ -268,7 +268,7 @@ void funcionalidade7(){
 
     // abre o arquivo de dados
     FILE* arq_dados;
-    if(open(&arq_dados, nome_dados, "rb")) {
+    if(open(&arq_dados, nome_dados, "rb+")) {
         // fim da execucao em caso de erros
         return;
     }
@@ -284,7 +284,7 @@ void funcionalidade7(){
 
     // abre o arquivo de indice (arvore B)
     FILE* arq_arvore;
-    if(open(&arq_arvore, nome_arvore, "rb")) {
+    if(open(&arq_arvore, nome_arvore, "rb+")) {
         // fim da execucao em caso de erros
         fclose(arq_dados);
         return;
@@ -302,7 +302,7 @@ void funcionalidade7(){
     registro reg;
     inicializa_registro(&reg);
     
-    // Leva cursor para o proxRNN do arquvio de dados
+    // Leva cursor para o proxRNN do arquivo de dados
     fseek(arq_dados, calcula_byte_off(cabecalho_dados.proxRRN), SEEK_SET);
 
     // RRN para inserção no arquivo de indice
