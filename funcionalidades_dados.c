@@ -8,7 +8,6 @@
 #include "funcionalidades_dados.h"
 #include "funcoesAuxiliares.h"
 #include "funcoesFornecidas.h"
-#include "lista.h"
 
 // define tamanho de strings para leitura do nome de arquivos
 #define TAM_ARQ_LEITURA 100

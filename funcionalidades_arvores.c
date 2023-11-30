@@ -3,7 +3,6 @@
 
 #include "funcionalidades_arvores.h"
 #include "funcoesAuxiliares.h"
-#include "lista.h"
 
 // define tamanho de strings para leitura do nome de arquivos
 #define TAM_ARQ_LEITURA 100
@@ -156,7 +155,7 @@ void funcionalidade6()
     // declara variáveis a serem empregadas no loop de leitura
     char *temp = malloc(160 * sizeof(char)); // valor temporario do campo a ser buscado
     char *valorCampoBuscado;        // ponteiro para armazenamento do campo buscado apos
-    
+
     for (int i = 0; i < n; i++)
     {
         // recebe o nome e valor do campo a serem buscados
@@ -262,28 +261,8 @@ void funcionalidade7()
     lista l;
     inicializa_lista(&l);
 
-    // Loop para efetuar leitura e coletar quantidade de tecnologias
-    while(1) {
-        registro reg_atual; // variavel para registro a ser lido
-
-        // leitura do registro
-        int end = ler_registro(arq_dados, &reg_atual);
-        if(end) {
-            // break com fim do arquivo
-            break;
-        }
-
-        // salva o nome de cada tecnologia em uma lista sem repeticoes
-        if(reg_atual.removido == '0') {
-            if(reg_atual.tecnologiaOrigem.tamanho != 0)
-                inserir(&l, reg_atual.tecnologiaOrigem.nome);
-            if(reg_atual.tecnologiaDestino.tamanho != 0)
-                inserir(&l, reg_atual.tecnologiaDestino.nome);
-        }
-        // libera as strings alocadas
-        free(reg_atual.tecnologiaOrigem.nome);
-        free(reg_atual.tecnologiaDestino.nome);
-    }
+    // Leitura completa do arquivo de dados para extrair quantidade de tecnologias
+    le_arquivo_de_dados(arq_dados, &l);
 
     // Loop para efetuar inserção.
     for (int i = 0; i < n; i++) {

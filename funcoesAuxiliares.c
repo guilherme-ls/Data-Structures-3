@@ -270,3 +270,28 @@ void entrada_para_registro(registro* reg){
     if(reg->tecnologiaDestino.nome != NULL)
         reg->tecnologiaDestino.tamanho = strlen(reg->tecnologiaDestino.nome);    
 }
+
+void le_arquivo_de_dados(FILE *arq_dados, lista *l){
+    // Loop para efetuar leitura e coletar quantidade de tecnologias
+    while(1) {
+        registro reg_atual; // variavel para registro a ser lido
+
+        // leitura do registro
+        int end = ler_registro(arq_dados, &reg_atual);
+        if(end) {
+            // break com fim do arquivo
+            break;
+        }
+
+        // salva o nome de cada tecnologia em uma lista sem repeticoes
+        if(reg_atual.removido == '0') {
+            if(reg_atual.tecnologiaOrigem.tamanho != 0)
+                inserir(l, reg_atual.tecnologiaOrigem.nome);
+            if(reg_atual.tecnologiaDestino.tamanho != 0)
+                inserir(l, reg_atual.tecnologiaDestino.nome);
+        }
+        // libera as strings alocadas
+        free(reg_atual.tecnologiaOrigem.nome);
+        free(reg_atual.tecnologiaDestino.nome);
+    }
+}

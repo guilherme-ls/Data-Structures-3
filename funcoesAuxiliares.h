@@ -5,6 +5,7 @@
 #define FUNCOES_AUXILIARES
 
 #include "registros_arvore.h"
+#include "lista.h"
 
 void concatena_chave(registro reg, char* string);
 int check_cabecalho(FILE* arq_bin, header* cabecalho);
@@ -16,5 +17,6 @@ int le_entrada(char* entrada, FILE* arq_csv);
 int busca_em_arq_dados(FILE *arq_bin, char* nomeCampo, char* valorCampoBuscado);
 void le_campo_funcionalidade_7(char *campo);
 void entrada_para_registro(registro* reg);
+void le_arquivo_de_dados(FILE *arq_dados, lista *l);
 
 #endif
