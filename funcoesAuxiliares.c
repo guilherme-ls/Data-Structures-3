@@ -198,3 +198,78 @@ int busca_em_arq_dados(FILE *arq_bin, char* nomeCampo, char* valorCampoBuscado){
     free(valorCampoAtual);
     return 0;
 }
+
+void le_campo_funcionalidade_7(char *campo) {
+    char *temp = (char *)malloc(80 * sizeof(char));
+
+    scanf("%s", temp);
+
+    campo = strtok(temp, ",");
+
+    free(temp);
+}
+
+/**
+ * @brief lê entrada de registros da funcionalidade 7 e salva na variavel dada
+ * @param reg variavel de registro os valores serão armazenados
+*/
+void entrada_para_registro(registro* reg){
+    // Inicialização de variaveis
+    char *nomeTecnologiaOrigem = malloc(80 * sizeof(char));
+    char *grupo = malloc(80 * sizeof(char));
+    char *popularidade = malloc(80 * sizeof(char));
+    char *nomeTecnologiaDestino = malloc(80 * sizeof(char));
+    char *peso = malloc(80 * sizeof(char));
+
+    scanf("%s", nomeTecnologiaOrigem);
+    nomeTecnologiaOrigem = strtok(nomeTecnologiaOrigem, ",");
+    scanf("%s", grupo);
+    grupo = strtok(grupo, ",");
+    scanf("%s", popularidade);
+    popularidade = strtok(popularidade, ",");
+    scanf("%s", nomeTecnologiaDestino);
+    nomeTecnologiaDestino = strtok(nomeTecnologiaDestino, ",");
+    scanf("%s", peso);
+    peso = strtok(peso, "\r\n");
+
+    // verificando se os campos strings são nulos.
+    if(strcmp(nomeTecnologiaOrigem, "NULO") == 0) {
+        free(nomeTecnologiaOrigem);
+        nomeTecnologiaOrigem = NULL;
+    }
+    else
+        reg->tecnologiaOrigem.nome = nomeTecnologiaOrigem;
+
+    if(strcmp(grupo, "NULO") == 0)
+        reg->grupo = -1;
+    else
+        reg->grupo = atoi(grupo);
+
+    if(strcmp(popularidade, "NULO") == 0)
+        reg->popularidade = -1;
+    else
+        reg->popularidade = atoi(popularidade);
+    
+    if(strcmp(nomeTecnologiaDestino, "NULO") == 0) {
+        free(nomeTecnologiaDestino);
+        nomeTecnologiaDestino = NULL;
+    }
+    else
+        reg->tecnologiaDestino.nome = nomeTecnologiaDestino;
+
+    if(strcmp(peso, "NULO") == 0)
+        reg->peso = -1;
+    else
+        reg->peso = atoi(peso);
+
+    // libera variaveis com inteiros previament
+    free(peso);
+    free(grupo);
+    free(popularidade);
+
+    // preenche  o tamanho dos nomes armazenados
+    if(reg->tecnologiaOrigem.nome != NULL)
+        reg->tecnologiaOrigem.tamanho = strlen(reg->tecnologiaOrigem.nome);
+    if(reg->tecnologiaDestino.nome != NULL)
+        reg->tecnologiaDestino.tamanho = strlen(reg->tecnologiaDestino.nome);    
+}

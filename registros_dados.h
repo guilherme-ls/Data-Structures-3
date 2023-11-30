@@ -57,6 +57,5 @@ void inicializa_cabecalho(header* cabecalho);
 void imprime_registro(registro reg);
 void imprime_campo_texto(string texto, char* fim);
 void imprime_campo_numerico(int num, char* fim);
-void entrada_para_registro(registro* reg);
 
 #endif
