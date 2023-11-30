@@ -117,8 +117,6 @@ void funcionalidade6()
     int n;                              // Quantidade de buscas;
     int primeiraBuscaArvore = 1;        // variavel de controle para pôr no raiz em memoria primaria
     int primeiraBuscaDados = 1;         // variavel de controle para posicionar cursos no inicio do arquivo de dados;
-    registro_arvore reg_raiz_arvore;    // variavel para armazenar no raiz da arvore
-    registro_arvore reg_no_atual;       // variavel para armazenar no atual da busca na arvore
 
     // Recebe o nome do arquivo de entrada e a quantidade de valores para buscar
     scanf("%s %s %d", nome_dados, nome_arvore, &n);
@@ -158,8 +156,7 @@ void funcionalidade6()
     // declara variáveis a serem empregadas no loop de leitura
     char *temp = malloc(160 * sizeof(char)); // valor temporario do campo a ser buscado
     char *valorCampoBuscado;        // ponteiro para armazenamento do campo buscado apos
-    char *chaveAtual;               // Valor para chave do indice sem o lixo
-
+    
     for (int i = 0; i < n; i++)
     {
         // recebe o nome e valor do campo a serem buscados
@@ -170,51 +167,15 @@ void funcionalidade6()
         // Verifica se a busca deve ser feita no arquivo de indice ou diretamente no
         // arquivo de dados
         if (strcmp(nomeCampo, "nomeTecnologiaOrigemDestino") == 0)
-        {
-            // busca em arquivo de indice (arvore)
-            int regEncontrado = 1; // controle para saber se registro foi encontrado
-            chaveAtual = malloc((TAM_CHAVE + 1) * sizeof(char)); // Valor para chave do indice sem o lixo
-
-            if (cabecalho_arvore.noRaiz == -1) {
-                // Arquivo de arvore vazio.
-                printf("Registro inexistente.\n");
-                continue;
-            }
-
-            if (primeiraBuscaArvore) {
-                // trazer raiz da arvore para memória primária
-                pega_raiz(arq_arvore, cabecalho_arvore, &reg_raiz_arvore);
-                primeiraBuscaArvore = 0;
-            }
-
-            reg_no_atual = reg_raiz_arvore; // começa busca pela raiz
-
-            int iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, reg_no_atual); // Variavel para indice retornado na busca binaria
-            ler_chave_sem_lixo(reg_no_atual.dados[iBuscaAtual].chave, chaveAtual); // Lê a chave retornada na busca.
-
-            // Busca no arquivo de indice (arvore B)
-            regEncontrado = busca_em_arvore(arq_arvore, valorCampoBuscado, chaveAtual, &iBuscaAtual, &reg_no_atual);
-            if (regEncontrado) {
-                // O registro foi encontrado
-                registro regBuscado;
-                int end = ler_reg_dados_do_indice(arq_dados, reg_no_atual, &regBuscado, iBuscaAtual); // ler registro a partir da referencia no arquivo de indice
-                if (end == 2) {
-                    printf("Falha no processamento do arquivo.");
-                    free(temp);
-                    fclose(arq_dados);
-                    fclose(arq_arvore);
-                    return;
-                }
-                else if (regBuscado.removido != '1') {
-                    // Por garantia, checar se registro não está removido.
-                    imprime_registro(regBuscado);
-                }
-                else
-                    printf("Registro inexistente.\n");
-
-                // libera as strings alocadas
-                free(regBuscado.tecnologiaOrigem.nome);
-                free(regBuscado.tecnologiaDestino.nome);
+        {   
+            // Busca em arquivo de indice
+            int end = busca_em_indice(arq_arvore, arq_dados, valorCampoBuscado, cabecalho_arvore, &primeiraBuscaArvore);
+            if(end == 2){
+                printf("Falha no processamento do arquivo.");
+                free(temp);
+                fclose(arq_dados);
+                fclose(arq_arvore);
+                return;
             }
         }
         else

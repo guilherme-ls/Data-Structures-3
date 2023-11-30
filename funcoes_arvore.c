@@ -302,6 +302,55 @@ void ler_chave_sem_lixo(char *chave_original, char *chave_limpa)
     chave_limpa[j] = '\0';
 }
 
+int busca_em_indice(FILE* arq_arvore,FILE *arq_dados, char *valorCampoBuscado, header_arvore cabecalho_arvore, int *primeiraBuscaArvore){
+    registro_arvore reg_raiz_arvore;    // variavel para armazenar no raiz da arvore
+    registro_arvore reg_no_atual;       // variavel para armazenar no atual da busca na arvore
+
+    int regEncontrado = 1; // controle para saber se registro foi encontrado
+
+    char* chaveAtual = malloc((TAM_CHAVE + 1) * sizeof(char)); // Valor para chave do indice sem o lixo
+
+    if (cabecalho_arvore.noRaiz == -1) {
+        // Arquivo de arvore vazio.
+        printf("Registro inexistente.\n");
+        return 0;
+    }
+
+    if (*primeiraBuscaArvore) {
+        // trazer raiz da arvore para memória primária
+        pega_raiz(arq_arvore, cabecalho_arvore, &reg_raiz_arvore);
+        *primeiraBuscaArvore = 0;
+    }
+
+    reg_no_atual = reg_raiz_arvore; // começa busca pela raiz
+
+    int iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, reg_no_atual); // Variavel para indice retornado na busca binaria
+    ler_chave_sem_lixo(reg_no_atual.dados[iBuscaAtual].chave, chaveAtual); // Lê a chave retornada na busca.
+
+    // Busca na arvore B
+    regEncontrado = busca_em_arvore(arq_arvore, valorCampoBuscado, chaveAtual, &iBuscaAtual, &reg_no_atual);
+
+    if (regEncontrado) {
+        // O registro foi encontrado
+        registro regBuscado;
+        int end = ler_reg_dados_do_indice(arq_dados, reg_no_atual, &regBuscado, iBuscaAtual); // ler registro a partir da referencia no arquivo de indice
+        if (end == 2) {
+            return 2;
+        }
+        else if (regBuscado.removido != '1') {
+            // Por garantia, checar se registro não está removido.
+            imprime_registro(regBuscado);
+        }
+        else
+            printf("Registro inexistente.\n");
+
+        // libera as strings alocadas
+        free(regBuscado.tecnologiaOrigem.nome);
+        free(regBuscado.tecnologiaDestino.nome);
+    }
+    return 0;
+}
+
 int busca_em_arvore(FILE *arq_arvore, char *valorCampoBuscado, char *chaveAtual,
                     int *iBuscaAtual, registro_arvore *reg_no_atual)
 {
