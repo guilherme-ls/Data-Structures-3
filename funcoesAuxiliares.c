@@ -22,56 +22,6 @@ void concatena_chave(registro reg, char* string) {
 }
 
 /**
- * @brief le o registro de cabecalho e checa pela ocorrencia de erros, lidando com estes
- * @param arq_bin arquivo binario ja aberto no qual deve ser lido o registro
- * @param cabecalho struct de cabecalho no qual devem ser armazenadas as informacoes lidas
- * @return 0, caso o registro seja lido com sucesso, ou 1, em caso de falha
- */
-int check_cabecalho(FILE* arq_bin, header* cabecalho) {
-    int erro = ler_header(arq_bin, cabecalho);
-    if(erro == 1) {
-        // fim da execucao em caso de erros
-        printf("Falha no processamento do arquivo.\n");
-        fclose(arq_bin);
-        return 1;
-    }
-
-    // retorna erro caso 'status' do arquivo lido seja '0'
-    if(cabecalho->status == '0') {
-        printf("Falha no processamento do arquivo.\n");
-        fclose(arq_bin);
-        return 1;
-    }
-
-    return 0;
-}
-
-/**
- * @brief le o registro de cabecalho e checa pela ocorrencia de erros, lidando com estes
- * @param arq_bin arquivo binario ja aberto no qual deve ser lido o registro
- * @param cabecalho struct de cabecalho no qual devem ser armazenadas as informacoes lidas
- * @return 0, caso o registro seja lido com sucesso, ou 1, em caso de falha
- */
-int check_cabecalho_arvore(FILE* arq_bin, header_arvore* cabecalho) {
-    int erro = ler_header_arvore(arq_bin, cabecalho);
-    if(erro == 1) {
-        // fim da execucao em caso de erros
-        printf("Falha no processamento do arquivo.\n");
-        fclose(arq_bin);
-        return 1;
-    }
-
-    // retorna erro caso 'status' do arquivo lido seja '0'
-    if(cabecalho->status == '0') {
-        printf("Falha no processamento do arquivo.\n");
-        fclose(arq_bin);
-        return 1;
-    }
-
-    return 0;
-}
-
-/**
  * @brief abre um arquivo com o nome e modo especificados
  * @param arq variavel na qual se armazena o ponteiro para o arquivo aberto
  * @param nome nome do arquivo a ser aberto
@@ -151,8 +101,12 @@ int le_entrada(char* entrada, FILE* arq_csv) {
 }
 
 /**
- * 
-*/
+ * @brief realiza a busca de um dado valor em arquivos de dados
+ * @param arq_bin arquivo binario onde buscar
+ * @param nomeCampo nome do campo buscado
+ * @param valorCampoBuscado valor do campo buscado
+ * @return 0 quando a busca conclui com sucesso, 2 em caso de erros
+ */
 int busca_em_arq_dados(FILE *arq_bin, char* nomeCampo, char* valorCampoBuscado){
     // variaveis de apoio
     registro reg; // registro a ser devolvido

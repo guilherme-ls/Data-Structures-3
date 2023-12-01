@@ -54,6 +54,7 @@ int ler_header(FILE* arquivo, header* cabecalho);
 int calcula_byte_off(int RRN);
 void inicializa_registro(registro* reg);
 void inicializa_cabecalho(header* cabecalho);
+int check_cabecalho(FILE* arq_bin, header* cabecalho);
 void imprime_registro(registro reg);
 void imprime_campo_texto(string texto, char* fim);
 void imprime_campo_numerico(int num, char* fim);

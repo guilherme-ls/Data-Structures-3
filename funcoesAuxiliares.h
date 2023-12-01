@@ -8,8 +8,6 @@
 #include "lista.h"
 
 void concatena_chave(registro reg, char* string);
-int check_cabecalho(FILE* arq_bin, header* cabecalho);
-int check_cabecalho_arvore(FILE* arq_bin, header_arvore* cabecalho);
 int open(FILE** arq, char* nome, char* mode);
 void divide_string(registro* reg, char* entrada);
 int checa_int_nulo(char* campo);

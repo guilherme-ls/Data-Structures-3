@@ -2,7 +2,6 @@
 // Emanuel Percinio Goncalves de Oliveira - 13676878
 
 #include "funcionalidades_arvores.h"
-#include "funcoesAuxiliares.h"
 
 // define tamanho de strings para leitura do nome de arquivos
 #define TAM_ARQ_LEITURA 100
@@ -52,7 +51,7 @@ void funcionalidade5()
     // cria registro de dados a ser empregado na leitura
     registro reg;
 
-    // inicializa registro raiz da arvore com dados generalizados e o escreve
+    // inicializa registro raiz da arvore com dados generalizados e o escreve (sempre o deixa em memoria primaria)
     registro_arvore reg_arvore;
     inicializa_registro_arvore(&reg_arvore);
     escrever_registro_arvore(arq_arvore, reg_arvore);
@@ -63,12 +62,10 @@ void funcionalidade5()
     int RRNatual = 0;
 
     // loop de leitura e escrita dos dados
-    while (1)
-    {
+    while (1) {
         // funcao de leitura dos registros, retornando 1 quando encontra EOF
         int end = ler_registro(arq_dados, &reg);
-        if (end)
-        {
+        if (end) {
             // break com fim do arquivo
             break;
         }
@@ -78,7 +75,7 @@ void funcionalidade5()
             dado data;
             concatena_chave(reg, data.chave);
             data.ponteiro_dado = RRNatual;
-            insere_raiz(arq_arvore, &cabecalho_arvore, &data);
+            insere_raiz(arq_arvore, &cabecalho_arvore, &data, &reg_arvore);
         }
 
         // libera as strings alocadas
@@ -116,6 +113,7 @@ void funcionalidade6()
     int n;                              // Quantidade de buscas;
     int primeiraBuscaArvore = 1;        // variavel de controle para pôr no raiz em memoria primaria
     int primeiraBuscaDados = 1;         // variavel de controle para posicionar cursos no inicio do arquivo de dados;
+    registro_arvore raiz_arvore;        // armazena em memoria primaria a raiz da arvore
 
     // Recebe o nome do arquivo de entrada e a quantidade de valores para buscar
     scanf("%s %s %d", nome_dados, nome_arvore, &n);
@@ -156,8 +154,7 @@ void funcionalidade6()
     char *temp = malloc(160 * sizeof(char)); // valor temporario do campo a ser buscado
     char *valorCampoBuscado;        // ponteiro para armazenamento do campo buscado apos
 
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         // recebe o nome e valor do campo a serem buscados
         scanf("%s", nomeCampo);
         scanf("%s", temp);
@@ -165,11 +162,10 @@ void funcionalidade6()
 
         // Verifica se a busca deve ser feita no arquivo de indice ou diretamente no
         // arquivo de dados
-        if (strcmp(nomeCampo, "nomeTecnologiaOrigemDestino") == 0)
-        {   
+        if (strcmp(nomeCampo, "nomeTecnologiaOrigemDestino") == 0) {
             // Busca em arquivo de indice
-            int end = busca_em_indice(arq_arvore, arq_dados, valorCampoBuscado, cabecalho_arvore, &primeiraBuscaArvore);
-            if(end == 2){
+            int end = busca_em_indice(arq_arvore, arq_dados, valorCampoBuscado, cabecalho_arvore, &primeiraBuscaArvore, &raiz_arvore);
+            if(end == 2) {
                 printf("Falha no processamento do arquivo.");
                 free(temp);
                 fclose(arq_dados);
@@ -177,8 +173,7 @@ void funcionalidade6()
                 return;
             }
         }
-        else
-        {
+        else {
             // busca direta em arquivo de dados
             if (primeiraBuscaDados == 0 || primeiraBuscaArvore == 0) {
                 // Leva cursor para inicio do arquivo de dados
@@ -264,6 +259,10 @@ void funcionalidade7()
     // Leitura completa do arquivo de dados para extrair quantidade de tecnologias
     le_arquivo_de_dados(arq_dados, &l);
 
+    // busca registro raiz da arvore em memoria primaria para insercao
+    registro_arvore reg_arvore;
+    pega_raiz(arq_arvore, cabecalho_arvore, &reg_arvore);
+
     // Loop para efetuar inserção.
     for (int i = 0; i < n; i++) {
         // Inserção no arquivo de dados:
@@ -293,7 +292,7 @@ void funcionalidade7()
             dado data;
             concatena_chave(reg, data.chave);
             data.ponteiro_dado = cabecalho_dados.proxRRN - 1;
-            insere_raiz(arq_arvore, &cabecalho_arvore, &data);
+            insere_raiz(arq_arvore, &cabecalho_arvore, &data, &reg_arvore);
         }
 
         // libera as strings alocadas

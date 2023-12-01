@@ -9,11 +9,10 @@
  * @param cabecalho cabecalho da arvore-B
  * @param data dado a ser inserido na arvore
  */
-void insere_raiz(FILE *arquivo, header_arvore *cabecalho, dado *data) {
+void insere_raiz(FILE *arquivo, header_arvore *cabecalho, dado *data, registro_arvore* raiz) {
     // inicia a insercao do dado na raiz
-    fseek(arquivo, calcula_byte_off_arvore(cabecalho->noRaiz), SEEK_SET);
     int *altura = malloc(sizeof(int));
-    dado *promove = insere_loop(arquivo, cabecalho, data, altura);
+    dado *promove = insere_loop(arquivo, cabecalho, data, altura, raiz);
 
     // se nao necessitar de nova raiz, retorna
     if (promove == NULL) {
@@ -32,6 +31,9 @@ void insere_raiz(FILE *arquivo, header_arvore *cabecalho, dado *data) {
     // muda noRaiz no cabecalho
     cabecalho->noRaiz = new_reg.RRNdoNo;
 
+    // troca raiz externa
+    *raiz = new_reg;
+
     // escreve registro modificado
     fseek(arquivo, (new_reg.RRNdoNo + 1) * TAM_REG_ARVORE, SEEK_SET);
     escrever_registro_arvore(arquivo, new_reg);
@@ -46,10 +48,13 @@ void insere_raiz(FILE *arquivo, header_arvore *cabecalho, dado *data) {
  * @param chave chave a ser buscada
  * @return retorna dado promovido
  */
-dado *insere_loop(FILE *arquivo, header_arvore *cabecalho, dado *data, int *altura) {
-    // le registro atual
+dado *insere_loop(FILE *arquivo, header_arvore *cabecalho, dado *data, int *altura, registro_arvore* registro_carregado) {
+    // le registro atual caso necessario, ou carrega o da raiz
     registro_arvore reg;
-    ler_registro_arvore(arquivo, &reg);
+    if(registro_carregado == NULL)
+        ler_registro_arvore(arquivo, &reg);
+    else
+        reg = *registro_carregado;
 
     // preenche altura atual, caso solicitado (nao nulo)
     if (altura != NULL)
@@ -60,12 +65,18 @@ dado *insere_loop(FILE *arquivo, header_arvore *cabecalho, dado *data, int *altu
 
     // analisa o ponteiro determinado, inserindo o elemento no registro atual caso seja -1, ou continuando a busca caso contrario
     dado *insere;
-    if (reg.ponteiro_arvore[num_chave] == -1)
-        return insere_reg(arquivo, cabecalho, data, &reg, num_chave, -1);
+    if (reg.ponteiro_arvore[num_chave] == -1) {
+        dado *retorno = insere_reg(arquivo, cabecalho, data, &reg, num_chave, -1);
+        // atualiza registro precarregado fornecido
+        if(registro_carregado != NULL)
+            *registro_carregado = reg;
+
+        return retorno;
+    }
     else {
         // segue para o proximo ponteiro e chama recursivamente a busca
         fseek(arquivo, calcula_byte_off_arvore(reg.ponteiro_arvore[num_chave]), SEEK_SET);
-        insere = insere_loop(arquivo, cabecalho, data, NULL);
+        insere = insere_loop(arquivo, cabecalho, data, NULL, NULL);
     }
 
     // caso a insercao tenha resultado em split e necessite da insercao de elemento na posicao atual
@@ -74,6 +85,10 @@ dado *insere_loop(FILE *arquivo, header_arvore *cabecalho, dado *data, int *altu
         int num_chave = busca_binaria_reg_arvore(insere->chave, reg);
         dado *retorno = insere_reg(arquivo, cabecalho, insere, &reg, num_chave, cabecalho->RRNproxNo - 1);
         free(insere);
+        // atualiza registro precarregado fornecido
+        if(registro_carregado != NULL)
+            *registro_carregado = reg;
+
         return retorno;
     }
     return NULL;
@@ -152,150 +167,16 @@ dado *insere_reg(FILE *arquivo, header_arvore *cabecalho, dado *data, registro_a
 }
 
 /**
- * @brief funcao para divisao de chaves e ponteiros entre dois registros durante o split
- * @param reg registro original
- * @param new_reg novo registro resultante do split
- * @param comeco ponto do registro original a partir do qual serao transferidas as chaves
- */
-void divide_chaves(registro_arvore *reg, registro_arvore *new_reg, int comeco) {
-    dado clear;
-    clear_dado(&clear);
-
-    // transfere chaves e ponteiros entre registros no intervalo dado
-    for (int i = comeco; i < ORDEM - 1; i++) {
-        new_reg->dados[i - ORDEM / 2] = reg->dados[i];
-        reg->dados[i] = clear;
-        new_reg->ponteiro_arvore[i - comeco + 1] = reg->ponteiro_arvore[i + 1];
-        reg->ponteiro_arvore[i + 1] = -1;
-
-        reg->nroChavesNo--;
-        new_reg->nroChavesNo++;
-    }
-}
-
-/**
- * @brief insere a chave fornecida na posicao desejada dentro do registro
- * @param reg registro na qual sera realizada a insercao
- * @param chave chave a ser inserida
- * @param ponteiro ponteiro a direita da chave
- * @param pos posicao na qual a chave deve ser inserida
- */
-void insere_chave_reg(registro_arvore *reg, dado chave, int ponteiro, int pos) {
-    for (int i = reg->nroChavesNo; i > pos; i--)
-    {
-        reg->dados[i] = reg->dados[i - 1];
-        reg->ponteiro_arvore[i + 1] = reg->ponteiro_arvore[i];
-    }
-    reg->dados[pos] = chave;
-    reg->ponteiro_arvore[pos + 1] = ponteiro;
-    reg->nroChavesNo++;
-}
-
-/**
- * @brief apaga o dado fornecido, colocando LIXO na chave e -1 no ponteiro
- * @param data dado a ser apagado
- */
-void clear_dado(dado *data) {
-    for (int i = 0; i < TAM_CHAVE; i++)
-        data->chave[i] = LIXO_ARVORE;
-    data->chave[TAM_CHAVE] = '\0';
-    data->ponteiro_dado = -1;
-}
-
-/**
- * @brief le registro raiz da arvore e armazena na variavel fornecida
- * @param arq_arvore arquivo de indices
- * @param header header da arvore
- * @param reg struct de registro no qual armazenar a raiz
- * @return 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
- */
-int pega_raiz(FILE *arq_arvore, header_arvore header, registro_arvore *reg) {
-    fseek(arq_arvore, calcula_byte_off_arvore(header.noRaiz), SEEK_SET); // posiciona cursor para no raiz
-    int check = ler_registro_arvore(arq_arvore, reg);
-    return check;
-}
-
-/**
- * @brief le registro de dados proveniente de uma chave especificada no registro da arvore
- * @param arq_dados arquivo de dados a ser lido
- * @param reg_arvore registro da arvore contendo a chave a ser buscada
- * @param reg_dados registro de dados, preenchido pela funcao
- * @param iBuscaBinaria indice da chave buscada
- * @return 1, quando encontrar fim do arquivo, ou 0, quando le com sucesso
- */
-int ler_reg_dados_do_indice(FILE *arq_dados, registro_arvore reg_arvore, registro *reg_dados, int iBuscaBinaria) {
-    int RRNDado = reg_arvore.dados[iBuscaBinaria].ponteiro_dado; // RRN do registro buscado no arquivo de dados
-    fseek(arq_dados, calcula_byte_off(RRNDado), SEEK_SET);       // Cursor para o registro encontrado no arquivo de dados
-    int end = ler_registro(arq_dados, reg_dados);
-    return end;
-}
-
-/**
- * @brief realiza a busca binaria nas chaves de um registro do arquivo de indice
- * @param chaveBuscada string da chave buscada
- * @param reg registro onde buscar a chave
- * @return posicao onde a chave deve ser inserida (ou onde foi encontrada)
- */
-int busca_binaria_reg_arvore(char *chaveBuscada, registro_arvore reg) {
-    // variaveis de apoio
-    int menor = 0;
-    int maior = reg.nroChavesNo - 1;
-    int meio = 0;
-
-    while (menor <= maior) {
-        // calculo da posicao do meio
-        meio = menor + (maior - menor) / 2;
-
-        if (strcmp(chaveBuscada, reg.dados[meio].chave) == 0) {
-            // Encontrou chave
-            return meio;
-        }
-        else if (strcmp(chaveBuscada, reg.dados[meio].chave) > 0) {
-            menor = meio + 1;
-        }
-        else {
-            maior = meio - 1;
-        }
-    }
-
-    // retorna posicao onde chave deveria ser inserida
-    return menor;
-}
-
-/**
- * @brief funcao para remover os caracteres lixo de uma chave lida a partir da arvore
- * @param chave_original chave lida, ainda com lixo
- * @param chave_limpa nova chave, preenchida pela funcao
- */
-void ler_chave_sem_lixo(char *chave_original, char *chave_limpa) {
-    int j = 0;
-    for (j = 0; j < TAM_CHAVE + 1; j++)
-    {
-        if (chave_original[j] == '$')
-        {
-            break;
-        }
-        chave_limpa[j] = chave_original[j];
-    }
-    chave_limpa[j] = '\0';
-}
-
-/**
  * @brief realiza a busca de uma chave fornecida em um arquivo de indices e imprime o registro encontrado
  * @param arq_arvore arquivo de indices onde realizar a busca
  * @param arq_dados arquivo de dados onde buscar o registro determinado no arquivo de indices
  * @param valorCampoBuscado chave buscada no aquivo de indices
  * @param cabecalho_arvore cabecalho do arvore B no arquivo de indices
- * @param primeiraBuscaArvore variavel para determinar a necessidade de fseek para a raiz da arvore
+ * @param primeiraBuscaArvore variavel para determinar a necessidade de buscar a raiz da arvore
  * @return 2 em caso de erros, 0 caso executado com sucesso
  */
-int busca_em_indice(FILE* arq_arvore,FILE *arq_dados, char *valorCampoBuscado, header_arvore cabecalho_arvore, int *primeiraBuscaArvore) {
-    registro_arvore reg_raiz_arvore;    // variavel para armazenar no raiz da arvore
-    registro_arvore reg_no_atual;       // variavel para armazenar no atual da busca na arvore
-
-    int regEncontrado = 1; // controle para saber se registro foi encontrado
-
-    char* chaveAtual = malloc((TAM_CHAVE + 1) * sizeof(char)); // Valor para chave do indice sem o lixo
+int busca_em_indice(FILE* arq_arvore,FILE *arq_dados, char *valorCampoBuscado, header_arvore cabecalho_arvore, int *primeiraBuscaArvore, registro_arvore* reg_raiz_arvore) {
+    registro_arvore reg_no_atual; // variavel para armazenar no atual da busca na arvore
 
     if (cabecalho_arvore.noRaiz == -1) {
         // Arquivo de arvore vazio.
@@ -303,21 +184,18 @@ int busca_em_indice(FILE* arq_arvore,FILE *arq_dados, char *valorCampoBuscado, h
         return 0;
     }
 
+    // trazer raiz da arvore para memória primária caso seja o primeiro acesso
     if (*primeiraBuscaArvore) {
-        // trazer raiz da arvore para memória primária
-        pega_raiz(arq_arvore, cabecalho_arvore, &reg_raiz_arvore);
+        pega_raiz(arq_arvore, cabecalho_arvore, reg_raiz_arvore);
         *primeiraBuscaArvore = 0;
     }
 
-    reg_no_atual = reg_raiz_arvore; // começa busca pela raiz
-
-    int iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, reg_no_atual); // Variavel para indice retornado na busca binaria
-    ler_chave_sem_lixo(reg_no_atual.dados[iBuscaAtual].chave, chaveAtual); // Lê a chave retornada na busca.
+    reg_no_atual = *reg_raiz_arvore; // começa busca pela raiz
 
     // Busca na arvore B
-    regEncontrado = busca_em_arvore(arq_arvore, valorCampoBuscado, chaveAtual, &iBuscaAtual, &reg_no_atual);
+    int iBuscaAtual = busca_em_arvore(arq_arvore, valorCampoBuscado, &reg_no_atual);
 
-    if (regEncontrado) {
+    if (iBuscaAtual != -1) {
         // O registro foi encontrado
         registro regBuscado;
         int end = ler_reg_dados_do_indice(arq_dados, reg_no_atual, &regBuscado, iBuscaAtual); // ler registro a partir da referencia no arquivo de indice
@@ -342,33 +220,35 @@ int busca_em_indice(FILE* arq_arvore,FILE *arq_dados, char *valorCampoBuscado, h
  * @brief realiza a busca de uma dada chave na arvora
  * @param arq_arvore arquivo de indices onde buscar a chave
  * @param valorCampoBuscado chave buscada na arvore
- * @param chaveAtual chave atual da comparacao
- * @param iBuscaAtual indice do ponteiro para o qual seguir no registro atual
  * @param reg_no_atual registro atual da arvore
- * @return 0 em caso de erros, 1 quando concluido com sucesso
+ * @return -1 em caso de erros, RRN quando concluido com sucesso
  */
-int busca_em_arvore(FILE *arq_arvore, char *valorCampoBuscado, char *chaveAtual, int *iBuscaAtual, registro_arvore *reg_no_atual) {
-    while (strcmp(valorCampoBuscado, chaveAtual) != 0) {
+int busca_em_arvore(FILE *arq_arvore, char *valorCampoBuscado, registro_arvore *reg_no_atual) {
+    char* chaveAtual = malloc((TAM_CHAVE + 1) * sizeof(char)); // Valor para chave do indice sem o lixo
+    int iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, *reg_no_atual); // Variavel para indice retornado na busca binaria
+    if(iBuscaAtual >= reg_no_atual->nroChavesNo)
+        strcpy(chaveAtual, ""); // caso a posicao para insercao seja a 3, ultimo ponteiro do registro, sem chaves
+    else
+        ler_chave_sem_lixo(reg_no_atual->dados[iBuscaAtual].chave, chaveAtual); // Lê a chave retornada na busca.
+    
+    if(strcmp(valorCampoBuscado, chaveAtual) != 0) {
         free(chaveAtual);
-        chaveAtual = malloc((TAM_CHAVE + 1) * sizeof(char)); // Valor para chave do indice sem o lixo
 
-        if (reg_no_atual->ponteiro_arvore[*iBuscaAtual] == -1) {
+        if (reg_no_atual->ponteiro_arvore[iBuscaAtual] == -1) {
             // Não existe subárvore, fim da busca.
             printf("Registro inexistente.\n");
-            free(chaveAtual);
-            return 0;
+            return -1;
         }
-        fseek(arq_arvore, (reg_no_atual->ponteiro_arvore[*iBuscaAtual] + 1) * TAM_REG_ARVORE, SEEK_SET); // Posiciona cursor no proximo registro da arvore.
+        fseek(arq_arvore, calcula_byte_off_arvore(reg_no_atual->ponteiro_arvore[iBuscaAtual]), SEEK_SET); // Posiciona cursor no proximo registro da arvore.
         int check = ler_registro_arvore(arq_arvore, reg_no_atual); // leitura do próximo registro de indice para busca.
+        // checa existencia do registro
         if (check == 1) {
-            // fim do arquivo
             printf("Registro inexistente.\n");
-            free(chaveAtual);
-            return 0;
+            return -1;
         }
-        *iBuscaAtual = busca_binaria_reg_arvore(valorCampoBuscado, *reg_no_atual); // Realiza busca binária no registro da arvore.
-        ler_chave_sem_lixo(reg_no_atual->dados[*iBuscaAtual].chave, chaveAtual); // Lê a chave retornada na busca.
+        // reinicia a busca recursivamente no proximo registro
+        return busca_em_arvore(arq_arvore, valorCampoBuscado, reg_no_atual);
     }
     free(chaveAtual);
-    return 1;
+    return iBuscaAtual;
 }

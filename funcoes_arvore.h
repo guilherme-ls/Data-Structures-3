@@ -6,21 +6,15 @@
 #include <string.h>
 #include "registros_arvore.h"
 #include "registros_dados.h"
+#include "subfuncoes_internas_arvore.h"
 
 #ifndef FUNCOES_ARVORE
 #define FUNCOES_ARVORE
 
-void insere_raiz(FILE* arquivo, header_arvore* cabecalho, dado *data);
-dado* insere_loop(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altura);
+void insere_raiz(FILE* arquivo, header_arvore* cabecalho, dado *data, registro_arvore* raiz);
+dado* insere_loop(FILE* arquivo, header_arvore* cabecalho, dado *data, int* altura, registro_arvore* registro_carregado);
 dado* insere_reg(FILE* arquivo, header_arvore* cabecalho, dado* data, registro_arvore* reg, int pos, int pont);
-void divide_chaves(registro_arvore* reg, registro_arvore* new_reg, int comeco);
-void insere_chave_reg(registro_arvore* reg, dado chave, int ponteiro, int pos);
-void clear_dado(dado* data);
-int pega_raiz(FILE* arq_arvore, header_arvore header, registro_arvore* reg);
-int ler_reg_dados_do_indice(FILE* arq_dados, registro_arvore reg_arvore, registro* reg_dados, int iBuscaBinaria);
-int busca_binaria_reg_arvore(char* chaveBuscada, registro_arvore reg);
-void ler_chave_sem_lixo(char* chave_original, char* chave_limpa);
-int busca_em_indice(FILE* arq_arvore, FILE* arq_dados, char *valorCampoBuscado, header_arvore cabecalho_arvore, int *primeiraBuscaArvore);
-int busca_em_arvore(FILE *arq_arvore, char *valorCampoBuscado, char *chaveAtual, int *iBuscaAtual, registro_arvore *reg_no_atual);
+int busca_em_indice(FILE* arq_arvore, FILE* arq_dados, char *valorCampoBuscado, header_arvore cabecalho_arvore, int *primeiraBuscaArvore, registro_arvore* reg_raiz_arvore);
+int busca_em_arvore(FILE *arq_arvore, char *valorCampoBuscado, registro_arvore *reg_no_atual);
 
 #endif

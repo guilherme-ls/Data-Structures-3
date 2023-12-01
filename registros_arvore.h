@@ -58,5 +58,6 @@ int calcula_byte_off_arvore(int RRN);
 void inicializa_registro_arvore(registro_arvore* reg);
 void inicializa_registro_preparado_arvore(registro_arvore* reg, header_arvore* cabecalho, int altura);
 void inicializa_cabecalho_arvore(header_arvore* cabecalho);
+int check_cabecalho_arvore(FILE* arq_bin, header_arvore* cabecalho);
 
 #endif
