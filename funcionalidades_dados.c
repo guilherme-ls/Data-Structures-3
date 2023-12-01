@@ -4,10 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "registros_dados.h"
 #include "funcionalidades_dados.h"
-#include "funcoesAuxiliares.h"
-#include "funcoesFornecidas.h"
 
 // define tamanho de strings para leitura do nome de arquivos
 #define TAM_ARQ_LEITURA 100

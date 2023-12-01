@@ -6,6 +6,7 @@
         "funcoesauxiliares.h": "c",
         "funcionalidades_arvores.h": "c",
         "registros_dados.h": "c",
-        "lista.h": "c"
+        "lista.h": "c",
+        "string.h": "c"
     }
 }

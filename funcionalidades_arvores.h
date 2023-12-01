@@ -8,6 +8,7 @@
 #include "funcoesAuxiliares.h"
 #include "funcoesFornecidas.h"
 #include "funcoes_arvore.h"
+#include "funcoes_dados.h"
 #include "subfuncoes_internas_arvore.h"
 
 #ifndef FUNCIONALIDADES_ARVORES

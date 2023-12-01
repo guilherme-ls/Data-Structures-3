@@ -1,6 +1,9 @@
 // Guilherme Lorete Schmidt - 13676857
 // Emanuel Percinio Goncalves de Oliveira - 13676878
 
+#ifndef LISTA
+#define LISTA
+
 // define os nos da lista
 struct no{
     char * info;
@@ -20,3 +23,5 @@ typedef struct lista lista;
 void inicializa_lista(lista *l);
 void destruir(lista *l);
 void inserir(lista *l, char* x);
+
+#endif

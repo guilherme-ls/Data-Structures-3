@@ -4,6 +4,11 @@
 #ifndef FUNCIONALIDADES
 #define FUNCIONALIDADES
 
+#include "registros_dados.h"
+#include "funcoesAuxiliares.h"
+#include "funcoesFornecidas.h"
+#include "funcoes_dados.h"
+
 // funcoes para cada funcionalidade criada
 
 void funcionalidade1();
