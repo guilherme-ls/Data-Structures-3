@@ -173,7 +173,7 @@ dado *insere_reg(FILE *arquivo, header_arvore *cabecalho, dado *data, registro_a
  * @param valorCampoBuscado chave buscada no aquivo de indices
  * @param cabecalho_arvore cabecalho do arvore B no arquivo de indices
  * @param primeiraBuscaArvore variavel para determinar a necessidade de buscar a raiz da arvore
- * @return 2 em caso de erros, 0 caso executado com sucesso
+ * @return 1 em caso de erros, 0 caso executado com sucesso
  */
 int busca_em_indice(FILE* arq_arvore,FILE *arq_dados, char *valorCampoBuscado, header_arvore cabecalho_arvore, int *primeiraBuscaArvore, registro_arvore* reg_raiz_arvore) {
     registro_arvore reg_no_atual; // variavel para armazenar no atual da busca na arvore
@@ -199,8 +199,10 @@ int busca_em_indice(FILE* arq_arvore,FILE *arq_dados, char *valorCampoBuscado, h
         // O registro foi encontrado
         registro regBuscado;
         int end = ler_reg_dados_do_indice(arq_dados, reg_no_atual, &regBuscado, iBuscaAtual); // ler registro a partir da referencia no arquivo de indice
-        if (end == 2) {
-            return 2;
+        if (end == 1) {
+            // o registro nao existe no arquivo de dados
+            printf("Registro inexistente.\n");
+            return 1;
         }
         else if (regBuscado.removido != '1') {
             // Por garantia, checar se registro não está removido.

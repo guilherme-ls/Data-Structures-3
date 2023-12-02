@@ -3,7 +3,7 @@ CFLAGS= -Wall -g -I.
 TARGET= main
 
 all :
-	$(CC) $(CFLAGS) *.c -o $(TARGET)
+	$(CC) $(CFLAGS) *.c src/*.c -I include -o $(TARGET)
 
 run :
 	./$(TARGET)

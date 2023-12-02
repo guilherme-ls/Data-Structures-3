@@ -9,8 +9,7 @@
 /**
  * @brief Executa a funcionalidade 1, lendo um dado arquivo csv e convertendo seus dados para registros em binario
  */
-void funcionalidade5()
-{
+void funcionalidade5() {
     // recebe arquivos de entrada e saida
     char nome_dados[TAM_ARQ_LEITURA];
     char nome_arvore[TAM_ARQ_LEITURA];
@@ -19,16 +18,14 @@ void funcionalidade5()
 
     // abre arquivo de saida em modo de escrita
     FILE *arq_arvore;
-    if (open(&arq_arvore, nome_arvore, "wb+"))
-    {
+    if (open(&arq_arvore, nome_arvore, "wb+")) {
         // fim da execucao em caso de erros
         return;
     }
 
     // abre arquivo de entrada em modo de leitura
     FILE *arq_dados;
-    if (open(&arq_dados, nome_dados, "rb"))
-    {
+    if (open(&arq_dados, nome_dados, "rb")) {
         // fim da execucao em caso de erros
         fclose(arq_arvore);
         return;
@@ -37,8 +34,7 @@ void funcionalidade5()
     // le registro de cabecalho do arquivo de dados e retorna quaisquer erros
     header cabecalho_dados;
     int erro = check_cabecalho(arq_dados, &cabecalho_dados);
-    if (erro == 1)
-    {
+    if (erro == 1) {
         // fim da execucao em caso de erros
         return;
     }
@@ -164,14 +160,7 @@ void funcionalidade6()
         // arquivo de dados
         if (strcmp(nomeCampo, "nomeTecnologiaOrigemDestino") == 0) {
             // Busca em arquivo de indice
-            int end = busca_em_indice(arq_arvore, arq_dados, valorCampoBuscado, cabecalho_arvore, &primeiraBuscaArvore, &raiz_arvore);
-            if(end == 2) {
-                printf("Falha no processamento do arquivo.");
-                free(temp);
-                fclose(arq_dados);
-                fclose(arq_arvore);
-                return;
-            }
+            busca_em_indice(arq_arvore, arq_dados, valorCampoBuscado, cabecalho_arvore, &primeiraBuscaArvore, &raiz_arvore);
         }
         else {
             // busca direta em arquivo de dados
@@ -219,8 +208,7 @@ void funcionalidade7()
     header cabecalho_dados;
     int erro;
     erro = check_cabecalho(arq_dados, &cabecalho_dados);
-    if (erro == 1)
-    {
+    if (erro == 1) {
         // fim da execucao em caso de erros
         return;
     }
@@ -235,8 +223,7 @@ void funcionalidade7()
 
     header_arvore cabecalho_arvore;
     erro = check_cabecalho_arvore(arq_arvore, &cabecalho_arvore);
-    if (erro == 1)
-    {
+    if (erro == 1) {
         // fim da execucao em caso de erro
         fclose(arq_dados);
         return;
