@@ -5,14 +5,23 @@
 #include <string.h>
 #include "grafo.h"
 
-// Funcao para incializar o grafo
+/**
+ * @brief funcao para a inicializacao do grafo com valores padrao
+ * @param g ponteiro do grafo a ser inicializado
+ * @param num_tecnologias numero de tecnologias contidas no grafo
+ */
 void inicializa_grafo(grafo *g, int num_tecnologias) {
     g->num_vertices = 0;
     g->num_arestas = 0;
     g->lista_vertices = (vertice_grafo**) malloc((num_tecnologias + 1) * sizeof(vertice_grafo*));
 }
 
-// Funcao para criar um vertice do grafo a partir do registro de dados
+/**
+ * @brief funcao para criar um vertice do grafo a partir dos dados fornecidos
+ * @param vertice ponteiro para o vertice a ser criado
+ * @param tecnologia string com a tecnologia origem do vertice
+ * @param grupo grupo do vertice
+ */
 void cria_vertice(vertice_grafo *vertice, string tecnologia, int grupo) {
     vertice->nomeTecOrigem = (char*) malloc((tecnologia.tamanho + 1) * sizeof(char));
     strcpy(vertice->nomeTecOrigem, tecnologia.nome);
@@ -23,12 +32,22 @@ void cria_vertice(vertice_grafo *vertice, string tecnologia, int grupo) {
     inicializa_lista(&(vertice->lista_arestas));
 }
 
-// Funcao para criar uma aresta do grafo a partir do vertice de origem e do registro de dados
+/**
+ * @brief funcao para criar uma aresta do grafo a partir do vertice de origem e do registro de dados
+ * @param aresta ponteiro para a aresta a ser criada
+ * @param vertice_destino vertice de destino a ser indicado pela aresta
+ * @param peso peso da aresta
+ */
 void cria_aresta(aresta_grafo *aresta, vertice_grafo *vertice_destino, int peso) {
     aresta->tecDestino = vertice_destino;
     aresta->peso = peso;
 }
 
+/**
+ * @brief insere uma aresta em um dado vertice
+ * @param vertice vertice onde inserir a aresta
+ * @param aresta aresta a ser inserida
+ */
 void insere_aresta_vertice(vertice_grafo *vertice, aresta_grafo *aresta) {
     inserir(&(vertice->lista_arestas), aresta);
     vertice->grau_saida++;
@@ -37,6 +56,12 @@ void insere_aresta_vertice(vertice_grafo *vertice, aresta_grafo *aresta) {
     aresta->tecDestino->grau_entrada++;
 }
 
+/**
+ * @brief realiza busca binaria na lista de adjacencias para encontrar o vertice com uma dada tecnologia origem
+ * @param g grafo onde realizar a busca
+ * @param nomeTec tecnologia origem do vertice buscado
+ * @return posicao do vertice buscado na lista de adjacencias
+ */
 int busca_binaria_vertices(grafo g, char* nomeTec) {
     // variaveis de apoio
     int menor = 0;
@@ -63,6 +88,12 @@ int busca_binaria_vertices(grafo g, char* nomeTec) {
     return menor;
 }
 
+/**
+ * @brief insere um dado vertice na lista de adjacencias do grafo
+ * @param g grafo onde realizar a insercao
+ * @param vertice vertice a ser inserido
+ * @param pos posicao onde inserir o vertice
+ */
 void insere_vertice(grafo *g, vertice_grafo *vertice, int pos) {
     for(int i = g->num_vertices; i > pos; i--) {
         g->lista_vertices[i] = g->lista_vertices[i-1];
@@ -71,7 +102,14 @@ void insere_vertice(grafo *g, vertice_grafo *vertice, int pos) {
     g->num_vertices++;
 }
 
-// Funcao para inserir aresta no grafo
+/**
+ * @brief insere uma aresta no grafo, definida pelos parametros da funcao
+ * @param g grafo onde realizar a insercao
+ * @param tecnologiaOrigem string da tecnologia origem
+ * @param grupo grupo ao qual as tecnologias pertencem
+ * @param tecnologiaDestino string da tecnologia destino
+ * @param peso peso da aresta
+ */
 void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnologiaDestino, int peso) {
     int pos;
     vertice_grafo *verticeOrigem = malloc(sizeof(vertice_grafo));
@@ -114,7 +152,7 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnolog
             verticeDestino = g->lista_vertices[pos];
         }
         else {
-            cria_vertice(verticeDestino, tecnologiaDestino, 0);
+            cria_vertice(verticeDestino, tecnologiaDestino, grupo);
             insere_vertice(g, verticeDestino, pos);
         }
 

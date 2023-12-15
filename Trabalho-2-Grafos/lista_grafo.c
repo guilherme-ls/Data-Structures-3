@@ -30,9 +30,9 @@ void destruir(lista *l) {
 }
 
 /**
- * @brief insere copia de string na lista
+ * @brief insere arestas na lista de forma ordenada
  * @param l ponteiro para a lista
- * @param x string cuja copia deve ser inserida
+ * @param aresta aresta a ser inserida
  */
 void inserir(lista *l, aresta_grafo *aresta) {
     no *p = malloc(sizeof(no));
@@ -64,6 +64,12 @@ void inserir(lista *l, aresta_grafo *aresta) {
     }
 }
 
+/**
+ * @brief funcao para busca da aresta de tecnologia destino com um dado nome
+ * @param l lista onde realizar a busca
+ * @param nomeTec nome da tecnologia destino buscada
+ * @return posicao onde encontrou a tecnologia, ou -1 quando nao encontrar
+ */
 int busca(lista *l, char* nomeTec) {
     if(l->ini == NULL) {
         return -1;

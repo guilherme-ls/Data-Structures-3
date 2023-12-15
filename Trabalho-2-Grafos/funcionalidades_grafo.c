@@ -42,9 +42,11 @@ void funcionalidade8() {
             break;
         }
 
-        // insere aresta lida no grafo
+        // insere aresta lida no grafo, caso valida
         if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
             insere_aresta(&g, reg.tecnologiaOrigem, reg.grupo, reg.tecnologiaDestino, reg.peso);
+
+        // libera variaveis alocadas
         free(reg.tecnologiaOrigem.nome);
         free(reg.tecnologiaDestino.nome);
     }
@@ -90,8 +92,11 @@ void funcionalidade9() {
             break;
         }
 
-        // insere aresta lida no grafo
-        insere_aresta(&g, reg.tecnologiaDestino, reg.grupo, reg.tecnologiaOrigem, reg.peso);
+        // insere aresta lida no grafo, invertendo-a para o grafo transposto
+        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
+            insere_aresta(&g, reg.tecnologiaDestino, reg.grupo, reg.tecnologiaOrigem, reg.peso);
+
+        // libera variaveis alocadas
         free(reg.tecnologiaOrigem.nome);
         free(reg.tecnologiaDestino.nome);
     }

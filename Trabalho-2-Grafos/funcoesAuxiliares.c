@@ -45,6 +45,10 @@ int le_entrada(char* entrada, FILE* arq_csv) {
     return 0;
 }
 
+/**
+ * @brief funcao para printar todos os elementos do grafo
+ * @param g grafo a ser printado
+ */
 void print_grafo(grafo g) {
     for(int i = 2; i < g.num_vertices; i++) {
         vertice_grafo vertice = *(g.lista_vertices[i]);
