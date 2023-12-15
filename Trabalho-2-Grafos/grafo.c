@@ -110,7 +110,7 @@ void insere_vertice(grafo *g, vertice_grafo *vertice, int pos) {
  * @param tecnologiaDestino string da tecnologia destino
  * @param peso peso da aresta
  */
-void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnologiaDestino, int peso) {
+void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo1, string tecnologiaDestino, int grupo2, int peso) {
     int pos;
     vertice_grafo *verticeOrigem = malloc(sizeof(vertice_grafo));
     vertice_grafo *verticeDestino = malloc(sizeof(vertice_grafo));
@@ -120,8 +120,8 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnolog
     // Primeira inserção, insere vertice e aresta direto
     if(g->num_vertices == 0) {
         // Cria o vertice a ser inserido no grafo
-        cria_vertice(verticeOrigem, tecnologiaOrigem, grupo);
-        cria_vertice(verticeDestino, tecnologiaDestino, grupo);
+        cria_vertice(verticeOrigem, tecnologiaOrigem, grupo1);
+        cria_vertice(verticeDestino, tecnologiaDestino, grupo2);
         insere_vertice(g, verticeOrigem, 0);
         pos = busca_binaria_vertices(*g, tecnologiaDestino.nome);
         insere_vertice(g, verticeDestino, pos);
@@ -139,9 +139,12 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnolog
         if(pos < g->num_vertices && strcmp(g->lista_vertices[pos]->nomeTecOrigem, tecnologiaOrigem.nome) == 0) {
             free(verticeOrigem);
             verticeOrigem = g->lista_vertices[pos];
+            if(verticeOrigem->grupo == 0) {
+                verticeOrigem->grupo = grupo1;
+            }
         }
         else {
-            cria_vertice(verticeOrigem, tecnologiaOrigem, grupo);
+            cria_vertice(verticeOrigem, tecnologiaOrigem, grupo1);
             insere_vertice(g, verticeOrigem, pos);
         }
 
@@ -150,9 +153,12 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnolog
         if(pos < g->num_vertices && strcmp(g->lista_vertices[pos]->nomeTecOrigem, tecnologiaDestino.nome) == 0) {
             free(verticeDestino);
             verticeDestino = g->lista_vertices[pos];
+            if(verticeDestino->grupo == 0) {
+                verticeDestino->grupo = grupo2;
+            }
         }
         else {
-            cria_vertice(verticeDestino, tecnologiaDestino, grupo);
+            cria_vertice(verticeDestino, tecnologiaDestino, grupo2);
             insere_vertice(g, verticeDestino, pos);
         }
 

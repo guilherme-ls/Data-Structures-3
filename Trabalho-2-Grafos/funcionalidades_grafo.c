@@ -45,7 +45,7 @@ void funcionalidade8() {
 
         // insere aresta lida no grafo, caso valida
         if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
-            insere_aresta(&g, reg.tecnologiaOrigem, reg.grupo, reg.tecnologiaDestino, reg.peso);
+            insere_aresta(&g, reg.tecnologiaOrigem, reg.grupo, reg.tecnologiaDestino, 0, reg.peso);
 
         // libera variaveis alocadas
         free(reg.tecnologiaOrigem.nome);
@@ -96,7 +96,7 @@ void funcionalidade9() {
 
         // insere aresta lida no grafo, invertendo-a para o grafo transposto
         if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
-            insere_aresta(&g, reg.tecnologiaDestino, reg.grupo, reg.tecnologiaOrigem, reg.peso);
+            insere_aresta(&g, reg.tecnologiaDestino, 0, reg.tecnologiaOrigem, reg.grupo, reg.peso);
 
         // libera variaveis alocadas
         free(reg.tecnologiaOrigem.nome);
@@ -147,7 +147,7 @@ void funcionalidade10() {
 
         // insere aresta lida no grafo, caso valida
         if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
-            insere_aresta(&g, reg.tecnologiaDestino, reg.grupo, reg.tecnologiaOrigem, reg.peso);
+            insere_aresta(&g, reg.tecnologiaDestino, 0, reg.tecnologiaOrigem, reg.grupo, reg.peso);
 
         // libera variaveis alocadas
         free(reg.tecnologiaOrigem.nome);

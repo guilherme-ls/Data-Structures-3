@@ -16,9 +16,9 @@ valout :
 
 # pode trocar os numeros para diferentes testes
 test :
-	for number in `seq 1 10` ; do \
-	./$(TARGET) < TestCases/$$number.in > TestCases/$$number.out2; \
-	diff -s TestCases/$$number.out TestCases/$$number.out2; \
+	for number in `seq 1 5` ; do \
+	./$(TARGET) < in/$$number.in > out2/$$number.out2; \
+	diff -s out/$$number.out out2/$$number.out2; \
 	done
 
 hex :

@@ -50,7 +50,7 @@ int le_entrada(char* entrada, FILE* arq_csv) {
  * @param g grafo a ser printado
  */
 void print_grafo(grafo g) {
-    for(int i = 2; i < g.num_vertices; i++) {
+    for(int i = 0; i < g.num_vertices; i++) {
         vertice_grafo vertice = *(g.lista_vertices[i]);
         no *aresta = vertice.lista_arestas.ini;
         for(int j = 0; j < vertice.lista_arestas.tam; j++) {
