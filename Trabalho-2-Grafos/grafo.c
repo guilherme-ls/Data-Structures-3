@@ -196,3 +196,18 @@ void busca_tecnologias_entrada(grafo g, char* tecnologia) {
     }
     printf("%s\n\n", aresta->info->tecDestino->nomeTecOrigem);
 }
+
+/**
+ * @brief libera memoria alocada pelo grafo
+ * @param g grafo a ser liberado
+ */
+void libera_grafo(grafo g) {
+    for(int i = 0; i < g.num_vertices; i++) {
+        vertice_grafo *vertice = g.lista_vertices[i];
+        destruir(&(vertice->lista_arestas));
+        free(vertice->nomeTecOrigem);
+        free(vertice);
+    }
+
+    free(g.lista_vertices);
+}

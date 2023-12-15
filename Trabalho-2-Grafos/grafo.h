@@ -38,5 +38,6 @@ void cria_vertice(vertice_grafo *vertice, string tecnologia, int grupo);
 void cria_aresta(aresta_grafo *aresta, vertice_grafo *vertice, int peso);
 void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnologiaDestino, int peso);
 void busca_tecnologias_entrada(grafo g, char* tecnologia);
+void libera_grafo(grafo g);
 
 #endif

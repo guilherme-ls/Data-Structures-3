@@ -54,8 +54,9 @@ void funcionalidade8() {
     // printa o grafo criado
     print_grafo(g);
 
-    // fecha arquivo de dados
+    // fecha arquivo de dados e libera grafo
     fclose(arq_dados);
+    libera_grafo(g);
 }
 
 
@@ -104,8 +105,9 @@ void funcionalidade9() {
     // printa o grafo criado
     print_grafo(g);
 
-    // fecha arquivo de dados
+    // fecha arquivo de dados e libera grafo
     fclose(arq_dados);
+    libera_grafo(g);
 }
 void funcionalidade10() {
     char nome_dados[TAM_ARQ_LEITURA];
@@ -159,8 +161,9 @@ void funcionalidade10() {
         busca_tecnologias_entrada(g, tecnologia_buscada);
     }
 
-    // fecha arquivo de dados
+    // fecha arquivo de dados e libera grafo
     fclose(arq_dados);
+    libera_grafo(g);
 }
 void funcionalidade11() {
     ;
