@@ -44,3 +44,15 @@ int le_entrada(char* entrada, FILE* arq_csv) {
 
     return 0;
 }
+
+void print_grafo(grafo g) {
+    for(int i = 0; i < g.num_vertices; i++) {
+        vertice_grafo vertice = *(g.lista_vertices[i]);
+        no *aresta = vertice.lista_arestas.ini;
+        for(int j = 0; j < vertice.lista_arestas.tam; j++) {
+            printf("%s %d %d %d %d %s %d\n", vertice.nomeTecOrigem, vertice.grupo, vertice.grau_entrada, vertice.grau_saida,
+             vertice.grau, aresta->info->tecDestino->nomeTecOrigem, aresta->info->peso);
+            aresta = aresta->prox;
+        }
+    }
+}

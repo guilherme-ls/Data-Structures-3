@@ -8,7 +8,7 @@
 
 #define TAM_ARQ_LEITURA 100
 
-void funcionalidadae8(){
+void funcionalidade8() {
     char nome_dados[TAM_ARQ_LEITURA];
     scanf("%s", nome_dados);
 
@@ -29,8 +29,12 @@ void funcionalidadae8(){
 
     registro reg;  // Registro de dados a ser empregrado na leitura
 
+    // cria e inicializa grafo
+    grafo g;
+    inicializa_grafo(&g, cabecalho_dados.nroTecnologias);
+
     //loop de leitura do arquivo de dados e criação do grafo
-    while(1){
+    while(1) {
         // funcao de leitura dos registros, retornando 1 quando encontra EOF
         int end = ler_registro(arq_dados, &reg);
         if (end) {
@@ -38,7 +42,26 @@ void funcionalidadae8(){
             break;
         }
 
-        
+        // insere aresta lida no grafo
+        insere_aresta(&g, reg);
     }
+    // printa o grafo criado
+    print_grafo(g);
 
+    // fecha arquivo de dados
+    fclose(arq_dados);
+}
+
+
+void funcionalidade9() {
+    ;
+}
+void funcionalidade10() {
+    ;
+}
+void funcionalidade11() {
+    ;
+}
+void funcionalidade12() {
+    ;
 }

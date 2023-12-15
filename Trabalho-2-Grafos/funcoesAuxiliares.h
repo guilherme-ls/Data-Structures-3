@@ -4,10 +4,10 @@
 #ifndef FUNCOES_AUXILIARES
 #define FUNCOES_AUXILIARES
 
-#include "registros_dados.h"
-#include "lista.h"
+#include "lista_grafo.h"
 
 void concatena_chave(registro reg, char* string);
 int open(FILE** arq, char* nome, char* mode);
+void print_grafo(grafo g);
 
 #endif
