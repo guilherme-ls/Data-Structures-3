@@ -16,7 +16,7 @@
 int open(FILE** arq, char* nome, char* mode) {
     *arq = fopen(nome, mode);
     if(*arq == NULL) {
-        printf("Falha no processamento do arquivo.\n");
+        printf("Falha na execução da funcionalidade\n");
         return 1;
     }
     return 0;
@@ -43,4 +43,21 @@ int le_entrada(char* entrada, FILE* arq_csv) {
     }
 
     return 0;
+}
+
+/**
+ * @brief funcao para printar todos os elementos do grafo
+ * @param g grafo a ser printado
+ */
+void print_grafo(grafo g) {
+    for(int i = 0; i < g.num_vertices; i++) {
+        vertice_grafo vertice = *(g.lista_vertices[i]);
+        no *aresta = vertice.lista_arestas.ini;
+        for(int j = 0; j < vertice.lista_arestas.tam; j++) {
+            printf("%s %d %d %d %d ", vertice.nomeTecOrigem, vertice.grupo, vertice.grau_entrada, vertice.grau_saida,
+             vertice.grau);
+            printf("%s %d\n", aresta->info->tecDestino->nomeTecOrigem, aresta->info->peso);
+            aresta = aresta->prox;
+        }
+    }
 }

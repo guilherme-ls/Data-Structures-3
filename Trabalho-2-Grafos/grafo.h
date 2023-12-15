@@ -4,41 +4,40 @@
 #ifndef GRAFO
 #define GRAFO
 
-#include "registros_dados.h"
-
-// Definir estrutura para areasta do grafo
-struct aresta_grafo {
-    struct vertice_grafo *tecDestino;
-    struct aresta_grafo *prox;
-    int peso;
-};
 typedef struct aresta_grafo aresta_grafo;
 
+#include "lista_grafo.h"
+#include "registros_dados.h"
+
 // Definir estrutura para vertice do grafo
-struct vertice_grafo {
+typedef struct  {
     char *nomeTecOrigem;
     int grupo;
     int grau_entrada;
     int grau_saida;
     int grau;
-    struct aresta_grafo *aresta_head;
+    lista lista_arestas;
+} vertice_grafo;
+
+// Definir estrutura para aresta do grafo
+struct aresta_grafo{
+    vertice_grafo *tecDestino;
+    int peso;
 };
-typedef struct vertice_grafo vertice_grafo;
 
 // Definir estrutura para grafo de tecnologias
-struct grafo {
+typedef struct {
     int num_vertices;
     int num_arestas;
-    struct vertice_grafo *lista_vertices;
-};
-typedef struct grafo grafo;
+    vertice_grafo **lista_vertices;
+} grafo;
 
 /******** Funcoes para manipulacao do grafo ********/
 void inicializa_grafo(grafo *g, int num_tecnologias);
-void cria_vertice(vertice_grafo *vertice, registro reg);
-void cria_aresta(aresta_grafo *aresta, vertice_grafo *vertice, registro reg);
-void insere_aresta_no_grafo(grafo *g, registro reg);
-
-
+void cria_vertice(vertice_grafo *vertice, string tecnologia, int grupo);
+void cria_aresta(aresta_grafo *aresta, vertice_grafo *vertice, int peso);
+void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnologiaDestino, int grupo2, int peso);
+void busca_tecnologias_entrada(grafo g, char* tecnologia);
+void libera_grafo(grafo g);
 
 #endif

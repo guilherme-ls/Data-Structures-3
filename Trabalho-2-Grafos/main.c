@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "grafo.h"
+#include "funcionalidades_grafo.h"
 
 
 int main() {
@@ -10,7 +10,6 @@ int main() {
 
     // executa a funcionalidade selecionada
     switch(comando) {
-        /*
         case 8:
             funcionalidade8();
             break;
@@ -26,7 +25,6 @@ int main() {
         case 12:
             funcionalidade12();
             break;
-        */
         default:
             printf("comando nao encontrado.\n");
     }

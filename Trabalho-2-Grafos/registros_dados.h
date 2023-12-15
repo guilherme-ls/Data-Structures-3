@@ -1,6 +1,10 @@
 // Guilherme Lorete Schmidt - 13676857
 // Emanuel Percinio Goncalves de Oliveira - 13676878
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #ifndef REGISTROS_DADOS
 #define REGISTROS_DADOS
 
@@ -46,17 +50,9 @@ typedef struct registro registro;
 
 // funcoes de manipulacao de registros
 
-void escrever_registro(FILE* arquivo, registro reg);
 int ler_registro(FILE* arquivo, registro* reg);
-int ler_campo(FILE* arquivo, char** valCampo, char* nomeCampo);
-void escrever_header(FILE* arquivo, header cabecalho);
 int ler_header(FILE* arquivo, header* cabecalho);
 int calcula_byte_off(int RRN);
-void inicializa_registro(registro* reg);
-void inicializa_cabecalho(header* cabecalho);
 int check_cabecalho(FILE* arq_bin, header* cabecalho);
-void imprime_registro(registro reg);
-void imprime_campo_texto(string texto, char* fim);
-void imprime_campo_numerico(int num, char* fim);
 
 #endif

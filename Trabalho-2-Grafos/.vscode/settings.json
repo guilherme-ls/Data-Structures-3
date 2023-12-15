@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "string.h": "c",
+        "funcoesauxiliares.h": "c",
+        "lista.h": "c",
+        "funcionalidades_grafo.h": "c",
+        "lista_grafo.h": "c",
+        "grafo.h": "c",
+        "stdlib.h": "c"
+    }
+}
