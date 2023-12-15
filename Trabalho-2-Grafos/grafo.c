@@ -13,21 +13,10 @@ void inicializa_grafo(grafo *g, int num_tecnologias) {
 }
 
 // Funcao para criar um vertice do grafo a partir do registro de dados
-void cria_vertice(vertice_grafo *vertice, registro reg) {
-    vertice->nomeTecOrigem = (char*) malloc((reg.tecnologiaOrigem.tamanho + 1) * sizeof(char));
-    strcpy(vertice->nomeTecOrigem, reg.tecnologiaOrigem.nome);
-    vertice->grupo = reg.grupo;
-    vertice->grau_entrada = 0;
-    vertice->grau_saida = 0;
-    vertice->grau = 0;
-    inicializa_lista(&(vertice->lista_arestas));
-}
-
-// Funcao para criar um vertice do grafo a partir do registro de dados
-void cria_vertice_destino(vertice_grafo *vertice, registro reg) {
-    vertice->nomeTecOrigem = (char*) malloc((reg.tecnologiaDestino.tamanho + 1) * sizeof(char));
-    strcpy(vertice->nomeTecOrigem, reg.tecnologiaDestino.nome);
-    vertice->grupo = 0;
+void cria_vertice(vertice_grafo *vertice, string tecnologia, int grupo) {
+    vertice->nomeTecOrigem = (char*) malloc((tecnologia.tamanho + 1) * sizeof(char));
+    strcpy(vertice->nomeTecOrigem, tecnologia.nome);
+    vertice->grupo = grupo;
     vertice->grau_entrada = 0;
     vertice->grau_saida = 0;
     vertice->grau = 0;
@@ -83,23 +72,24 @@ void insere_vertice(grafo *g, vertice_grafo *vertice, int pos) {
 }
 
 // Funcao para inserir aresta no grafo
-void insere_aresta(grafo *g, registro reg) {
+void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnologiaDestino, int peso) {
     int pos;
     vertice_grafo *verticeOrigem = malloc(sizeof(vertice_grafo));
     vertice_grafo *verticeDestino = malloc(sizeof(vertice_grafo));
     aresta_grafo *aresta = malloc(sizeof(aresta_grafo));
 
+
     // Primeira inserção, insere vertice e aresta direto
     if(g->num_vertices == 0) {
         // Cria o vertice a ser inserido no grafo
-        cria_vertice(verticeOrigem, reg);
-        cria_vertice_destino(verticeDestino, reg);
+        cria_vertice(verticeOrigem, tecnologiaOrigem, grupo);
+        cria_vertice(verticeDestino, tecnologiaDestino, grupo);
         insere_vertice(g, verticeOrigem, 0);
-        pos = busca_binaria_vertices(*g, reg.tecnologiaDestino.nome);
+        pos = busca_binaria_vertices(*g, tecnologiaDestino.nome);
         insere_vertice(g, verticeDestino, pos);
 
         // Cria aresta a ser inserida no grafo
-        cria_aresta(aresta, verticeDestino, reg.peso);
+        cria_aresta(aresta, verticeDestino, peso);
 
         // Adiciona aresta na lista de arestas do vertice
         insere_aresta_vertice(verticeOrigem, aresta);
@@ -107,30 +97,29 @@ void insere_aresta(grafo *g, registro reg) {
     }
     else {
         // checa se o vertice origem ja existe na lista de adjacencias, criando e inserindo caso necessario
-        pos = busca_binaria_vertices(*g, reg.tecnologiaOrigem.nome);
-        if(pos < g->num_vertices && strcmp(g->lista_vertices[pos]->nomeTecOrigem, reg.tecnologiaOrigem.nome) == 0) {
+        pos = busca_binaria_vertices(*g, tecnologiaOrigem.nome);
+        if(pos < g->num_vertices && strcmp(g->lista_vertices[pos]->nomeTecOrigem, tecnologiaOrigem.nome) == 0) {
             free(verticeOrigem);
             verticeOrigem = g->lista_vertices[pos];
-            verticeOrigem->grupo = reg.grupo;
         }
         else {
-            cria_vertice(verticeOrigem, reg);
+            cria_vertice(verticeOrigem, tecnologiaOrigem, grupo);
             insere_vertice(g, verticeOrigem, pos);
         }
 
         // checa se o vertice destino ja existe na lista de adjacencias, criando e inserindo caso necessario
-        pos = busca_binaria_vertices(*g, reg.tecnologiaDestino.nome);
-        if(pos < g->num_vertices && strcmp(g->lista_vertices[pos]->nomeTecOrigem, reg.tecnologiaDestino.nome) == 0) {
+        pos = busca_binaria_vertices(*g, tecnologiaDestino.nome);
+        if(pos < g->num_vertices && strcmp(g->lista_vertices[pos]->nomeTecOrigem, tecnologiaDestino.nome) == 0) {
             free(verticeDestino);
             verticeDestino = g->lista_vertices[pos];
         }
         else {
-            cria_vertice_destino(verticeDestino, reg);
+            cria_vertice(verticeDestino, tecnologiaDestino, 0);
             insere_vertice(g, verticeDestino, pos);
         }
 
         // cria aresta a ser inserida
-        cria_aresta(aresta, verticeDestino, reg.peso);
+        cria_aresta(aresta, verticeDestino, peso);
         
         // insere aresta criada
         insere_aresta_vertice(verticeOrigem, aresta);

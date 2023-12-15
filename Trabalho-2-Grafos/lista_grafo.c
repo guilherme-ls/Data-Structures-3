@@ -53,9 +53,29 @@ void inserir(lista *l, aresta_grafo *aresta) {
             prev = atual;
             atual = atual->prox;
         }
-        if(prev != NULL)
+        if(prev != NULL) {
             prev->prox = p;
+        }
+        else {
+            l->ini = p;
+        }
         p->prox = atual;
         l->tam++;
     }
+}
+
+int busca(lista *l, char* nomeTec) {
+    if(l->ini == NULL) {
+        return -1;
+    }
+    no* atual = l->ini;
+    int pos = 0;
+    while(atual != NULL) {
+        if(strcmp(atual->info->tecDestino->nomeTecOrigem, nomeTec) == 0) {
+            return pos;
+        }
+        pos++;
+        atual = atual->prox;
+    }
+    return -1;
 }
