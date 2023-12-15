@@ -16,7 +16,7 @@
 int open(FILE** arq, char* nome, char* mode) {
     *arq = fopen(nome, mode);
     if(*arq == NULL) {
-        printf("Falha no processamento do arquivo.\n");
+        printf("Falha na execução da funcionalidade\n");
         return 1;
     }
     return 0;

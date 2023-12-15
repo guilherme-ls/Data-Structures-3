@@ -164,3 +164,35 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo, string tecnolog
         g->num_arestas++;
     }
 }
+
+/**
+ * @brief busca a tecnologia origem fornecida e imprime todas as tecnologias destino para a qual possui arestas de saida
+ * @param g grafo onde buscar
+ * @param tecnologia tecnologia origem buscada
+ */
+void busca_tecnologias_entrada(grafo g, char* tecnologia) {
+    // realiza busca binaria na lista de adjacencias para encontrar o vertice buscado
+    int pos = busca_binaria_vertices(g, tecnologia);
+
+    // verifica se o vertice foi encontrado
+    vertice_grafo vertice = *(g.lista_vertices[pos]);
+    if(strcmp(tecnologia, vertice.nomeTecOrigem) != 0) {
+        printf("Registro inexistente.\n");
+        return;
+    }
+
+    // se encontrado, verifica o tamanho de sua lista de arestas
+    if(vertice.grau_saida == 0) {
+        printf("Registro inexistente.\n");
+        return;
+    }
+
+    // caso existam elementos, printa a saida desejada
+    printf("%s: ", vertice.nomeTecOrigem);
+    no *aresta = vertice.lista_arestas.ini;
+    for(int i = 0; i < vertice.lista_arestas.tam - 1; i++) {
+        printf("%s, ", aresta->info->tecDestino->nomeTecOrigem);
+        aresta = aresta->prox;
+    }
+    printf("%s\n\n", aresta->info->tecDestino->nomeTecOrigem);
+}

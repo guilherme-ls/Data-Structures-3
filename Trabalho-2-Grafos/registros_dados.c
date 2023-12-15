@@ -90,14 +90,14 @@ int check_cabecalho(FILE* arq_bin, header* cabecalho) {
     int erro = ler_header(arq_bin, cabecalho);
     if(erro == 1) {
         // fim da execucao em caso de erros
-        printf("Falha no processamento do arquivo.\n");
+        printf("Falha na execução da funcionalidade.\n");
         fclose(arq_bin);
         return 1;
     }
 
     // retorna erro caso 'status' do arquivo lido seja '0'
     if(cabecalho->status == '0') {
-        printf("Falha no processamento do arquivo.\n");
+        printf("Falha na execução da funcionalidade.\n");
         fclose(arq_bin);
         return 1;
     }
