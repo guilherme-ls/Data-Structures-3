@@ -15,7 +15,7 @@ void inicializa_grafo(grafo *g, int num_tecnologias){
 // Funcao para criar um vertice do grafo a partir do registro de dados
 void cria_vertice(vertice_grafo *vetice, registro reg){
     vertice->nomeTecOrigem = (char*) malloc(80 * sizeof(char));
-    vertice->nomeTecOrigem = reg.nomeTecnologiaOrigem;
+    strcpy(vertice->nomeTecOrigem, reg.nomeTecnologiaOrigem);
     vertice->grupo = reg.grupo;
     vertice->grau_entrada = 0;
     vertice->grau_saida = 0;
