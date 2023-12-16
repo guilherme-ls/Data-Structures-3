@@ -215,7 +215,7 @@ void funcionalidade11() {
         free(reg.tecnologiaDestino.nome);
     }
 
-    printf("numero de vertices no grafo: %d\n", g.num_vertices);
+    // printf("numero de vertices no grafo: %d\n", g.num_vertices);
 
     // Realiza busca em profundidade no grafo normal
     ContaCFC(&g, &g_transposto);
