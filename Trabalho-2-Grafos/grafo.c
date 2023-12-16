@@ -203,6 +203,69 @@ void busca_tecnologias_entrada(grafo g, char* tecnologia) {
     printf("%s\n\n", aresta->info->tecDestino->nomeTecOrigem);
 }
 
+int verificaNaoDescoberto(grafo *g, vertice_grafo *vertice, int cor[]){
+    int pos = busca_binaria_vertices(vertice.nomeTecOrigem);
+
+    if(cor[pos] == 0){
+        return 1;
+    }
+    return 0;
+}  
+
+
+void procedimentoBuscaDFS(grafo *g, vertice_grafo *vertice, int *cor, int *tempoDescoberta, int *tempoTermino, int *tempo){
+    int posAtual = busca_binaria_vertices(g, verticeAtual->nomeTecOrigem);
+    // Pinta vertice de cinza e marca tempo de descoberta
+    cor[posAtual] = 1;
+    tempoDescoberta[posAtual] = *tempo;
+    *tempo++;
+
+    // Empilha vertices adjacentes nao descobertos
+    no *noAdjacente = verticeAtual->lista_arestas.ini;
+    aresta_grafo *aresta_adjacente;
+    while(noAdjacente != NULL){
+        aresta_adjacente = noAdjacente->info;
+        if(verificaNaoDescoberto(g, aresta_adjacente->tecDestino, cor)){
+            procedimentoBuscaDFS(g, aresta_adjacente->tecDestino, cor, tempoDescoberta, tempoTermino, tempo);
+        }
+        noAdjacente = noAdjacente->prox;
+    }
+
+    // Sem vertices adjacentes pinta de preto e marca tempo de termino
+    cor[posAtual] = 2;
+    tempoTermino[posAtual] = *tempo;
+    *tempo++;
+}
+
+void BuscaEmProfundidade(grafo *g, int inicio){
+    int tempoDescoberta[g->num_vertices]; // Vetor para armazenar tempo de descoberta dos vertices
+    int tempoTermino[g->num_vertices]; // Vetor para armazenar tempo de termino dos vertices
+    int cor[g->num_vertices]; // 0 (branco) - Nao descoberto; 1 (cinza) - Descoberto; 2 (preto) - Finalizado
+
+    // Incializa vertice atual com topo da pilha
+    vertice_grafo *verticeAtual = g->lista_vertices[inicio];
+
+    // Inicializa temporizador
+    int tempo = 1;
+
+    // Inicializa cor branca (= 0) em todos
+    for(int i = 0; i < g->num_vertices; i++){
+        cor[i] = 0;
+    } 
+
+    // Comeca busca pelo vertice inicial
+    procedimentoBuscaDFS(g, verticeAtual, cor, tempoDescoberta, tempoTermino, &tempo);
+
+    for(int i = 0; i < g->num_vertices; i++){
+        // Caso ainda haja vertices nao descobertos
+        if(cor[i] == 0){
+            verticeAtual = g->lista_vertices[i];
+            procedimentoBuscaDFS(g, verticeAtual, cor, tempoDescoberta, tempoTermino, &tempo);
+        }
+    }
+
+}
+
 /**
  * @brief verifica se determinado vertice ja foi finalizado no algoritmo de Dijkstra
  * @param finalizados vetor com vertices ja finalizados
@@ -210,7 +273,7 @@ void busca_tecnologias_entrada(grafo g, char* tecnologia) {
  * @param cont quantidade de vertices finalizados
  * @return 1 caso ja esteja finaliza, 0 caso contrario.
  */
-int verifica_vertice_finalizado(vertice_grafo finalizados[], vertice_grafo vertice, int cont){
+int verifica_vertice_finalizado(vertice_grafo *finalizados, vertice_grafo vertice, int cont){
     // Loop para verificar se vertice ja foi finalizado
     for(int i = 0; i < cont; i++){
         if(strcmp(finalizados[cont].nomeTecOrigem, vertice.nomeTecOrigem) == 0){

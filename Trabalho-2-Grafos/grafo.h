@@ -7,6 +7,7 @@
 typedef struct aresta_grafo aresta_grafo;
 
 #include "lista_grafo.h"
+#include "pilha_grafo.h"
 #include "registros_dados.h"
 
 #define INFINITO 1000000
