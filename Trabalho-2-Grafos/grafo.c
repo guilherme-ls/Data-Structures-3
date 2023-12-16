@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "grafo.h"
+#include "heap.h"
 
 /**
  * @brief funcao para a inicializacao do grafo com valores padrao
@@ -319,9 +320,9 @@ int dijkstra(grafo g, char* tecnologiaInicial, char* tecnologiaFinal){
     // Realiza busca binaria na lista de adjacencia para encontrar o vertice de origem
     int posInicial = busca_binaria_vertices(g, tecnologiaInicial);  // Posicao vertice origem.
     int posFinal = busca_binaria_vertices(g, tecnologiaFinal);  // Posicao vertice destino.
-    int cont = 0;  // Quantidade de vertices finalizados
+    int size = g.num_vertices;
     int distancias[g.num_vertices];  // Vetor para armazenar distancias minímas a partir do vertice inicial
-    vertice_grafo finalizados[g.num_vertices];  // Vertices cuja a distancia mínima a partir do vertice inicial estiver finalizada
+    int heap[g.num_vertices];
     
     // Verifica se existem os vertices inicial e final em questao
     vertice_grafo verticeInicial = *(g.lista_vertices[posInicial]);
@@ -334,41 +335,44 @@ int dijkstra(grafo g, char* tecnologiaInicial, char* tecnologiaFinal){
     }
 
     // Inicializacao das distancias
-    for(int i = 0; i < g.num_vertices; i++){
+    for(int i = 0; i < g.num_vertices; i++) {
+        heap[i] = i;
         distancias[i] = INFINITO;
     }
 
     // Começa pelo vertice origem
     vertice_grafo vertice_atual = verticeInicial;
     distancias[posInicial] = 0;
-    finalizados[cont] = vertice_atual;
     int posAtual = posInicial;
+    organiza_heap(heap, size, distancias);
 
     // Loop para encontrar menor caminho entre os vertices
-    while(1){
+    while(1) {
+        // define lista de arestas a ser analisada
         no *no_atual_lista = vertice_atual.lista_arestas.ini;
         aresta_grafo aresta_adjacente;
-        for(int i = 0; i < vertice_atual.lista_arestas.tam; i++){
+        for(int i = 0; i < vertice_atual.lista_arestas.tam; i++) {
             aresta_adjacente = *(no_atual_lista->info);
             
             // Para todo vertice (v) adjacente ao atual (w) D[v] = min(D[v], D[w] + peso aresta(w, v)) 
             int posAdjacente = busca_binaria_vertices(g, aresta_adjacente.tecDestino->nomeTecOrigem);
-            if(distancias[posAtual] + aresta_adjacente.peso < distancias[posAdjacente]){
+            if(distancias[posAtual] + aresta_adjacente.peso < distancias[posAdjacente]) {
                 distancias[posAdjacente] = distancias[posAtual] + aresta_adjacente.peso;
             }
 
             // Vai para proxima aresta
             no_atual_lista = no_atual_lista->prox;
         }
-        int posMenor = finalizaMenor(g, finalizados, distancias, cont);
-        if(posMenor == -1){
+        if(size == 0) {
             // Nao ha mais vertices para analisar
             break;
-        }else{
-            vertice_atual = *(g.lista_vertices[posMenor]);
-            posAtual = busca_binaria_vertices(g, vertice_atual.nomeTecOrigem);
-            cont++;
         }
+
+        // reorganiza a heap com base nas novas posicoes e seleciona seu topo para ser o novo vertice a ser analisado
+        organiza_heap(heap, size, distancias);
+        posAtual = remove_top(heap, &size, distancias);
+        size--;
+        vertice_atual = *(g.lista_vertices[posAtual]);
     }
 
     // Retorna tamanho do menor caminho para vertice final.

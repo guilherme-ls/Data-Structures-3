@@ -262,26 +262,30 @@ void funcionalidade12() {
 
         // insere aresta lida no grafo, caso valida
         if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
-            insere_aresta(&g, reg.tecnologiaDestino, 0, reg.tecnologiaOrigem, reg.grupo, reg.peso);
+            insere_aresta(&g, reg.tecnologiaOrigem, reg.grupo, reg.tecnologiaDestino, 0, reg.peso);
 
         // libera variaveis alocadas
         free(reg.tecnologiaOrigem.nome);
         free(reg.tecnologiaDestino.nome);
     }
 
+    // para cada par de nos fornecido, aplica dijkstra para encontrar o menor caminho
     for(int i = 0; i < numero_buscas; i++){
         char tecnologia_origem[TAM_ARQ_LEITURA]; 
         char tecnologia_destino[TAM_ARQ_LEITURA];
         scan_quote_string(tecnologia_origem);
         scan_quote_string(tecnologia_destino);
 
+        // caso encontre um caminho, o imprime, caso contrario, imprime "CAMINHO INEXISTENTE"
         int distancia = dijkstra(g, tecnologia_origem, tecnologia_destino);
         if(distancia < INFINITO){
             printf("%s %s: %d\n", tecnologia_origem, tecnologia_destino, distancia);
         }else{
             printf("%s %s: CAMINHO INEXISTENTE\n", tecnologia_origem, tecnologia_destino);
         }
-        
-
     }
+
+    // fecha arquivo de dados e libera grafo
+    fclose(arq_dados);
+    libera_grafo(g);
 }
