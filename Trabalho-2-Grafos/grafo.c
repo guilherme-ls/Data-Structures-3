@@ -290,7 +290,7 @@ void ContaCFC(grafo *g, grafo *g_transposto){
             procedimentoBuscaDFS(g, verticeAtual, pilha, &indicePilha, cor, tempoDescoberta, tempoTermino, &tempo);
         }
     }
-    
+
     // Reinicializa cor branca (= 0) em todos
     for(int i = 0; i < g->num_vertices; i++){
         cor[i] = 0;
@@ -309,9 +309,9 @@ void ContaCFC(grafo *g, grafo *g_transposto){
     }
     
     if(cont == 1){
-        printf("Sim, o grafo e fortemente conexo e possui 1 componente\n");
+        printf("Sim, o grafo é fortemente conexo e possui 1 componente\n");
     }else{
-        printf("Nao, o grafo nao e fortemente conexo e possui %d componentes\n", cont);
+        printf("Não, o grafo não é fortemente conexo e possui %d componentes\n", cont);
     }
 
     // Libera memoria da pilha

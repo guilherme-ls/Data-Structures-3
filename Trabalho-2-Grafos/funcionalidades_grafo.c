@@ -284,7 +284,7 @@ void funcionalidade12() {
         if(distancia < INFINITO){
             printf("%s %s: %d\n", tecnologia_origem, tecnologia_destino, distancia);
         }else{
-            printf("%s %s: CAMINHO INEXISTENTE\n", tecnologia_origem, tecnologia_destino);
+            printf("%s %s: CAMINHO INEXISTENTE.\n", tecnologia_origem, tecnologia_destino);
         }
     }
 
