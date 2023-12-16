@@ -170,9 +170,7 @@ void funcionalidade10() {
 
 void funcionalidade11() {
     char nome_dados[TAM_ARQ_LEITURA];
-    int numero_buscas;
     scanf("%s", nome_dados);
-    scanf("%d", &numero_buscas);
 
     // abre arquivo de entrada em modo de leitura
     FILE *arq_dados;
@@ -216,6 +214,11 @@ void funcionalidade11() {
         free(reg.tecnologiaOrigem.nome);
         free(reg.tecnologiaDestino.nome);
     }
+
+    printf("numero de vertices no grafo: %d\n", g.num_vertices);
+
+    // Realiza busca em profundidade no grafo normal
+    ContaCFC(&g, &g_transposto);
     
 
     // fecha arquivo de dados e libera grafo

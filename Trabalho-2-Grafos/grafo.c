@@ -205,7 +205,7 @@ void busca_tecnologias_entrada(grafo g, char* tecnologia) {
 }
 
 int verificaNaoDescoberto(grafo *g, vertice_grafo *vertice, int cor[]){
-    int pos = busca_binaria_vertices(vertice.nomeTecOrigem);
+    int pos = busca_binaria_vertices(*g, vertice->nomeTecOrigem);
 
     if(cor[pos] == 0){
         return 1;
@@ -214,8 +214,8 @@ int verificaNaoDescoberto(grafo *g, vertice_grafo *vertice, int cor[]){
 }  
 
 
-void procedimentoBuscaDFS(grafo *g, vertice_grafo *vertice, int *cor, int *tempoDescoberta, int *tempoTermino, int *tempo){
-    int posAtual = busca_binaria_vertices(g, verticeAtual->nomeTecOrigem);
+void procedimentoBuscaDFS(grafo *g, vertice_grafo *verticeAtual, int *pilha, int *indicePilha, int *cor, int *tempoDescoberta, int *tempoTermino, int *tempo){
+    int posAtual = busca_binaria_vertices(*g, verticeAtual->nomeTecOrigem);
     // Pinta vertice de cinza e marca tempo de descoberta
     cor[posAtual] = 1;
     tempoDescoberta[posAtual] = *tempo;
@@ -227,7 +227,34 @@ void procedimentoBuscaDFS(grafo *g, vertice_grafo *vertice, int *cor, int *tempo
     while(noAdjacente != NULL){
         aresta_adjacente = noAdjacente->info;
         if(verificaNaoDescoberto(g, aresta_adjacente->tecDestino, cor)){
-            procedimentoBuscaDFS(g, aresta_adjacente->tecDestino, cor, tempoDescoberta, tempoTermino, tempo);
+            procedimentoBuscaDFS(g, aresta_adjacente->tecDestino, pilha, indicePilha, cor, tempoDescoberta, tempoTermino, tempo);
+        }
+        noAdjacente = noAdjacente->prox;
+    }
+
+    // Adiciona a pilha de ordem
+    pilha[(*indicePilha)++] = posAtual;
+
+    // Sem vertices adjacentes pinta de preto e marca tempo de termino
+    cor[posAtual] = 2;
+    tempoTermino[posAtual] = *tempo;
+    *tempo++;
+}
+
+void procedimentoBuscaDFSTransposto(grafo *g, vertice_grafo *verticeAtual, int *cor, int *tempoDescoberta, int *tempoTermino, int *tempo){
+    int posAtual = busca_binaria_vertices(*g, verticeAtual->nomeTecOrigem);
+    // Pinta vertice de cinza e marca tempo de descoberta
+    cor[posAtual] = 1;
+    tempoDescoberta[posAtual] = *tempo;
+    *tempo++;
+
+    // Empilha vertices adjacentes nao descobertos
+    no *noAdjacente = verticeAtual->lista_arestas.ini;
+    aresta_grafo *aresta_adjacente;
+    while(noAdjacente != NULL){
+        aresta_adjacente = noAdjacente->info;
+        if(verificaNaoDescoberto(g, aresta_adjacente->tecDestino, cor)){
+            procedimentoBuscaDFSTransposto(g, aresta_adjacente->tecDestino, cor, tempoDescoberta, tempoTermino, tempo);
         }
         noAdjacente = noAdjacente->prox;
     }
@@ -238,13 +265,13 @@ void procedimentoBuscaDFS(grafo *g, vertice_grafo *vertice, int *cor, int *tempo
     *tempo++;
 }
 
-void BuscaEmProfundidade(grafo *g, int inicio){
+
+void ContaCFC(grafo *g, grafo *g_transposto){
     int tempoDescoberta[g->num_vertices]; // Vetor para armazenar tempo de descoberta dos vertices
     int tempoTermino[g->num_vertices]; // Vetor para armazenar tempo de termino dos vertices
     int cor[g->num_vertices]; // 0 (branco) - Nao descoberto; 1 (cinza) - Descoberto; 2 (preto) - Finalizado
-
-    // Incializa vertice atual com topo da pilha
-    vertice_grafo *verticeAtual = g->lista_vertices[inicio];
+    int *pilha = (int*) malloc(g->num_vertices * sizeof(int));  // Pilha para armazenar ordem dos vertices
+    int indicePilha = 0;
 
     // Inicializa temporizador
     int tempo = 1;
@@ -254,16 +281,37 @@ void BuscaEmProfundidade(grafo *g, int inicio){
         cor[i] = 0;
     } 
 
-    // Comeca busca pelo vertice inicial
-    procedimentoBuscaDFS(g, verticeAtual, cor, tempoDescoberta, tempoTermino, &tempo);
+    // Declara variavel para vertice atual
+    vertice_grafo *verticeAtual;
 
+    // Loop para busca em profundidadae no grafo normal
     for(int i = 0; i < g->num_vertices; i++){
         // Caso ainda haja vertices nao descobertos
         if(cor[i] == 0){
             verticeAtual = g->lista_vertices[i];
-            procedimentoBuscaDFS(g, verticeAtual, cor, tempoDescoberta, tempoTermino, &tempo);
+            procedimentoBuscaDFS(g, verticeAtual, pilha, &indicePilha, cor, tempoDescoberta, tempoTermino, &tempo);
         }
     }
+
+    // Reinicializa cor branca (= 0) em todos
+    for(int i = 0; i < g->num_vertices; i++){
+        cor[i] = 0;
+    } 
+    
+    int cont = 0;
+    // Loop para busca em profundidadae no grafo transposto
+    for(int i = indicePilha-1; i >= 0; i--){
+        // Caso ainda haja vertices nao descobertos
+        int idAtual = pilha[i];
+        if(cor[idAtual] == 0){
+            printf("Percorrendo CFC %d...\n", ++cont);
+            verticeAtual = g->lista_vertices[idAtual];
+            procedimentoBuscaDFSTransposto(g, verticeAtual, cor, tempoDescoberta, tempoTermino, &tempo);
+        }
+    }
+
+    // Libera memoria da pilha
+    free(pilha);
 
 }
 
