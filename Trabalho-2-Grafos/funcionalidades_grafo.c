@@ -262,7 +262,7 @@ void funcionalidade12() {
 
         // insere aresta lida no grafo, caso valida
         if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
-            insere_aresta(&g, reg.tecnologiaDestino, 0, reg.tecnologiaOrigem, reg.grupo, reg.peso);
+            insere_aresta(&g, reg.tecnologiaOrigem, reg.grupo, reg.tecnologiaDestino, 0, reg.peso);
 
         // libera variaveis alocadas
         free(reg.tecnologiaOrigem.nome);
@@ -281,7 +281,9 @@ void funcionalidade12() {
         }else{
             printf("%s %s: CAMINHO INEXISTENTE\n", tecnologia_origem, tecnologia_destino);
         }
-        
-
     }
+
+    // fecha arquivo de dados e libera grafo
+    fclose(arq_dados);
+    libera_grafo(g);
 }
