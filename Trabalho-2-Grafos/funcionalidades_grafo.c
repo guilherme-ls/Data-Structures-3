@@ -269,12 +269,14 @@ void funcionalidade12() {
         free(reg.tecnologiaDestino.nome);
     }
 
+    // para cada par de nos fornecido, aplica dijkstra para encontrar o menor caminho
     for(int i = 0; i < numero_buscas; i++){
         char tecnologia_origem[TAM_ARQ_LEITURA]; 
         char tecnologia_destino[TAM_ARQ_LEITURA];
         scan_quote_string(tecnologia_origem);
         scan_quote_string(tecnologia_destino);
 
+        // caso encontre um caminho, o imprime, caso contrario, imprime "CAMINHO INEXISTENTE"
         int distancia = dijkstra(g, tecnologia_origem, tecnologia_destino);
         if(distancia < INFINITO){
             printf("%s %s: %d\n", tecnologia_origem, tecnologia_destino, distancia);

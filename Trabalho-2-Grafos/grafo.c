@@ -243,6 +243,7 @@ int dijkstra(grafo g, char* tecnologiaInicial, char* tecnologiaFinal){
 
     // Loop para encontrar menor caminho entre os vertices
     while(1) {
+        // define lista de arestas a ser analisada
         no *no_atual_lista = vertice_atual.lista_arestas.ini;
         aresta_grafo aresta_adjacente;
         for(int i = 0; i < vertice_atual.lista_arestas.tam; i++) {
@@ -251,7 +252,6 @@ int dijkstra(grafo g, char* tecnologiaInicial, char* tecnologiaFinal){
             // Para todo vertice (v) adjacente ao atual (w) D[v] = min(D[v], D[w] + peso aresta(w, v)) 
             int posAdjacente = busca_binaria_vertices(g, aresta_adjacente.tecDestino->nomeTecOrigem);
             if(distancias[posAtual] + aresta_adjacente.peso < distancias[posAdjacente]) {
-                //printf("posAdjacente: %s %d, posAtual: %s %d, peso: %d\n", vertice_atual.nomeTecOrigem, distancias[]);
                 distancias[posAdjacente] = distancias[posAtual] + aresta_adjacente.peso;
             }
 
@@ -263,6 +263,7 @@ int dijkstra(grafo g, char* tecnologiaInicial, char* tecnologiaFinal){
             break;
         }
 
+        // reorganiza a heap com base nas novas posicoes e seleciona seu topo para ser o novo vertice a ser analisado
         organiza_heap(heap, size, distancias);
         posAtual = remove_top(heap, &size, distancias);
         size--;

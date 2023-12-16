@@ -3,7 +3,13 @@
 
 #include "heap.h"
 
-// organiza heaps
+/**
+ * @brief organiza heaps recursivamente (um deslocamento)
+ * @param vertice vetor de indices de vertices
+ * @param size tamanho do vetor da heap
+ * @param pos posicao onde iniciar a organizacao
+ * @param distancias vetor de distancias para atuar como peso dos nos da heap
+ */
 void heapify(int *vertice, int size, int pos, int* distancias) {
     // define a posição do menor elemento como a atual
     int smaller = pos;
@@ -33,6 +39,12 @@ void heapify(int *vertice, int size, int pos, int* distancias) {
     }
 }
 
+/**
+ * @brief organiza heaps por completo
+ * @param vertice vetor de indices de vertices
+ * @param size tamanho do vetor da heap
+ * @param distancias vetor de distancias para atuar como peso dos nos da heap
+ */
 void organiza_heap(int *vertice, int size, int* distancias) {
     // organiza a heap inicialmente
     // inicia em size/2 - 1 e vai até 0 para contemplar apenas nós pais, reorganizando a heap em cada um deles
@@ -41,6 +53,13 @@ void organiza_heap(int *vertice, int size, int* distancias) {
     }
 }
 
+/**
+ * @brief retorna topo da heap e o substitui
+ * @param vertice vetor de indices de vertices
+ * @param size tamanho do vetor da heap
+ * @param distancias vetor de distancias para atuar como peso dos nos da heap
+ * @return topo da heap (seu menor elemento)
+ */
 int remove_top(int *vertice, int *size, int* distancias) {
     if(size == 0)
         return -1;
