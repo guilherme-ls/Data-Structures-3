@@ -133,12 +133,10 @@ void ContaCFC(grafo *g, grafo *g_transposto){
     // Declara variavel para vertice atual
     vertice_grafo *verticeAtual;
 
-    int normal = 0;
     // Loop para busca em profundidadae no grafo normal
     for(int i = 0; i < g->num_vertices; i++){
         // Caso ainda haja vertices nao descobertos
         if(cor[i] == 0){
-            normal++;
             verticeAtual = g->lista_vertices[i];
             procedimentoBuscaDFS(g, verticeAtual, pilha, &indicePilha, cor);
         }
