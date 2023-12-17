@@ -44,7 +44,7 @@ void funcionalidade8() {
         }
 
         // insere aresta lida no grafo, caso valida
-        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
+        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0 && reg.grupo != -1)
             insere_aresta(&g, reg.tecnologiaOrigem, reg.grupo, reg.tecnologiaDestino, 0, reg.peso);
 
         // libera variaveis alocadas
@@ -95,7 +95,7 @@ void funcionalidade9() {
         }
 
         // insere aresta lida no grafo, invertendo-a para o grafo transposto
-        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
+        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0 && reg.grupo != -1)
             insere_aresta(&g, reg.tecnologiaDestino, 0, reg.tecnologiaOrigem, reg.grupo, reg.peso);
 
         // libera variaveis alocadas
@@ -147,7 +147,7 @@ void funcionalidade10() {
         }
 
         // insere aresta lida no grafo transposto, caso valida
-        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
+        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0 && reg.grupo != -1)
             insere_aresta(&g, reg.tecnologiaDestino, 0, reg.tecnologiaOrigem, reg.grupo, reg.peso);
 
         // libera variaveis alocadas
@@ -205,7 +205,7 @@ void funcionalidade11() {
         }
 
         // insere aresta lida nos grafos, caso valida
-        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0) {
+        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0 && reg.grupo != -1) {
             insere_aresta(&g, reg.tecnologiaOrigem, reg.peso, reg.tecnologiaDestino, 0, reg.peso);
             insere_aresta(&g_transposto, reg.tecnologiaDestino, 0, reg.tecnologiaOrigem, reg.grupo, reg.peso);
         }
@@ -261,7 +261,7 @@ void funcionalidade12() {
         }
 
         // insere aresta lida no grafo, caso valida
-        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0)
+        if(reg.tecnologiaOrigem.tamanho != 0 && reg.tecnologiaDestino.tamanho != 0 && reg.grupo != -1)
             insere_aresta(&g, reg.tecnologiaOrigem, reg.grupo, reg.tecnologiaDestino, 0, reg.peso);
 
         // libera variaveis alocadas
