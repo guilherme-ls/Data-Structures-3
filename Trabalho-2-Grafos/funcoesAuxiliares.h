@@ -4,7 +4,7 @@
 #ifndef FUNCOES_AUXILIARES
 #define FUNCOES_AUXILIARES
 
-#include "lista_grafo.h"
+#include "busca_grafo.h"
 
 void concatena_chave(registro reg, char* string);
 int open(FILE** arq, char* nome, char* mode);
