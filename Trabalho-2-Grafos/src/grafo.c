@@ -106,8 +106,9 @@ void insere_vertice(grafo *g, vertice_grafo *vertice, int pos) {
  * @brief insere uma aresta no grafo, definida pelos parametros da funcao
  * @param g grafo onde realizar a insercao
  * @param tecnologiaOrigem string da tecnologia origem
- * @param grupo grupo ao qual as tecnologias pertencem
+ * @param grupo1 grupo ao qual a tecnologia origem pertence
  * @param tecnologiaDestino string da tecnologia destino
+ * @param grupo2 grupo ao qual a tecnologia destino pertence
  * @param peso peso da aresta
  */
 void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo1, string tecnologiaDestino, int grupo2, int peso) {
@@ -119,7 +120,7 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo1, string tecnolo
 
     // Primeira inserção, insere vertice e aresta direto
     if(g->num_vertices == 0) {
-        // Cria o vertice a ser inserido no grafo
+        // Cria os vertices a serem inseridos no grafo e os insere
         cria_vertice(verticeOrigem, tecnologiaOrigem, grupo1);
         cria_vertice(verticeDestino, tecnologiaDestino, grupo2);
         insere_vertice(g, verticeOrigem, 0);
@@ -137,6 +138,7 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo1, string tecnolo
         // checa se o vertice origem ja existe na lista de adjacencias, criando e inserindo caso necessario
         pos = busca_binaria_vertices(*g, tecnologiaOrigem.nome);
         if(pos < g->num_vertices && strcmp(g->lista_vertices[pos]->nomeTecOrigem, tecnologiaOrigem.nome) == 0) {
+            // atribui a verticeOrigem o vertice ja existente correspondente
             free(verticeOrigem);
             verticeOrigem = g->lista_vertices[pos];
             if(verticeOrigem->grupo == 0) {
@@ -144,6 +146,7 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo1, string tecnolo
             }
         }
         else {
+            // cria e insere o vertice
             cria_vertice(verticeOrigem, tecnologiaOrigem, grupo1);
             insere_vertice(g, verticeOrigem, pos);
         }
@@ -151,6 +154,7 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo1, string tecnolo
         // checa se o vertice destino ja existe na lista de adjacencias, criando e inserindo caso necessario
         pos = busca_binaria_vertices(*g, tecnologiaDestino.nome);
         if(pos < g->num_vertices && strcmp(g->lista_vertices[pos]->nomeTecOrigem, tecnologiaDestino.nome) == 0) {
+            // atribui a verticeDestino o vertice ja existente correspondente
             free(verticeDestino);
             verticeDestino = g->lista_vertices[pos];
             if(verticeDestino->grupo == 0) {
@@ -158,6 +162,7 @@ void insere_aresta(grafo *g, string tecnologiaOrigem, int grupo1, string tecnolo
             }
         }
         else {
+            // cria e insere o vertice
             cria_vertice(verticeDestino, tecnologiaDestino, grupo2);
             insere_vertice(g, verticeDestino, pos);
         }

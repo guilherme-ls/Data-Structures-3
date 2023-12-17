@@ -1,9 +1,9 @@
 CC= gcc
-CFLAGS= -Wall -g -I.
+CFLAGS= -Wall -g
 TARGET= main
 
 all :
-	$(CC) $(CFLAGS) *.c -o $(TARGET)
+	$(CC) $(CFLAGS) *.c src/*.c -I include -o $(TARGET)
 
 run :
 	./$(TARGET)
