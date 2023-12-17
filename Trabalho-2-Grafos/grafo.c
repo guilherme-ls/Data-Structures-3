@@ -213,12 +213,19 @@ int verificaNaoDescoberto(grafo *g, vertice_grafo *vertice, int cor[]){
     return 0;
 }  
 
-
-void procedimentoBuscaDFS(grafo *g, vertice_grafo *verticeAtual, int *pilha, int *indicePilha, int *cor, int *tempoDescoberta, int *tempoTermino, int *tempo){
+/**
+ * @brief realiza busca em profundidade armazenando vertices visitados na pilha
+ * @param g grafo em que a busca e realizada
+ * @param verticeAtual vertice visitado
+ * @param pilha pilha para ordenar vertices na ordem decrescente de visita 
+ * @param indicePilha indice atual para inserção na pilha
+ * @param cor vetor que armazena qual o cor (estado) o vertice se encontra
+ * 
+*/
+void procedimentoBuscaDFS(grafo *g, vertice_grafo *verticeAtual, int *pilha, int *indicePilha, int *cor){
     int posAtual = busca_binaria_vertices(*g, verticeAtual->nomeTecOrigem);
     // Pinta vertice de cinza e marca tempo de descoberta
     cor[posAtual] = 1;
-    tempoDescoberta[posAtual] = (*tempo)++;
 
     // Empilha vertices adjacentes nao descobertos
     no *noAdjacente = verticeAtual->lista_arestas.ini;
@@ -226,7 +233,7 @@ void procedimentoBuscaDFS(grafo *g, vertice_grafo *verticeAtual, int *pilha, int
     while(noAdjacente != NULL){
         aresta_adjacente = noAdjacente->info;
         if(verificaNaoDescoberto(g, aresta_adjacente->tecDestino, cor)){
-            procedimentoBuscaDFS(g, aresta_adjacente->tecDestino, pilha, indicePilha, cor, tempoDescoberta, tempoTermino, tempo);
+            procedimentoBuscaDFS(g, aresta_adjacente->tecDestino, pilha, indicePilha, cor);
         }
         noAdjacente = noAdjacente->prox;
     }
@@ -236,14 +243,19 @@ void procedimentoBuscaDFS(grafo *g, vertice_grafo *verticeAtual, int *pilha, int
 
     // Sem vertices adjacentes pinta de preto e marca tempo de termino
     cor[posAtual] = 2;
-    tempoTermino[posAtual] = (*tempo)++;
 }
 
-void procedimentoBuscaDFSTransposto(grafo *g, vertice_grafo *verticeAtual, int *cor, int *tempoDescoberta, int *tempoTermino, int *tempo){
+/**
+ * @brief realiza busca em profundidade no grafo transposto para contar quantidade de componentes formente conexos
+ * @param g grafo em que a busca e realizada
+ * @param verticeAtual vertice visitado
+ * @param cor vetor que armazena qual o cor (estado) o vertice se encontra
+ * 
+*/
+void procedimentoBuscaDFSTransposto(grafo *g, vertice_grafo *verticeAtual, int *cor){
     int posAtual = busca_binaria_vertices(*g, verticeAtual->nomeTecOrigem);
     // Pinta vertice de cinza e marca tempo de descoberta
     cor[posAtual] = 1;
-    tempoDescoberta[posAtual] = (*tempo)++;
 
     // Empilha vertices adjacentes nao descobertos
     no *noAdjacente = verticeAtual->lista_arestas.ini;
@@ -251,26 +263,24 @@ void procedimentoBuscaDFSTransposto(grafo *g, vertice_grafo *verticeAtual, int *
     while(noAdjacente != NULL){
         aresta_adjacente = noAdjacente->info;
         if(verificaNaoDescoberto(g, aresta_adjacente->tecDestino, cor)){
-            procedimentoBuscaDFSTransposto(g, aresta_adjacente->tecDestino, cor, tempoDescoberta, tempoTermino, tempo);
+            procedimentoBuscaDFSTransposto(g, aresta_adjacente->tecDestino, cor);
         }
         noAdjacente = noAdjacente->prox;
     }
 
     // Sem vertices adjacentes pinta de preto e marca tempo de termino
     cor[posAtual] = 2;
-    tempoTermino[posAtual] = (*tempo)++;
 }
 
-
+/**
+ * @brief Realiza a contagem da quantidade de componentes fortemente conexos a partir de busca em profundidade (Algoritmo de Kosaraju)
+ * @param g grafo para contagem de componentes fortemente conexos
+ * @param g_transposto transposto do grafo de interesse.
+*/
 void ContaCFC(grafo *g, grafo *g_transposto){
-    int tempoDescoberta[g->num_vertices]; // Vetor para armazenar tempo de descoberta dos vertices
-    int tempoTermino[g->num_vertices]; // Vetor para armazenar tempo de termino dos vertices
     int cor[g->num_vertices]; // 0 (branco) - Nao descoberto; 1 (cinza) - Descoberto; 2 (preto) - Finalizado
     int *pilha = (int*) malloc(g->num_vertices * sizeof(int));  // Pilha para armazenar ordem dos vertices
     int indicePilha = 0;
-
-    // Inicializa temporizador
-    int tempo = 1;
 
     // Inicializa cor branca (= 0) em todos
     for(int i = 0; i < g->num_vertices; i++){
@@ -287,7 +297,7 @@ void ContaCFC(grafo *g, grafo *g_transposto){
         if(cor[i] == 0){
             normal++;
             verticeAtual = g->lista_vertices[i];
-            procedimentoBuscaDFS(g, verticeAtual, pilha, &indicePilha, cor, tempoDescoberta, tempoTermino, &tempo);
+            procedimentoBuscaDFS(g, verticeAtual, pilha, &indicePilha, cor);
         }
     }
 
@@ -303,15 +313,15 @@ void ContaCFC(grafo *g, grafo *g_transposto){
         int idAtual = pilha[i];
         if(cor[idAtual] == 0){
             cont++;
-            verticeAtual = g->lista_vertices[idAtual];
-            procedimentoBuscaDFSTransposto(g, verticeAtual, cor, tempoDescoberta, tempoTermino, &tempo);
+            verticeAtual = g_transposto->lista_vertices[idAtual];
+            procedimentoBuscaDFSTransposto(g_transposto, verticeAtual, cor);
         }
     }
     
     if(cont == 1){
-        printf("Sim, o grafo é fortemente conexo e possui 1 componente\n");
+        printf("Sim, o grafo é fortemente conexo e possui 1 componente.\n");
     }else{
-        printf("Não, o grafo não é fortemente conexo e possui %d componentes\n", cont);
+        printf("Não, o grafo não é fortemente conexo e possui %d componentes.\n", cont);
     }
 
     // Libera memoria da pilha

@@ -215,11 +215,8 @@ void funcionalidade11() {
         free(reg.tecnologiaDestino.nome);
     }
 
-    // printf("numero de vertices no grafo: %d\n", g.num_vertices);
-
-    // Realiza busca em profundidade no grafo normal
+    // Realiza contagem de componentes formente conexos
     ContaCFC(&g, &g_transposto);
-    
 
     // fecha arquivo de dados e libera grafo
     fclose(arq_dados);
